@@ -1,0 +1,27 @@
+import autoit
+import time
+from random import choice
+
+def codigo():
+    codProd = choice(["15","44","45","50","62","65","99","107","115","116","129","130","131","138","141","159","161","201","212","227","240","53162"])
+    return codProd
+
+def qtde():
+    qtde = choice(["1","2","3"])
+    return qtde
+
+def inserirItem():
+    time.sleep(3)
+    autoit.control_send("[CLASS:TFRM_VENDAS]", "TVSMDBGrid1", codigo())
+    time.sleep(3)
+    autoit.send("{ENTER}")
+    time.sleep(3)
+    autoit.control_send("[CLASS:TFRM_VENDAS]", "TVSMDBGrid1", qtde())
+    time.sleep(3)
+    autoit.send("{ENTER}")
+
+def loop(qtde):
+    cont = 0
+    while cont < qtde:
+        inserirItem()
+        cont += 1

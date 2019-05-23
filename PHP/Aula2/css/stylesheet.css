@@ -1,0 +1,200 @@
+body {
+	background-color: #060606;
+    background-image: url(../img/background-pizza.jpg);
+    /*
+	Imagem de Fundo - background-image
+	repeat: colocando no-repeat para aparecer só uma vez;
+    size: contain-> só ao tamanho do conteiner
+    valor cover para o size, cobre tanto horizontal e verticalmente
+    ;
+
+    */
+
+    background-repeat: no-repeat;
+    background-size: contain;
+
+	color: #fff;
+	font-family: "Helvetica Neue", sans-serif;
+    /* 
+		font-family
+		Alterando a fote para Helvetica, que seja dessa familia ou parecida 'sans-serif'
+
+    */
+
+    margin: 0;
+}
+/* 
+a { -> links (a)
+	color: red; -> atribuo a cor vermelha a todos os links
+	background-color: ywllow; Atribuo a cor amarela ao fundo dos links
+}
+
+
+*/
+
+#banner { /*id da div, identifica só a div que irei alterar*/
+	background-color: rgba(0, 0, 0, .5);
+	/*
+	Para deixar tranparente, usar rgba e rgb
+	rgba deixar passar a opacidade pelo valor 0.5 ou .5
+	Deixando assim semi transparente
+	*/
+	height: 76px;
+	/*   height tamanho do banner 
+	padding-> Adicionar distancia na parte inferior do elemento
+	+/- -> superior inferior superior e inferior e laterais
+	*/
+	padding: 30px 70px 30px 70px;
+
+
+}
+
+#banner h1 {
+	float: left;
+	/* flutuando a esquerda para não dar conflito com os nav
+	removendo a margem para não atrapalhar no banner pelo h1
+	*/
+	margin: 0;
+}
+
+#banner nav {
+	float: right;
+	position: relative;
+	/*
+	float: flutuar a direita por exemplo;
+	position: relative; -> dizendo que terei pelo top, uma distancia relativa de 30px do banner 
+	*/
+	top: 30px;
+}
+
+#banner ul {
+	margin: 0;
+
+}
+
+#banner nav ul li {
+	/* Selecionar os itens da lista nav > ul > li
+		inline -> deixa os itens na mesma linha
+	 	block -> 
+	 */
+	display: inline-block; 
+	width: 100px;
+}
+
+#banner nav ul li a {
+	color: #fff;
+	font-size: 12px;
+	/*
+		font-size: tamanho da fonte
+		font-weight: bold-> deixando em negrito;
+
+	*/
+	font-weight: bold;
+	text-decoration: none;
+	/* 
+	text-decoration: none; -> texto não sera decorado de nenhuma forma
+	text-transform: deixar em letra maiuscula
+	
+
+	*/
+	text-transform: uppercase;
+
+}
+
+#sabores-pizzas h2 {
+
+	/*
+		line-height -> altura da linha padrão, multiplicando *6 no ex
+	*/
+	line-height: 6;
+	margin: 0;
+	text-align: center;
+	/*
+	text-align alinhando no centro o h2
+	
+	*/
+    text-shadow: 2px -2px 10px #060606;
+
+    /*
+	Sombra-text-shadow descolamento X, Y, raio de desfoque, cor da sombra
+    */
+	text-transform: uppercase;
+
+
+}
+
+#sabores-pizzas table {
+    background-color: #2a2a2a;
+    /*
+	Deixar as bordas coladas, juntas
+	border-collapse: collapse;
+    */ 
+    border-collapse: collapse;
+	margin: 0 auto;
+	width: 80%;
+}
+
+/*
+Separando por virgula, aplico a mesma regla a N propriedades
+*/
+#sabores-pizzas table td,
+#sabores-pizzas table th {
+	border: 1px #000 solid;
+	/*
+	Borda de 1 px cor e sólida
+	*/
+	font-size: 12px;
+	padding: 25px;
+	/*
+	Espaço interno da célula
+	*/
+	text-align: center;
+	text-transform: uppercase;
+	width: 20%;
+}
+
+#sabores-pizzas .texto-negativo {
+	color: #fb3958;
+}
+
+#sabores-pizzas .texto-positivo {
+	color: #87b50f;
+	/*
+		Definido a classe no HTML e atribuindo a cor de acordo com a classe, por ser uma caracteristicas de vários elementos da pagina.
+		Usando o seletor de classe com o ponto e nome da classe .wagner		
+	*/
+}
+
+#copyright {
+	background-color: #060606;
+    padding: 35px 0 10px 0;	
+
+    /*
+ 	padding-top right bottom left
+    */
+}
+
+#copyright a {
+	/*centralizar o link do copyright*/
+	display: block;
+	/* passando o block para ele gerenciar, ocupando toda a linha e empurrando todos os demais itens para baixo dele*/
+	text-align: center;
+}
+
+#copyright p {
+	/*
+Paragrafo do copiryght 
+Ele vem com block de padrão do display, não precisando instanciar ;
+
+	*/
+	font-size: 12px;
+	text-align: center;
+}
+
+#sabores-pizzas {
+	margin-top: 400px;
+	/*
+	Centralizando e dando margens
+	*/
+	padding-bottom: 60px;
+}

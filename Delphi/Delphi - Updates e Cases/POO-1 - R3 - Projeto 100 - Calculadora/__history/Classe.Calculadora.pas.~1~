@@ -1,0 +1,11 @@
+unit Classe.Calculadora;
+
+interface
+type
+    TCalculadora = class
+
+    end;
+
+implementation
+
+end.

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2018/06/05 22:14:36.000.297,=C:\Users\Rafael\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2018/06/05 22:17:41.000.022,C:\Users\Rafael\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Case\Projeto\UPrincipal.pas</Transaction>
+    <Transaction>2018/06/05 22:17:41.000.022,C:\Users\Rafael\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Case\Projeto\UPrincipal.dfm</Transaction>
+    <Transaction>2018/06/05 22:17:55.000.085,C:\Users\Rafael\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Case\Projeto\GerenciadorClientes.dproj</Transaction>
+    <Transaction>2018/06/06 21:10:00.000.465,=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/06 21:11:34.000.661,C:\Case\Projeto\U_dm.pas=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/06 21:11:34.000.661,C:\Case\Projeto\U_dm.dfm=C:\Case\Projeto\Unit1.dfm</Transaction>
+    <Transaction>2018/06/06 21:17:23.000.131,C:\Case\Projeto\Fontes\U_dm.dfm=C:\Case\Projeto\U_dm.dfm</Transaction>
+    <Transaction>2018/06/06 21:17:23.000.131,C:\Case\Projeto\Fontes\U_dm.pas=C:\Case\Projeto\U_dm.pas</Transaction>
+    <Transaction>2018/06/06 21:17:33.000.009,C:\Case\Projeto\Fontes\UPrincipal.pas=C:\Case\Projeto\UPrincipal.pas</Transaction>
+    <Transaction>2018/06/06 21:17:33.000.009,C:\Case\Projeto\Fontes\UPrincipal.dfm=C:\Case\Projeto\UPrincipal.dfm</Transaction>
+    <Transaction>2018/06/06 23:51:13.000.437,=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/06 23:51:52.000.922,C:\Case\Projeto\Unit1.dfm=C:\Case\Projeto\Fontes\U_Cadclientes.dfm</Transaction>
+    <Transaction>2018/06/06 23:51:52.000.922,C:\Case\Projeto\Unit1.pas=C:\Case\Projeto\Fontes\U_Cadclientes.pas</Transaction>
+    <Transaction>2018/06/07 22:16:51.000.045,C:\Case\Projeto\Fontes\UPrincipal.dfm=C:\Case\Projeto\view\Ufrm_Principal.dfm</Transaction>
+    <Transaction>2018/06/07 22:16:51.000.045,C:\Case\Projeto\Fontes\UPrincipal.pas=C:\Case\Projeto\view\Ufrm_Principal.pas</Transaction>
+    <Transaction>2018/06/07 22:17:24.000.720,C:\Case\Projeto\Fontes\U_Cadclientes.pas=</Transaction>
+    <Transaction>2018/06/07 22:17:51.000.005,C:\Case\Projeto\Fontes\U_dm.pas=C:\Case\Projeto\datamodule\U_dmcl.pas</Transaction>
+    <Transaction>2018/06/07 22:17:51.000.005,C:\Case\Projeto\Fontes\U_dm.dfm=C:\Case\Projeto\datamodule\U_dmcl.dfm</Transaction>
+    <Transaction>2018/06/07 23:08:20.000.998,=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/07 23:08:55.000.794,C:\Case\Projeto\Unit1.pas=C:\Case\Projeto\datamodule\U_DMClientes.pas</Transaction>
+    <Transaction>2018/06/07 23:08:55.000.794,C:\Case\Projeto\Unit1.dfm=C:\Case\Projeto\datamodule\U_DMClientes.dfm</Transaction>
+    <Transaction>2018/06/08 00:02:58.000.975,C:\Case\Projeto\datamodule\U_DMDados.dfm=C:\Case\Projeto\datamodule\U_DMClientes.dfm</Transaction>
+    <Transaction>2018/06/08 00:02:58.000.975,C:\Case\Projeto\datamodule\U_DMDados.pas=C:\Case\Projeto\datamodule\U_DMClientes.pas</Transaction>
+    <Transaction>2018/06/08 00:21:34.000.453,=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/08 00:21:59.000.170,C:\Case\Projeto\view\Ufrm_Login.dfm=C:\Case\Projeto\Unit1.dfm</Transaction>
+    <Transaction>2018/06/08 00:21:59.000.170,C:\Case\Projeto\view\Ufrm_Login.pas=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/09 00:26:40.000.924,=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/09 00:27:09.000.067,C:\Case\Projeto\Unit1.pas=C:\Case\Projeto\classes\U_Funcoes.pas</Transaction>
+    <Transaction>2018/06/09 16:56:46.000.858,=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/09 16:57:10.000.074,C:\Case\Projeto\view\Ufrm_Endereco.dfm=C:\Case\Projeto\Unit1.dfm</Transaction>
+    <Transaction>2018/06/09 16:57:10.000.074,C:\Case\Projeto\view\Ufrm_Endereco.pas=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/09 16:57:42.000.589,=C:\Case\Projeto\Unit2.pas</Transaction>
+    <Transaction>2018/06/09 16:58:07.000.255,C:\Case\Projeto\view\Ufrm_Telefone.pas=C:\Case\Projeto\Unit2.pas</Transaction>
+    <Transaction>2018/06/09 16:58:07.000.255,C:\Case\Projeto\view\Ufrm_Telefone.dfm=C:\Case\Projeto\Unit2.dfm</Transaction>
+    <Transaction>2018/06/10 03:43:02.000.692,C:\Case\Projeto\datamodule\U_dmcl.pas=</Transaction>
+    <Transaction>2018/06/10 03:43:45.000.679,=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/10 03:44:06.000.064,C:\Case\Projeto\datamodule\U_DMRelatorio.pas=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/10 03:44:06.000.064,C:\Case\Projeto\datamodule\U_DMRelatorio.dfm=C:\Case\Projeto\Unit1.dfm</Transaction>
+    <Transaction>2018/06/10 03:49:22.000.560,C:\Case\Projeto\datamodule\U_DMRelatorios.pas=C:\Case\Projeto\datamodule\U_DMRelatorio.pas</Transaction>
+    <Transaction>2018/06/10 03:49:22.000.560,C:\Case\Projeto\datamodule\U_DMRelatorios.dfm=C:\Case\Projeto\datamodule\U_DMRelatorio.dfm</Transaction>
+    <Transaction>2018/06/10 14:50:10.000.233,=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/10 14:50:41.000.653,C:\Case\Projeto\Unit1.pas=C:\Case\Projeto\classes\U_Login.pas</Transaction>
+    <Transaction>2018/06/10 17:12:01.000.320,=C:\Case\Projeto\Unit1.pas</Transaction>
+    <Transaction>2018/06/10 17:12:28.000.874,C:\Case\Projeto\Unit1.dfm=C:\Case\Projeto\view\Ufrm_Splash.dfm</Transaction>
+    <Transaction>2018/06/10 17:12:28.000.874,C:\Case\Projeto\Unit1.pas=C:\Case\Projeto\view\Ufrm_Splash.pas</Transaction>
+    <Transaction>2018/06/10 17:30:00.000.019,C:\Case\Projeto\view\Ufrm_Splash.pas=</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="classes"/>
+    <File Path="classes\U_Funcoes.pas"/>
+    <File Path="classes\U_Login.pas"/>
+    <File Path="datamodule"/>
+    <File Path="datamodule\U_DMDados.pas"/>
+    <File Path="datamodule\U_DMDados.dfm"/>
+    <File Path="datamodule\U_DMRelatorios.pas"/>
+    <File Path="datamodule\U_DMRelatorios.dfm"/>
+    <File Path="view"/>
+    <File Path="view\Ufrm_Endereco.pas"/>
+    <File Path="view\Ufrm_Endereco.dfm"/>
+    <File Path="view\Ufrm_Login.pas"/>
+    <File Path="view\Ufrm_Login.dfm"/>
+    <File Path="view\Ufrm_Principal.pas"/>
+    <File Path="view\Ufrm_Principal.dfm"/>
+    <File Path="view\Ufrm_Telefone.pas"/>
+    <File Path="view\Ufrm_Telefone.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>

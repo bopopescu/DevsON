@@ -1,0 +1,476 @@
+unit frmPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.FMTBcd, Data.SqlExpr,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Data.DBXMySQL, Vcl.ExtCtrls,
+  Vcl.DBCtrls, Datasnap.DBClient, Datasnap.Provider, Vcl.ComCtrls,
+  frmDataModulo,
+  Vcl.Mask, Vcl.Buttons, frxClass;
+// frxClass;
+
+type
+  TForm1 = class(TForm)
+
+    grdDados: TDBGrid;
+    grdEndcli: TDBGrid;
+    grdTelcli: TDBGrid;
+    Listagem: TTabSheet;
+    Manutencao: TTabSheet;
+    Sistema: TTabSheet;
+    PageControl1: TPageControl;
+    Panel1: TPanel;
+    btnInsereEnd: TButton;
+    btnDeleteEndereco: TButton;
+    btnInsereFone: TButton;
+    btnDeleteFone: TButton;
+    btnSalvar: TButton;
+    btnCancelar: TButton;
+    btnNovaSenha: TButton;
+    edtSenhaNova: TEdit;
+    edtSenhaConfirmar: TEdit;
+
+    dtClientes: TDataSource;
+    dtEndcli: TDataSource;
+    dtTelcli: TDataSource;
+    btnExcluir: TBitBtn;
+    RG: TStaticText;
+    Nome: TStaticText;
+    StaticText5: TStaticText;
+    StaticText1: TStaticText;
+    StaticText2: TStaticText;
+    StaticText6: TStaticText;
+    btnSair: TBitBtn;
+    BitIncluir: TBitBtn;
+    btnEditar: TBitBtn;
+    edtNome: TDBEdit;
+    edtRG: TDBEdit;
+    DBRadioGroup1: TDBRadioGroup;
+    Senha: TStaticText;
+    edtUsuario: TEdit;
+    edtSenhaAtual: TEdit;
+    StaticText7: TStaticText;
+    StaticText8: TStaticText;
+    frxReport_RelacaoClientes: TfrxReport;
+    btnReport: TBitBtn;
+    edtCNPJMask: TMaskEdit;
+    edtCPFMask: TMaskEdit;
+    RadioGroup1: TRadioGroup;
+    edtCPF: TDBEdit;
+    edtCNPJ: TDBEdit;
+    // frxReport1: TfrxReport;
+
+    procedure btnExcluirClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+    procedure btnNovaSenhaClick(Sender: TObject);
+    procedure btnSairClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure BitIncluirClick(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
+    procedure ManutencaoShow(Sender: TObject);
+    procedure btnInsereEndClick(Sender: TObject);
+    procedure btnInsereFoneClick(Sender: TObject);
+    procedure btnDeleteEnderecoClick(Sender: TObject);
+    procedure btnDeleteFoneClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnReportClick(Sender: TObject);
+
+    procedure RadioGroup1Click(Sender: TObject);
+    procedure edtCPFChange(Sender: TObject);
+  private
+    function loginValido(const usuario, Senha: String): Boolean;
+    function ultimoCodcli: Integer;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+uses ConfirmarExclusao;
+
+// Listar Clientes na Grid principal
+
+procedure TForm1.BitIncluirClick(Sender: TObject);
+begin
+  frmDataModulo.DataModule1.cdsEndcli.close;
+  frmDataModulo.DataModule1.cdsEndcli.ParamByName('CODCLIENTE').AsInteger := -1;
+  frmDataModulo.DataModule1.cdsEndcli.open;
+
+  frmDataModulo.DataModule1.cdsTelcli.close;
+  frmDataModulo.DataModule1.cdsTelcli.ParamByName('CODCLIENTE').AsInteger := -1;
+  frmDataModulo.DataModule1.cdsTelcli.open;
+
+  frmDataModulo.DataModule1.cdsClientes.Append;
+
+  PageControl1.ActivePage := Manutencao;
+  edtCPFMask.Text := edtCPF.Text;
+  edtCNPJMask.Text :=  edtCNPJ.Text ;
+  // setando na Mascara os valores do banco
+end;
+
+procedure TForm1.btnCancelarClick(Sender: TObject);
+begin
+  frmDataModulo.DataModule1.cdsClientes.Cancel;
+  PageControl1.ActivePage := Listagem;
+end;
+
+procedure TForm1.btnDeleteEnderecoClick(Sender: TObject);
+begin
+  frmDataModulo.DataModule1.cdsEndcli.Delete;
+  frmDataModulo.DataModule1.cdsEndcli.ApplyUpdates(0);
+end;
+
+procedure TForm1.btnDeleteFoneClick(Sender: TObject);
+begin
+  frmDataModulo.DataModule1.cdsTelcli.Delete;
+  frmDataModulo.DataModule1.cdsTelcli.ApplyUpdates(0);
+end;
+
+procedure TForm1.btnEditarClick(Sender: TObject);
+begin
+  frmDataModulo.DataModule1.cdsEndcli.close;
+  frmDataModulo.DataModule1.cdsEndcli.ParamByName('CODCLIENTE').AsInteger :=
+    frmDataModulo.DataModule1.cdsClientesCODCLI.AsInteger;
+  frmDataModulo.DataModule1.cdsEndcli.open;
+
+  frmDataModulo.DataModule1.cdsTelcli.close;
+  frmDataModulo.DataModule1.cdsTelcli.ParamByName('CODCLIENTE').AsInteger :=
+    frmDataModulo.DataModule1.cdsClientesCODCLI.AsInteger;
+  frmDataModulo.DataModule1.cdsTelcli.open;
+
+  frmDataModulo.DataModule1.cdsClientes.Edit;
+  PageControl1.ActivePage := Manutencao;
+  edtCPFMask.Text := edtCPF.Text;
+  edtCNPJMask.Text :=  edtCNPJ.Text ;
+  // Persistindo e Buscando no Banco
+end;
+
+procedure TForm1.btnExcluirClick(Sender: TObject);
+begin
+  form3.ShowModal;
+  ShowMessage('Cliente excluído com sucesso');
+end;
+
+function TForm1.ultimoCodcli: Integer;
+begin
+
+  frmDataModulo.DataModule1.SQL.close;
+  frmDataModulo.DataModule1.SQL.open;
+  Result := frmDataModulo.DataModule1.SQL.FieldByName('CODCLI').AsInteger;
+  //edtCPFMask.Text := edtCPF.Text;
+  // edtCNPJ.Text :=  edtCPF.Text ;
+  // Persistindo e Buscando no Banco
+
+end;
+
+procedure TForm1.btnInsereEndClick(Sender: TObject);
+var
+  codCliente: Integer;
+begin
+
+  if frmDataModulo.DataModule1.cdsClientesCODCLI.AsString.IsEmpty then
+  begin
+
+    if not(frmDataModulo.DataModule1.cdsEndcli.State in dsEditModes) then
+    begin
+      frmDataModulo.DataModule1.cdsEndcli.close;
+      frmDataModulo.DataModule1.cdsEndcli.Params.ParamByName('CODCLIENTE')
+        .AsInteger := -1;
+      frmDataModulo.DataModule1.cdsEndcli.open;
+    end;
+
+    frmDataModulo.DataModule1.cdsEndcli.Append;
+  end
+  else
+  begin
+
+    frmDataModulo.DataModule1.cdsEndcli.Append;
+  end;
+
+end;
+
+procedure TForm1.btnInsereFoneClick(Sender: TObject);
+
+var
+  codCliente: Integer;
+begin
+
+  if frmDataModulo.DataModule1.cdsClientesCODCLI.AsString.IsEmpty then
+  begin
+
+    if not(frmDataModulo.DataModule1.cdsTelcli.State in dsEditModes) then
+    begin
+      frmDataModulo.DataModule1.cdsTelcli.close;
+      frmDataModulo.DataModule1.cdsTelcli.Params.ParamByName('CODCLIENTE')
+        .AsInteger := -1;
+      frmDataModulo.DataModule1.cdsTelcli.open;
+    end;
+
+    frmDataModulo.DataModule1.cdsTelcli.Append;
+  end
+  else
+  begin
+
+    frmDataModulo.DataModule1.cdsTelcli.Append;
+  end;
+
+end;
+
+procedure TForm1.btnSalvarClick(Sender: TObject);
+var
+  codCliente: Integer;
+  registroSelecionado: Integer;
+  bInsercao: Boolean;
+begin
+
+  bInsercao := (frmDataModulo.DataModule1.cdsClientes.State = dsInsert);
+
+  begin
+    if (edtNome.Text = '') then // Verifica se o campo "Nome" foi preenchido
+    begin
+      Messagedlg('O campo "Nome Completo" deve ser preenchido!', mtInformation,
+        [mbOk], 0);
+
+      if edtNome.CanFocus then
+        edtNome.SetFocus;
+
+      Exit;
+    end;
+      // ***************** VALIDAR COM MASCARAS
+    if (edtCPF.Text = '') then // Verifica se o campo "CPF" foi preenchido
+    begin
+      Messagedlg('O campo "CPF/CNPJ" deve ser preenchido!', mtInformation,
+        [mbOk], 0);
+
+      if edtCPF.CanFocus then
+        edtCPF.SetFocus;
+
+      Exit;
+    end;
+
+    if (edtRG.Text = '') then // Verifica se o campo "RG" foi preenchido
+    begin
+      Messagedlg('O campo "RG" deve ser preenchido!', mtInformation, [mbOk], 0);
+
+      if edtRG.CanFocus then
+        edtRG.SetFocus;
+
+      Exit;
+    end;
+
+    if frmDataModulo.DataModule1.cdsClientes.State in dsEditModes then
+    begin
+
+      frmDataModulo.DataModule1.cdsClientes.Post;
+      frmDataModulo.DataModule1.cdsClientes.ApplyUpdates(0);
+
+      if frmDataModulo.DataModule1.cdsClientesCODCLI.AsString.IsEmpty then
+        codCliente := ultimoCodcli
+      else
+        codCliente := frmDataModulo.DataModule1.cdsClientesCODCLI.AsInteger;
+    end;
+
+    frmDataModulo.DataModule1.cdsEndcli.First;
+    while not frmDataModulo.DataModule1.cdsEndcli.Eof do
+    begin
+      frmDataModulo.DataModule1.cdsEndcli.Edit;
+      frmDataModulo.DataModule1.cdsEndcliCODCLI.AsInteger := codCliente;
+      frmDataModulo.DataModule1.cdsEndcli.Post;
+
+      frmDataModulo.DataModule1.cdsEndcli.Next;
+    end;
+    frmDataModulo.DataModule1.cdsEndcli.ApplyUpdates(0);
+    frmDataModulo.DataModule1.cdsTelcli.First;
+
+    while not frmDataModulo.DataModule1.cdsTelcli.Eof do
+    begin
+      frmDataModulo.DataModule1.cdsTelcli.Edit;
+      frmDataModulo.DataModule1.cdsTelcliCODCLI.AsInteger := codCliente;
+      frmDataModulo.DataModule1.cdsTelcli.Post;
+      frmDataModulo.DataModule1.cdsTelcli.Next;
+    end;
+    frmDataModulo.DataModule1.cdsTelcli.ApplyUpdates(0);
+    frmDataModulo.DataModule1.cdsClientes.Refresh;
+
+    if bInsercao then
+    begin
+      frmDataModulo.DataModule1.cdsClientes.First;
+    end;
+
+    PageControl1.ActivePage := Listagem;
+  end;
+end;
+
+procedure TForm1.edtCPFChange(Sender: TObject);
+begin
+
+  // ADO_Cliente.FieldByName('cnpj').AsString := MaskEdit1.Text;
+
+  // muitos utilizam um DBedit e um MaskEdit1
+
+  // fazendo da seguinte forma:
+
+  // DBEdit.Text := MaskEdit1.Text;
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Application.Terminate;
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+  frmDataModulo.DataModule1.cdsClientes.close;
+  frmDataModulo.DataModule1.cdsClientes.open;
+  frmDataModulo.DataModule1.cdsEndcli.close;
+  frmDataModulo.DataModule1.cdsEndcli.open;
+  frmDataModulo.DataModule1.cdsTelcli.close;
+  frmDataModulo.DataModule1.cdsTelcli.open;
+  PageControl1.ActivePage := Listagem;
+end;
+
+// Validando o campo Senha da aba Sistema
+
+procedure TForm1.btnNovaSenhaClick(Sender: TObject);
+begin
+
+  if (edtSenhaNova.Text = '') then // Verifica se o campo "Senha" foi preenchido
+  begin
+    ShowMessage('O campo "Nova Senha" deve ser preenchido!');
+
+    if edtSenhaNova.CanFocus then
+      edtSenhaNova.SetFocus;
+
+    Exit;
+  end;
+  if (edtSenhaAtual.Text = '') then
+  begin
+    ShowMessage('O campo "Nova Senha" deve ser preenchido!');
+
+    if edtSenhaAtual.CanFocus then
+      edtSenhaAtual.SetFocus;
+
+    Exit;
+  end;
+  if (edtUsuario.Text = '') then
+  begin
+    ShowMessage('O campo "Nova Senha" deve ser preenchido!');
+
+    if edtUsuario.CanFocus then
+      edtUsuario.SetFocus;
+
+    Exit;
+  end;
+  if (edtSenhaConfirmar.Text = '') then
+  begin
+    ShowMessage('O campo "Nova Senha" deve ser preenchido!');
+
+    if edtSenhaConfirmar.CanFocus then
+      edtSenhaConfirmar.SetFocus;
+
+    Exit;
+  end;
+    // Verifica se o login é válido
+  if loginValido(edtUsuario.Text, edtSenhaAtual.Text) then
+  begin
+
+    if edtSenhaNova.Text = edtSenhaConfirmar.Text then
+    begin
+
+      frmDataModulo.DataModule1.cdsVendedores.Edit;
+      frmDataModulo.DataModule1.cdsVendedoresSENHAVEND.AsString :=
+        edtSenhaNova.Text;
+      frmDataModulo.DataModule1.cdsVendedores.Post;
+
+      frmDataModulo.DataModule1.cdsVendedores.ApplyUpdates(0);
+
+      ShowMessage('Senha do usuário: ' + edtUsuario.Text + ' alteradara!');
+      edtSenhaNova.Text := '';
+      edtSenhaAtual.Text := '';
+      edtUsuario.Text := '';
+      edtSenhaConfirmar.Text := '';
+
+    end
+    else
+    begin
+
+      ShowMessage('Nova senha informada não confere');
+    end;
+  end
+  else
+  begin
+    ShowMessage('Usuário ou senha Inválido(s)');
+  end;
+end;
+
+procedure TForm1.btnReportClick(Sender: TObject);
+begin
+  frxReport_RelacaoClientes.ShowReport();
+
+end;
+
+procedure TForm1.btnSairClick(Sender: TObject);
+begin
+  close;
+
+end;
+// Validar se a Senha esta em branco ou se a senha é valida*** Checar
+function TForm1.loginValido(const usuario, Senha: String): Boolean;
+begin
+  // Caso o componente ConLOGIN não esteja conectado ao BD
+  frmDataModulo.DataModule1.cdsVendedores.close;
+  frmDataModulo.DataModule1.cdsVendedores.ParamByName('nome').AsString :=
+    AnsiUpperCase(Trim(usuario));
+    // frmDataModulo.DataModule1.cdsClientes.ParamByName('senha').AsString := '');
+  frmDataModulo.DataModule1.cdsVendedores.ParamByName('senha').AsString :=
+    Trim(Senha);
+  frmDataModulo.DataModule1.cdsVendedores.open;
+
+  if not frmDataModulo.DataModule1.cdsVendedores.IsEmpty then
+    Result := True;
+end;
+
+procedure TForm1.ManutencaoShow(Sender: TObject);
+begin
+
+  edtNome.SetFocus;
+end;
+
+procedure TForm1.RadioGroup1Click(Sender: TObject);
+var
+  Valor: Integer;
+begin
+  Valor := RadioGroup1.ItemIndex;
+  // ShowMessage(IntToStr(RadioGroup1.ItemIndex));
+  if Valor = 1 then
+  begin
+    edtCNPJMask.Visible := True;
+    edtCPFMask.Visible := false;
+    // ShowMessage(BoolToStr(edtCPF.Visible));
+    // Visualizando os valores
+  end;
+  // ShowMessage(IntToStr(RadioGroup1.ItemIndex));
+  if Valor = 0 then
+  begin
+    edtCNPJMask.Visible := false;
+    edtCPFMask.Visible := True;
+  end;
+  edtCPF.Text := edtCPFMask.Text;
+  edtCNPJ.Text := edtCNPJMask.Text;
+  ShowMessage(edtCNPJ.Text);
+    ShowMessage(edtCNPJMask.Text);
+  // if rdCNPJ.Action = 'true' then
+  // edtCNPJ.Visible=true;
+end;
+
+end.

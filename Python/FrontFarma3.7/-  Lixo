@@ -1,0 +1,147 @@
+    # lixo
+    if Doc == "xxx":
+        try:
+            PedeCPF.PedeCPF()
+
+            if Rec == "S":
+                RecebeDinheiro.RecebeDinheiro()
+
+            log.EscreverLog('Timer ' + str(Variaveis.TAlertaR))
+            autoit.win_wait_active("[Class:TFRM_NUMPREVENDA]", Variaveis.TAlertaR)
+            log.EscreverLog("Numero Prevenda")
+
+            if Variaveis.PrevAuto == 'S':
+                log.EscreverLog('Timer ' + str(Variaveis.TTela))
+                time.sleep(Variaveis.TTela)
+                log.EscreverLog('Confirma Pre-venda')
+                autoit.control_click("[Class:TFRM_NUMPREVENDA]", "TVSMColorButton1")
+                log.EscreverLog('Timer ' + str(Variaveis.TDig))
+                time.sleep(Variaveis.TDig)
+
+                Tecla.Enter()
+
+            if Variaveis.PrevAuto == 'N':
+                Sai = 'N'
+
+                while Sai =='N':
+                    autoit.control_set_text("[Class:TFRM_NUMPREVENDA]", "TRzNumericEdit1",str(Variaveis.Nro))
+                    log.EscreverLog('Timer ' + str(Variaveis.TDig))
+                    time.sleep(Variaveis.TDig)
+                    log.EscreverLog("Passou numero Prevenda: " + str(Variaveis.Nro))
+                    Tecla.Enter()
+                    try:
+                        log.EscreverLog('Timer ' + str(Variaveis.TTelaR))
+                        autoit.win_wait_active("[Class:TFRM_VSMTASKDIALOG]", Variaveis.TTelaR)
+                        log.EscreverLog(str(Variaveis.Nro) + ' Numero Pre-venda ja existente')
+                        Tecla.Enter()
+                        #time.sleep(Variaveis.TDig)
+                        Variaveis.Nro += 1
+
+                    except:
+                        log.EscreverLog('Timer ' + str(Variaveis.TTelaR))
+                        time.sleep(Variaveis.TTelaR)
+                        log.EscreverLog('Confirma Pre-venda')
+
+                        F5 = choice([1, 2, 3])
+                        F5 = 0
+
+                        if F5 == 0:
+                            log.EscreverLog('Confirma Pre-venda com Click Botao')
+                            autoit.control_click("[Class:TFRM_NUMPREVENDA]", "TVSMColorButton1")
+
+                        if F5 == 1:
+                            log.EscreverLog('Confirma Pre-venda com Click Botao')
+                            autoit.control_click("[Class:TFRM_NUMPREVENDA]", "TVSMColorButton1")
+                            autoit.control_click("[Class:TFRM_NUMPREVENDA]", "TVSMColorButton1")
+                            autoit.control_click("[Class:TFRM_NUMPREVENDA]", "TVSMColorButton1")
+                        elif F5 == 2:
+                            log.EscreverLog('Confirma Pre-venda com Enter')
+                            autoit.send("{ENTER}")
+                            autoit.send("{ENTER}")
+                            autoit.send("{ENTER}")
+                        elif F5 == 3:
+                            log.EscreverLog('Confirma Pre-venda com F10')
+                            autoit.send("{F10}")
+                            autoit.send("{F10}")
+                            autoit.send("{F10}")
+
+                        try:
+                            log.EscreverLog('Timer ' + str(Variaveis.TTelaR))
+                            autoit.win_wait_active("[Class:TFRM_VSMTASKDIALOG]", Variaveis.TTelaR)
+                            log.EscreverLog(str(Variaveis.Nro) + ' Numero Pre-venda ja existente')
+                            #time.sleep(Variaveis.TDig)
+                            Tecla.Enter()
+                            Sai = 'S'
+
+                        except:
+                            Sai = 'S'
+
+            #log.EscreverLog('Timer ' + str(Variaveis.TDig))
+            #time.sleep(Variaveis.TDig)
+            Tecla.Enter()
+
+            if Variaveis.PrevAuto == 'S':
+                log.EscreverLog('Timer ' + str(Variaveis.TTela))
+                time.sleep(Variaveis.TTela)
+                log.EscreverLog('Confirma Pre-venda')
+                autoit.control_click("[Class:TFRM_NUMPREVENDA]", "TVSMColorButton1")
+                log.EscreverLog('Timer ' + str(Variaveis.TDig))
+                time.sleep(Variaveis.TDig)
+
+                Tecla.Enter()
+
+        except:
+            log.EscreverLog('Não Abriu tela numero de prevenda')
+
+    else:
+        #if Doc != "NFCE":
+        if Doc == "xxxx":
+            if Doc == "SAT":
+                try:
+                    log.EscreverLog('Alerta Sat')
+                    log.EscreverLog('Tempo. ' + str(Variaveis.TTela) + ' segundos')
+                    autoit.win_wait_active("[Class:TfrmMostraMensagens]", Variaveis.TTela)
+                    log.EscreverLog('Timer ' + str(Variaveis.TDig))
+                    time.sleep(Variaveis.TDig)
+                    log.EscreverLog('Sat Ocupado')
+
+                    Tecla.Esc()
+
+                except:
+                    log.EscreverLog('Sem Alerta Sat Ocupado')
+
+            PedeCPF.PedeCPF()
+
+            if Rec == "S":
+                RecebeDinheiro.RecebeDinheiro()
+
+
+            if Doc == "MOD2":
+                try:
+                    log.EscreverLog('Timer ' + str(Variaveis.TTela))
+                    autoit.win_wait_active("[Class:TFRM_CONFIRMARIMPRESSAONOTA]", Variaveis.TTela)
+                    log.EscreverLog('Confirma Venda NF Modelo 2')
+
+                    autoit.control_click("[Class:TFRM_CONFIRMARIMPRESSAONOTA]", "TRzBmpButton1")
+                    log.EscreverLog('Timer ' + str(Variaveis.TDig))
+                    time.sleep(Variaveis.TDig)
+                except:
+                    log.EscreverLog('NF Modelo 2')
+
+
+
+
+
+            for X in range(0, 3):
+                Tecla.Esc()
+
+
+            try:
+                log.EscreverLog('Timer ' + str(Variaveis.TTela))
+                autoit.win_wait_active("[Class:TFRM_VENDAS]",Variaveis.TTela)
+                log.EscreverLog('Lento')
+            except:
+                log.EscreverLog('Rapido')
+
+            for X in range(0, 3):
+                Tecla.Esc()

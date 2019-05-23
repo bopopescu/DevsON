@@ -1,0 +1,212 @@
+# -*- coding: utf-8 -*-
+
+import log
+import Variaveis
+import FuncoesBD
+import easygui
+import sys
+import Tela
+import Tecla
+
+def SelecionarLoja():
+    log.EscreverLog('Função Selecionar Loja')
+    sSql = "SELECT CODLOJA,NOMELOJA FROM MYOURO.LOJAS";
+    log.EscreverLog('Executando Sql:' + str(sSql))
+    Resultado = FuncoesBD.ComDBMaster.Select(sSql)
+    choices = ''
+    if len(Resultado) > 0:
+        for linha in Resultado:
+            if len(choices) > 0:
+                choices = choices + ','
+            choices = choices + str(linha[0]) + ' | ' + str(linha[1])
+        choices = choices.split(',')
+
+        msg = "Operações"
+        title = "O que deseja Realizar"
+        Lista = easygui.choicebox(msg, title, choices)
+
+        if Lista != None:
+            Variaveis.Loja = str((Lista[:Lista.find('|')].strip()))
+        else:
+            Variaveis.Loja = '0'
+
+
+def SelecionarTErminal():
+    log.EscreverLog('Função Terminal')
+    msg = "Informe o Codigo Terminal Logado"
+    title = "VSM - Automação"
+    fieldNames = ["Código do Terminal"]
+    fieldValues = easygui.multenterbox(msg, title, fieldNames)
+    if fieldValues == None:
+        sCod = 0
+        sys.exit()
+    else:
+        sCod = int(''.join(fieldValues))  # Converte Vetor para String
+        Variaveis.CodTerminal = str(sCod)
+
+    if Variaveis.CodTerminal != '0':
+        sSql = ('SELECT ' \
+               'TT.AUTO_ATENDENTELOGADO ' \
+               'FROM TERMINAIS T ' \
+               'INNER JOIN TIPOTERMINAL TT ON TT.IDTIPOTERMINAL = T.IDTIPOTERMINAL ' \
+               'WHERE ' \
+               'T.CODLOJA = "%s" and  ' \
+               'T.CODTERMINAL = "%s" ' % ((Variaveis.Loja),(Variaveis.CodTerminal)))
+
+        log.EscreverLog('Executando Sql:' + str(sSql))
+        Resultado = FuncoesBD.ComDBMaster.Select(sSql)
+        if Resultado.__len__() > 0:
+            Result = Resultado[0]
+            Variaveis.VendedorAutomatico = str(Result[0])
+        log.EscreverLog('Fim da execução da Sql')
+
+
+
+
+
+def ControlaTroco():
+    Variaveis.ControlarTroco = 'N'
+    if Variaveis.Loja != '0':
+        sSql = "SELECT ENTREGAS_CONTROLARTROCO FROM MYOURO.CONFIGLOJA WHERE CODLOJA = '%s' " %(Variaveis.Loja)
+        log.EscreverLog('Executando Sql:' + str(sSql))
+        Resultado = FuncoesBD.ComDBSlave.Select(sSql)
+        if Resultado.__len__() > 0:
+            Result = Resultado[0]
+            Variaveis.ControlarTroco = str(Result[0])
+        log.EscreverLog('Fim da execução da Sql')
+
+
+def PedeCpf():
+    Variaveis.PedeCpf = 'S'
+    sSql = "SELECT COALESCE(CF.STATUS,'S') " \
+           "FROM myouro.LOJAS L " \
+           "INNER JOIN myouro.CIDADES C ON C.CODCID = L.CODCID " \
+           "LEFT JOIN myouro.CONFIGURACAO CF ON CF.CHAVE = CONCAT(C.UFCID,'_PEDECPF') " \
+           "WHERE L.CODLOJA  = %s " % (Variaveis.Loja)
+
+    log.EscreverLog('Executando Sql:' + str(sSql))
+    Resultado = FuncoesBD.ComDBSlave.Select(str(sSql))
+
+    if Resultado.__len__() > 0:
+        Result = Resultado[0]
+        Variaveis.PedeCpf = str(Result[0])
+
+
+def Operecao():
+    if Variaveis.Loja != '0':
+        Variaveis.DocFiscal = ''
+        msg = "Operações"
+        title = "O que deseja Realizar"
+        choices = ["1 | Venda", "2 | Pre-vendas ", "3 | Baixa Pre-Venda"]
+        Lista = easygui.choicebox(msg, title, choices)
+
+        if Lista != None:
+            sOperacao = str((Lista[:Lista.find('|')].strip()))
+        else:
+            sOperacao = '0'
+
+        if sOperacao != '2':
+            msg = "Documento Fiscal a Ser Utilizado"
+            title = "Qual Documento Fiscal esta Configurado"
+            choices = ["1 | Cupom Fiscal", "2 | Sat ", "3 | Nfc-e", "4 | Nfe", "5 | Modelo 2", "6 | Prevenda",
+                       "7 | CheckFront"]
+            Lista = easygui.choicebox(msg, title, choices)
+            if Lista != None:
+                sDoc = str((Lista[:Lista.find('|')].strip()))
+            else:
+                sDoc = '0'
+        else:
+            sDoc = '5'
+
+        if sDoc == '1':
+            Variaveis.DocFiscal = 'ECF'
+
+        if sDoc == '2':
+            Variaveis.DocFiscal = 'SAT'
+
+        if sDoc == '3':
+            Variaveis.DocFiscal = 'NFCE'
+
+        if sDoc == '4':
+            Variaveis.DocFiscal = 'NFE'
+
+        if sDoc == '5':
+            #Variaveis.DocFiscal = 'MOD2'
+            Variaveis.DocFiscal = 'PREV'
+
+        if sDoc == '6':
+            Variaveis.DocFiscal = 'PREV'
+
+        Tecla.ClickGrid()
+
+
+
+
+def TesteRapido():
+    Variaveis.TesteRapido='N'
+    if Variaveis.Loja != '0':
+        msg = "Tipo do Teste"
+        title = "Optar por um Teste Rapido"
+
+        if Variaveis.DocFiscal == 'NFCE':
+            choices = ["1 | Informar um Produto e um Cliente (Teste Rapido)", "2 | Validação com Varios Produtos (Teste Lento)","3 | Tratar Rejeiçoes"]
+        else:
+            choices = ["1 | Informar um Produto e um Cliente (Teste Rapido)","2 | Validação com Varios Produtos (Teste Lento)"]
+
+        Lista = easygui.choicebox(msg, title, choices)
+        if Lista != None:
+            sSelecao = str((Lista[:Lista.find('|')].strip()))
+        else:
+            sSelecao = '0'
+
+        if sSelecao == '1':
+            Variaveis.TesteRapido ='S'
+        if sSelecao == '2':
+            Variaveis.TesteRapido = 'N'
+        if sSelecao == '3':
+            Variaveis.TesteRapido = 'R'
+
+    if Variaveis.DocFiscal =='NFCE' and Variaveis.TesteRapido == 'R' :
+        Tela.TratamentoRejeicoes()
+        Variaveis.TesteRapido = 'S'
+
+
+    if Variaveis.TesteRapido =='S':
+        msg = "Informe o Produto"
+        title = "VSM - Automação"
+        fieldNames = ["Informao Código do Produto"]
+        fieldValues = easygui.multenterbox(msg, title, fieldNames)
+        if fieldValues == None:
+            sCod = 0
+            sys.exit()
+        else:
+            sCod = int(''.join(fieldValues))  # Converte Vetor para String
+
+        Variaveis.CodProd = str(sCod)
+
+        msg = "Informe o Cliente"
+        title = "VSM - Automação"
+        fieldNames = ["Informao Código do Cliente"]
+        fieldValues = easygui.multenterbox(msg, title, fieldNames)
+        if fieldValues == None:
+            sCod = 0
+            sys.exit()
+        else:
+            sCod = int(''.join(fieldValues))  # Converte Vetor para String
+        Variaveis.Cli = str(sCod)
+
+        Variaveis.CodVendedor = '0'
+
+        if Variaveis.VendedorAutomatico =='N':
+            msg = "Informe o Vendedor"
+            title = "VSM - Automação"
+            fieldNames = ["Informao Código do Vendedor"]
+
+            fieldValues = easygui.multenterbox(msg, title, fieldNames)
+            if fieldValues == None:
+                sCod = 0
+                sys.exit()
+            else:
+                sCod = int(''.join(fieldValues))  # Converte Vetor para String
+                Variaveis.VendedorAutomatico = 'N'
+            Variaveis.CodVendedor = str(sCod)

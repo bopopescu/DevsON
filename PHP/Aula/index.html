@@ -1,0 +1,117 @@
+<!DOCTYPE html> <!-- Tipo do Documento -->
+<html> <!-- informar que é um html -->
+           <!-- todo documento html tem que ser fechado -->
+	<head>
+		<!-- Formatação do documento, titulo, CSS, UTF-8, etc -->
+		<title>Hello Pizza</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Baloo|Reenie+Beanie|Roboto:400,500,500i" rel="stylesheet">
+		<meta charset="UTF-8" />
+	</head>
+	<body>
+		<!-- Corpo do documento, que será exibido na tela -->
+		
+		 <header> <!-- Titulos e Documentos introdutórios-->
+			<h1>Hello Costta</h1>
+			<nav> 
+				<ul>
+					<!-- Menu de Listas-->
+					<!-- li -> Listas -->
+					<li><a href="#">Home</a></li>
+					<!-- href redireciona para onde eu quero enviar a lista ou item. Podendo indicar a pasta no diretório acima: ../sobre.html ou ainda em uma subpasta outraPasta/sobre.html, ou linkando uma pagina mesmo wwww, podemos parametrizar para abrir na mesma pagina ainda ou em outra utilizando: target="_blank" dentro do href que indica que abrira em outra pagina.-->
+					<li><a href="#">Sabores</a></li>
+					<li><a href="#">Contato</a></li>
+				</ul>
+			</nav>
+		</header>
+		<section> <!-- Dividir a pagina em sub seções, h1 sempre é unico mas é possivel ter N* h2, h3, quanto maior o numero, menor a fonte. Exemplo: h1 titulo do livro, h2 titulo do captulo, h3 titulo da sessão, etc... -->
+			<ul id="vantagens">
+				<!-- Listas tb, só usando ul e li, seria não ordenada - utilizando ol ela sera ordenada. -->
+				<li>Qualidade</li>
+				<li>Sabor</li>
+				<li>Praticidade</li>
+				<li>Agilidade</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Sabores</h2>
+			<p>Conheça os nossos <strong>5 sabores </strong> de pizza!</p> <!-- Strong-> Deixa em negrito, mas tem o intuito de dizer que o valor dentro dele é importante. Em inter interpretadores por audio ira enfatizar de outra forma.--> 
+			<img src="img/sabores-pizzas.png" id="pizza-sabores" />
+			<!-- img-> indico atraves do src o caminho da nossa imagem e podemos direcionar da mesma forma que os links. Usando o texto alt="" em um navegador de audio, que vai descrever o que é aquela imagem.  e caso a imagem não exista o texto é exibido no lugar -->
+			<table> <!-- Tabelas de Preços e Sabores, usando border só de exemplo -->
+				<tr>
+					<!-- cada linha é uma TR e cada coluna uma TD-->
+					<th>Pizzas</th> <!-- Titulos das tabelas -->
+					<th>Queijo e Molho</th>
+					<th>Salada</th>
+					<th>Carne</th>
+					<th>Azeito/Champignon</th>
+				</tr>
+				<tr>
+					<!-- Itens da Tabela -->
+					<td>Mozzarella</td>
+					<td rowspan="6" class="texto-positivo">Sim</td>
+					<!-- rowspan se expande na tabela pela quantidade de linhas que eu passar como parametro. -->
+					<td class="texto-negativo">Não</td>
+					<td class="texto-negativo">Não</td>
+					<td class="texto-negativo">Não</td>
+				</tr>
+				<tr>
+					<td>Calabresa</td>
+					<td class="texto-negativo">Não</td>
+					<td class="texto-positivo">Sim</td>
+					<td class="texto-positivo">Sim</td>
+				</tr>
+				<tr>
+					<td>Pepperoni</td>
+					<td class="textoNegativo">Não</td>
+					<td class="texto-positivo">Sim</td>
+					<td class="texto-positivo">Sim</td>
+				</tr>
+				<tr>
+					<td>Marguerita</td>
+					<td class="texto-positivo">Sim</td>
+					<td class="texto-positivo">Sim</td>
+					<td class="texto-positivo">Sim</td>
+				</tr>
+				<tr>
+					<td>Portuguesa</td>
+					<td class="texto-positivo">Sim</td>
+					<td class="texto-positivo">Sim</td>
+					<td class="texto-positivo">Sim</td>
+				</tr>
+				<tr>
+					<td>Alho</td>
+					<td class="texto-negativo">Não</td>
+					<td class="texto-negativo">Não</td>
+					<td class="texto-negativo">Não</td>
+				</tr>
+			</table>
+		</section>
+		<section>
+			<h2>Contato</h2>
+			
+
+			<!-- action é a forma que será enviado o form a seguir, e o metodo method="" que pode ser por POST sem mostrar o conteudo enviado ou GET mostrando na barra de endereço por exemplo.-->
+			<form  action=" http://arquivo.devmedia.com.br/projeto/requisicao.php" method="post">
+				<!-- Elementos de controle que iram formar o formulário. -->
+				<label>Nome:</label>
+				<input type="text" name="nome" />
+				<!-- Para colocar o nome tag input, como não tem conteudo ela já abre e fecha e o type é o conteudo, nesse caso texto. e no name a descrição do campo-->
+				<label>E-Mail:</label>
+				<!-- label é a descrição ou rotulo do campo.-->
+				<input type="text" name="email" />
+				<label>Mensagem:</label>
+				<textarea name="mensagem"></textarea>
+				<!-- text area, area de mensagem para varias linhas (textos grandes)-->
+				<input type="submit" value="Enviar Mensagem" />
+				<!-- E por ultimo o conteudo de enviar, submit onde ira submeter os dados de texto e se não passar o value dentro do botão ira ficar como "Enviar" como padrão.-->
+			</form>
+		</section>
+		<footer> <!-- Todas as informações, do rodapé por exemplo, endereço, contato, etc -->
+			<a href="#" id="logo-hellopizza">Hello Pizza</a>
+			<p>Todos os direitos reservados &copy; 2018</p>
+
+		</footer> 
+	</body> 
+</html>
