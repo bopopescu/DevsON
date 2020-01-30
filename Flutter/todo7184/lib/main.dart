@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
             ),
             key: Key(item.title),
             onDismissed: (direction) {
-              remove(index);
+              if (direction == DismissDirection.endToStart) remove(index);
             },
             background: Container(
               color: Theme.of(context).primaryColorLight,
