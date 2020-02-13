@@ -77,9 +77,9 @@ class _HomeState extends State<Home> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                     labelText: "Peso (kg)",
-                    labelStyle: TextStyle(color: Colors.green)),
+                    labelStyle: TextStyle(color: Colors.blueGrey[300])),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.green, fontSize: 25.0),
+                style: TextStyle(color: Colors.blueGrey, fontSize: 25.0),
                 controller: weightController,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -91,9 +91,9 @@ class _HomeState extends State<Home> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                     labelText: "Altura (cm)",
-                    labelStyle: TextStyle(color: Colors.green)),
+                    labelStyle: TextStyle(color: Colors.blueGrey)),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.green, fontSize: 25.0),
+                style: TextStyle(color: Colors.blueGrey, fontSize: 25.0),
                 controller: heightController,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -115,14 +115,14 @@ class _HomeState extends State<Home> {
                       "Calcular",
                       style: TextStyle(color: Colors.white, fontSize: 25.0),
                     ),
-                    color: Colors.green,
+                    color: Colors.blueGrey,
                   ),
                 ),
               ),
               Text(
                 _infoText,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.green, fontSize: 25.0),
+                style: TextStyle(color: Colors.blueGrey, fontSize: 25.0),
               )
             ],
           ),
