@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   Future<Map> _getGifs() async {
     http.Response response;
 
-    if (_search == null)
+    if (_search == null || _search.isEmpty)
       response = await http.get(url_melhores_gifs);
     else {
       _url_pesquisa_mont =
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   int _getCount(List data) {
-    if (_search == null) {
+    if (_search == null || _search.isEmpty) {
       return data.length;
     } else {
       return data.length + 1;
