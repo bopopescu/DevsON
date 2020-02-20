@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+import 'package:flutter_search_gifs/ui/gif_page.dart';
 
 const url_melhores_gifs =
     "https://api.giphy.com/v1/gifs/trending?api_key=ETRUxGlwAKlCo4YAMLeY6R9HR2QebWrx&limit=25&rating=G";
@@ -14,7 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _search, _url_pesquisa_mont;
+  String _search = '';
+  String _url_pesquisa_mont;
   int _offSet = 0;
   Future<Map> _getGifs() async {
     http.Response response;
@@ -23,11 +25,8 @@ class _HomePageState extends State<HomePage> {
       response = await http.get(url_melhores_gifs);
     else {
       _url_pesquisa_mont =
-          "https://api.giphy.com/v1/gifs/search?api_key=ETRUxGlwAKlCo4YAMLeY6R9HR2QebWrx&q=$_search&limit=25&offset=$_offSet&rating=G&lang=pt";
-      ;
+          "https://api.giphy.com/v1/gifs/search?api_key=ETRUxGlwAKlCo4YAMLeY6R9HR2QebWrx&q=$_search&limit=19&offset=$_offSet&rating=G&lang=pt";
 
-      _search.isEmpty;
-      print(_url_pesquisa_mont);
       response = await http.get(_url_pesquisa_mont);
     }
     return json.decode(response.body);
@@ -64,7 +63,7 @@ class _HomePageState extends State<HomePage> {
               onSubmitted: (text) {
                 setState(() {
                   _search = text;
-                  text.isEmpty;
+                  _offSet = 0;
                 });
               },
             ),
@@ -99,19 +98,61 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  int _getCount(List data) {
+    if (_search == null) {
+      return data.length;
+    } else {
+      return data.length + 1;
+    }
+  }
+
   Widget _createGifTable(BuildContext context, AsyncSnapshot snapshot) {
     return GridView.builder(
         padding: EdgeInsets.all(10.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, crossAxisSpacing: 10.0, mainAxisSpacing: 10.0),
-        itemCount: snapshot.data["data"].length,
+        itemCount: _getCount(snapshot.data["data"]),
         itemBuilder: (context, index) {
-          return GestureDetector(
-              child: Image.network(
-            snapshot.data["data"][index]["images"]["fixed_height_small"]["url"],
-            height: 100.0,
-            fit: BoxFit.cover,
-          ));
+          if (_search == null || index < snapshot.data["data"].length) {
+            return GestureDetector(
+                child: Image.network(
+                  snapshot.data["data"][index]["images"]["fixed_height_small"]
+                      ["url"],
+                  height: 100.0,
+                  fit: BoxFit.cover,
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              GifPage(snapshot.data["data"][index])));
+                });
+          } else
+            return Container(
+              child: GestureDetector(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.add,
+                      color: Colors.white60,
+                      size: 70.0,
+                    ),
+                    Text("Carregar mais..",
+                        style: TextStyle(
+                          color: Colors.white10,
+                          fontSize: 22.0,
+                        )),
+                  ],
+                ),
+                onTap: () {
+                  setState(() {
+                    _offSet += 19;
+                  });
+                },
+              ),
+            );
         });
   }
 }
