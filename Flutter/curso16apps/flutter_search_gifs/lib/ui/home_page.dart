@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'package:flutter_search_gifs/ui/gif_page.dart';
+import 'package:share/share.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 const url_melhores_gifs =
     "https://api.giphy.com/v1/gifs/trending?api_key=ETRUxGlwAKlCo4YAMLeY6R9HR2QebWrx&limit=25&rating=G";
@@ -115,19 +117,26 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (context, index) {
           if (_search == null || index < snapshot.data["data"].length) {
             return GestureDetector(
-                child: Image.network(
-                  snapshot.data["data"][index]["images"]["fixed_height_small"]
-                      ["url"],
-                  height: 100.0,
-                  fit: BoxFit.cover,
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              GifPage(snapshot.data["data"][index])));
-                });
+              child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: snapshot.data["data"][index]["images"]
+                      ["fixed_height_small"]["url"],
+                  height: 300.0,
+                  fit: BoxFit.cover),
+              //snapshot.data["data"][index]["images"]["fixed_height_small"]["url"],
+
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            GifPage(snapshot.data["data"][index])));
+              },
+              onLongPress: () {
+                Share.share(snapshot.data["data"][index]["images"]
+                    ["fixed_height"]["url"]);
+              },
+            );
           } else
             return Container(
               child: GestureDetector(
