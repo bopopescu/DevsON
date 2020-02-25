@@ -12,12 +12,19 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 @RestController
-@RequestMapping("product")
+@RequestMapping("products")
 public class ProductEndpoint {
-    @Autowired
-    private DateUtil dateUtil;
+    private final DateUtil dateUtil;
 
-    @RequestMapping(method = RequestMethod.GET, path = "/list")
+    @Autowired
+    public ProductEndpoint(DateUtil dateUtil) {
+        this.dateUtil = dateUtil;
+    }
+
+
+
+
+    @RequestMapping(method = RequestMethod.GET)
 
     public List<Product> listAll() {
         return asList(new Product(0), new Product(2));
