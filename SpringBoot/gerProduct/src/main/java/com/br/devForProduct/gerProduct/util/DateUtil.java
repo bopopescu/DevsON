@@ -1,4 +1,4 @@
-package com.br.devForProduct.util;
+package com.br.devForProduct.gerProduct.util;
 
 import org.springframework.stereotype.Component;
 

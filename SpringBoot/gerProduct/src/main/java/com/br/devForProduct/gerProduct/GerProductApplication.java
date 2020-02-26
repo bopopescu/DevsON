@@ -1,4 +1,4 @@
-package com.br.devForProduct;
+package com.br.devForProduct.gerProduct;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
