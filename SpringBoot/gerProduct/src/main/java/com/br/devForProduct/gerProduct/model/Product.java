@@ -7,7 +7,6 @@ import java.util.Objects;
 import static java.util.Arrays.asList;
 
 public class Product extends AbstractEntity {
-//    private int id;
     private String descricao;
     private String marca;
     private String numeroPatrimonio;
@@ -20,30 +19,10 @@ public class Product extends AbstractEntity {
         this.descricao = descricao;
     }
 
-//    public Product(int id) {
-//        this.id = id;
-//    }
 
     private static void productRepository(){
         productList = new ArrayList<>(asList(new Product("Dorflex"), new Product("ANADOR")));
     }
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Product product = (Product) o;
-//        return id == product.id;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id);
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
