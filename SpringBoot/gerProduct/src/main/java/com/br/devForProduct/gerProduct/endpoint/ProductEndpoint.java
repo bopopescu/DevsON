@@ -18,12 +18,12 @@ public class ProductEndpoint {
         this.dateUtil = dateUtil;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<?> listAll() {
         return new ResponseEntity<>(Product.productList, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") int id) {
         Product product = new Product();
         product.setId(id);
@@ -33,19 +33,19 @@ public class ProductEndpoint {
         return new ResponseEntity<>(Product.productList.get(index),HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody Product product) {
         Product.productList.add(product);
         return new ResponseEntity<>(product,HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     public ResponseEntity<?> delete(@RequestBody Product product) {
         Product.productList.remove(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public ResponseEntity<?> update(@RequestBody Product product) {
         Product.productList.remove(product);
         Product.productList.add(product);
