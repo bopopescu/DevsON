@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("products")
 public class ProductEndpoint {
     private final ProductRepository productDao;
-
     @Autowired
     public ProductEndpoint(ProductRepository productDao) {
         this.productDao = productDao;
