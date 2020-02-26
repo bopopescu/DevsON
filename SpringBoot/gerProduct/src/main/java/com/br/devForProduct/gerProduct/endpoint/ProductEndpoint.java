@@ -2,6 +2,7 @@ package com.br.devForProduct.gerProduct.endpoint;
 
 import com.br.devForProduct.gerProduct.error.CustomErrorType;
 import com.br.devForProduct.gerProduct.model.Product;
+import com.br.devForProduct.gerProduct.repository.ProductRepository;
 import com.br.devForProduct.gerProduct.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,44 +12,40 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("products")
 public class ProductEndpoint {
-    private final DateUtil dateUtil;
+    private final ProductRepository productDao;
 
     @Autowired
-    public ProductEndpoint(DateUtil dateUtil) {
-        this.dateUtil = dateUtil;
+    public ProductEndpoint(ProductRepository productDao) {
+        this.productDao = productDao;
     }
 
     @GetMapping
     public ResponseEntity<?> listAll() {
-        return new ResponseEntity<>(Product.productList, HttpStatus.OK);
+        return new ResponseEntity<>(productDao.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable("id") int id) {
-        Product product = new Product();
-        product.setId(id);
-        int index = Product.productList.indexOf(product);
-        if(index == -1)
+    public ResponseEntity<?> getProductById(@PathVariable("id") Long id) {
+        Product product = productDao.findOne(id);
+        if(product == null)
             return new ResponseEntity<>(new CustomErrorType("Produto Não Encontrado"), HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(Product.productList.get(index),HttpStatus.OK);
+        return new ResponseEntity<>(product,HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Product product) {
-        Product.productList.add(product);
-        return new ResponseEntity<>(product,HttpStatus.CREATED);
+        return new ResponseEntity<>(productDao.save(product),HttpStatus.CREATED);
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody Product product) {
-        Product.productList.remove(product);
+    @DeleteMapping(path = "admin/products/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        productDao.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Product product) {
-        Product.productList.remove(product);
-        Product.productList.add(product);
+        productDao.save(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
