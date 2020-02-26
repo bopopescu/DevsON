@@ -36,12 +36,19 @@ public class ProductEndpoint {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> save(@RequestBody Product product) {
         Product.productList.add(product);
-        return new ResponseEntity<>(product,HttpStatus.OK);
+        return new ResponseEntity<>(product,HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@RequestBody Product product) {
         Product.productList.remove(product);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@RequestBody Product product) {
+        Product.productList.remove(product);
+        Product.productList.add(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
