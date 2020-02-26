@@ -26,7 +26,7 @@ public class Product {
     }
 
     private static void productRepository(){
-        productList = new ArrayList<>(asList(new Product(0), new Product(2)));
+        productList = new ArrayList<>(asList(new Product(1,"Dorflex"), new Product(2,"ANADOR")));
     }
 
     public void setId(int id) {
