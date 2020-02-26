@@ -37,10 +37,11 @@ public class ProductEndpoint {
     public ResponseEntity<?> save(@RequestBody Product product) {
         Product.productList.add(product);
         return new ResponseEntity<>(product,HttpStatus.OK);
+    }
 
-//        int index = Product.productList.indexOf(product);
-//        if(index == -1)
-//            return new ResponseEntity<>(new CustomErrorType("Produto Não Encontrado"), HttpStatus.NOT_FOUND);
-
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@RequestBody Product product) {
+        Product.productList.remove(product);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
