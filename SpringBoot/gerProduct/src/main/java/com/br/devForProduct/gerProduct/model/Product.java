@@ -6,8 +6,8 @@ import java.util.Objects;
 
 import static java.util.Arrays.asList;
 
-public class Product {
-    private int id;
+public class Product extends AbstractEntity {
+//    private int id;
     private String descricao;
     private String marca;
     private String numeroPatrimonio;
@@ -16,36 +16,34 @@ public class Product {
         productRepository();
     }
 
-
-    public Product(int id, String descricao) {
+    public Product(String descricao) {
         this.descricao = descricao;
-        this.id = id;
     }
 
-    public Product(int id) {
-        this.id = id;
-    }
+//    public Product(int id) {
+//        this.id = id;
+//    }
 
     private static void productRepository(){
-        productList = new ArrayList<>(asList(new Product(1,"Dorflex"), new Product(2,"ANADOR")));
+        productList = new ArrayList<>(asList(new Product("Dorflex"), new Product("ANADOR")));
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return id == product.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Product product = (Product) o;
+//        return id == product.id;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id);
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
@@ -71,9 +69,9 @@ public class Product {
         return numeroPatrimonio;
     }
 
-    public int getId() {
-        return id;
-    }
+//    public int getId() {
+//        return id;
+//    }
 
     public Product() {
     }
