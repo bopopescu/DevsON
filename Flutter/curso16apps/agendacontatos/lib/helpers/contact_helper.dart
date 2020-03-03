@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'dart:async';
 
 final String contactTable = "contactTable";
 final String idCol = "idCol";
@@ -24,19 +25,20 @@ class ContactHelper {
   ContactHelper.internal();
 
   Database _db;
-  get db {
+  Future<Database> get db async {
     if (_db != null) {
       return _db;
     } else {
-      _db = initDb();
+      _db = await initDb();
+      return _db;
     }
   }
 
-  initDb() async {
+  Future<Database> initDb() async {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, "contact.db");
 
-    openDatabase(path, version: 1,
+    return await openDatabase(path, version: 1,
         onCreate: (Database db, int newerVersion) async {
       await db.execute(sSqlCreate);
     });
