@@ -18,7 +18,7 @@ class ContactHelper {
       "$telefoneCol TEXT,"
       "$imagemCol TEXT"
       ")";
-  static final ContactHelper _instance = Contact.internal();
+  static final ContactHelper _instance = ContactHelper.internal();
 
   factory ContactHelper() => _instance;
 
@@ -42,6 +42,25 @@ class ContactHelper {
         onCreate: (Database db, int newerVersion) async {
       await db.execute(sSqlCreate);
     });
+  }
+
+  Future<Contact> saveContact(Contact contact) async {
+    Database dbContact = await db;
+    contact.id = await dbContact.insert(contactTable, contact.toMap());
+    return contact;
+  }
+
+  Future<Contact> getContact(int id) async {
+    Database dbContact = await db;
+    List<Map> maps = await dbContact.query(contactTable,
+        columns: [idCol, nomeCol, emailCol, telefoneCol, imagemCol],
+        where: "$idCol = ?",
+        whereArgs: [id]);
+    if (maps.length > 0) {
+      return Contact.fromMap(maps.first);
+    } else {
+      return null;
+    }
   }
 }
 
