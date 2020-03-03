@@ -35,4 +35,9 @@ class Contact {
     }
     return map;
   }
+
+  @override
+  String toString() {
+    return "Contato(id: $id, nome: $nome, email: $email, telefone: $telefone, imagem: $imagem";
+  }
 }
