@@ -9,37 +9,55 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   ContactHelper helper = ContactHelper();
 
-  //teste
+  List<Contact> contacts = List();
   @override
   void initState() {
     super.initState();
 
-    Contact c = Contact();
-    c.nome = "WG";
-    c.email = "wg@gmail.com";
-    c.telefone = "184444444";
-    c.imagem = "teste";
-
-    helper.saveContact(c);
+    //helper.saveContact();
 
     helper.getAllContacts().then((list) {
-      print(list);
+      setState() {
+        contacts = list;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Contatos"),
-        backgroundColor: Colors.red,
-        centerTitle: true,
-      ),
-      backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.add),
-          backgroundColor: Colors.red),
-    );
+        appBar: AppBar(
+          title: Text("Contatos"),
+          backgroundColor: Colors.red,
+          centerTitle: true,
+        ),
+        backgroundColor: Colors.white,
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            child: Icon(Icons.add),
+            backgroundColor: Colors.red),
+        body: ListView.builder(
+            padding: EdgeInsets.all(10.0),
+            itemCount: contacts.length,
+            itemBuilder: (context, index) {
+              //
+            }));
   }
+
+
+  Widget _contactCard(BuildContext context, int index){
+    return GestureDetector(
+      child: Card(
+        child: Padding(padding: EdgeInsets.all(10.0),
+        child: Row(children: <Widget>[
+          Container(width: 80.0 ,
+          height: 80.0,
+          decoration: BoxDecoration(shape: BoxShape.circle,
+          image: DecorationImage(image: 
+          )),)
+        ],))
+      )
+    )
+  }
+
 }
