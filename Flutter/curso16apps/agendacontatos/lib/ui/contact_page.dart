@@ -114,5 +114,34 @@ class _ContactPageState extends State<ContactPage> {
         onWillPop: _requestPop);
   }
 
-  _requestPop() {}
+  Future<bool> _requestPop() {
+    if (_bUserEdit) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Descartar Alterações ?"),
+              content: Text("Se sair, vai perder as informações"),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Permanecer"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                FlatButton(
+                  child: Text("Descartar"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
+          });
+      return Future.value(false);
+    } else {
+      return Future.value(true);
+    }
+  }
 }
