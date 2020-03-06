@@ -10,14 +10,6 @@ final String telefoneCol = "telefoneCol";
 final String imagemCol = "imagemCol";
 
 class ContactHelper {
-  //Singleton
-  final String sSqlCreate = "CREATE TABLE $contactTable("
-      "$idCol INTEGER PRIMARY KEY,"
-      "$nomeCol TEXT,"
-      "$emailCol TEXT,"
-      "$telefoneCol TEXT,"
-      "$imagemCol TEXT"
-      ")";
   static final ContactHelper _instance = ContactHelper.internal();
 
   factory ContactHelper() => _instance;
@@ -25,6 +17,7 @@ class ContactHelper {
   ContactHelper.internal();
 
   Database _db;
+
   Future<Database> get db async {
     if (_db != null) {
       return _db;
@@ -36,11 +29,13 @@ class ContactHelper {
 
   Future<Database> initDb() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, "contact.db");
+    final path = join(databasesPath, "contactsnew.db");
 
     return await openDatabase(path, version: 1,
         onCreate: (Database db, int newerVersion) async {
-      await db.execute(sSqlCreate);
+      await db.execute(
+          "CREATE TABLE $contactTable($idCol INTEGER PRIMARY KEY, $nomeCol TEXT, $emailCol TEXT,"
+          "$telefoneCol TEXT, $imagemCol TEXT)");
     });
   }
 
@@ -66,13 +61,13 @@ class ContactHelper {
   Future<int> deleteContact(int id) async {
     Database dbContact = await db;
     return await dbContact
-        .delete(contactTable, where: "idCol = ?", whereArgs: [id]);
+        .delete(contactTable, where: "$idCol = ?", whereArgs: [id]);
   }
 
   Future<int> updateContact(Contact contact) async {
     Database dbContact = await db;
     return await dbContact.update(contactTable, contact.toMap(),
-        where: "idCol = ?", whereArgs: [contact.id]);
+        where: "$idCol = ?", whereArgs: [contact.id]);
   }
 
   Future<List> getAllContacts() async {
@@ -129,6 +124,6 @@ class Contact {
 
   @override
   String toString() {
-    return "Contato(id: $id, nome: $nome, email: $email, telefone: $telefone, imagem: $imagem";
+    return "Contact(id: $id, name: $nome, email: $email, phone: $telefone, img: $imagem)";
   }
 }
