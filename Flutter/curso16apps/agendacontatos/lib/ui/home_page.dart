@@ -126,48 +126,10 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: FlatButton(
-                        child: Text(
-                          "Ligar",
-                          style: TextStyle(color: Colors.red, fontSize: 20.0),
-                        ),
-                        onPressed: () {
-                          launch("tel:${contacts[index].telefone}");
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: FlatButton(
-                        child: Text(
-                          "Editar",
-                          style: TextStyle(color: Colors.red, fontSize: 20.0),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _showContactPage(contact: contacts[index]);
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: FlatButton(
-                        child: Text(
-                          "Excluir",
-                          style: TextStyle(color: Colors.red, fontSize: 20.0),
-                        ),
-                        onPressed: () {
-                          helper.deleteContact(contacts[index].id);
-                          setState(() {
-                            contacts.removeAt(index);
-                            Navigator.pop(context);
-                          });
-                        },
-                      ),
-                    ),
+                    _flatButton(context, "Ligar",
+                        "tel:${contacts[index].telefone}", 0, 0),
+                    _flatButton(context, "Editar", "", 1, index),
+                    _flatButton(context, "Excluir", "", 2, index),
                   ],
                 ),
               );
@@ -215,5 +177,42 @@ class _HomePageState extends State<HomePage> {
         break;
     }
     setState(() {});
+  }
+
+  Widget _flatButton(BuildContext context, String sTextoAcao, String sTelefone,
+      int iAcao, int index) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: FlatButton(
+        child: Text(
+          sTextoAcao,
+          style: TextStyle(color: Colors.red, fontSize: 20.0),
+        ),
+        onPressed: () {
+          switch (iAcao) {
+            case 0:
+              {
+                launch(sTelefone);
+                Navigator.pop(context);
+                break;
+              }
+            case 1:
+              {
+                Navigator.pop(context);
+                _showContactPage(contact: contacts[index]);
+                break;
+              }
+            case 2:
+              {
+                helper.deleteContact(contacts[index].id);
+                setState(() {
+                  contacts.removeAt(index);
+                  Navigator.pop(context);
+                });
+              }
+          }
+        },
+      ),
+    );
   }
 }
