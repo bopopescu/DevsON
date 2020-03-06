@@ -44,7 +44,12 @@ class _ContactPageState extends State<ContactPage> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          if (_editedContact.nome.isNotEmpty) {
+            Navigator.pop(context);
+            //remove a tela e volta para a tela anterior.
+          }
+        },
         child: Icon(Icons.save),
         backgroundColor: Colors.red,
       ),
