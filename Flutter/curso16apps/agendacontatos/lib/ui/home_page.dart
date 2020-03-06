@@ -19,7 +19,6 @@ class _HomePageState extends State<HomePage> {
 
     //helper.saveContact();
     _getAllContacts;
-    
   }
 
   @override
@@ -103,11 +102,12 @@ class _HomePageState extends State<HomePage> {
     if (recContact != null) {
       if (contact != null) {
         await helper.updateContact(recContact);
-        await 
+        _getAllContacts();
       }
     }
   }
-  _getAllContacts(){
+
+  void _getAllContacts() {
     helper.getAllContacts().then((list) {
       setState() {
         contacts = list;
