@@ -73,11 +73,14 @@ class _ContactPageState extends State<ContactPage> {
                       image: DecorationImage(
                           image: _editedContact.imagem != null
                               ? FileImage(File(_editedContact.imagem))
-                              : AssetImage("images/person.png")),
+                              : AssetImage("images/person.png"),
+                          fit: BoxFit.cover),
                     ),
                   ),
                   onTap: () {
-                    ImagePicker.pickImage(source: ImageSource.gallery)
+                    ImagePicker.pickImage(
+                            source: ImageSource
+                                .gallery) //pode ser chamado a Camera tb
                         .then((file) {
                       setState(() {
                         if (file == null) {
