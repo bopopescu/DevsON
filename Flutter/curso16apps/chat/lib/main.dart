@@ -17,12 +17,12 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Generated App',
       theme: new ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.blue,
-        primaryColor: const Color(0xFF212121),
-        accentColor: const Color(0xFF64ffda),
-        canvasColor: const Color(0xFF303030),
-      ),
+          brightness: Brightness.dark,
+          primarySwatch: Colors.blue,
+          primaryColor: const Color(0xFF212121),
+          accentColor: const Color(0xFF64ffda),
+          canvasColor: const Color(0xFF303030),
+          iconTheme: IconThemeData(color: Colors.black87)),
       home: new ChatScreen(),
     );
   }
