@@ -1,3 +1,4 @@
+import 'package:chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         accentColor: const Color(0xFF64ffda),
         canvasColor: const Color(0xFF303030),
       ),
-      home: new MyHomePage(),
+      home: new ChatScreen(),
     );
   }
 }
