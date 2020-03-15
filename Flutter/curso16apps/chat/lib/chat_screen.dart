@@ -15,7 +15,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Text('App Name'),
         elevation: 0,
       ),
-      body: TextComposer(),
+      body: TextComposer((text) {}),
     );
   }
 }
