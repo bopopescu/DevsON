@@ -13,6 +13,13 @@ class _TextComposerState extends State<TextComposer> {
 
   bool _isComposing = false;
 
+  void _reset() {
+    _controller.clear();
+    setState(() {
+      _isComposing = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,6 +39,7 @@ class _TextComposerState extends State<TextComposer> {
                   },
                   onSubmitted: (text) {
                     widget.sendMessage(text);
+                    _reset();
                   }),
             ),
             IconButton(
@@ -39,6 +47,7 @@ class _TextComposerState extends State<TextComposer> {
               onPressed: _isComposing
                   ? () {
                       widget.sendMessage(_controller.text);
+                      _reset();
                     }
                   : null,
             )
