@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class TextComposer extends StatefulWidget {
   TextComposer(this.sendMessage);
@@ -26,7 +29,16 @@ class _TextComposerState extends State<TextComposer> {
         margin: const EdgeInsets.symmetric(horizontal: 0),
         child: Row(
           children: <Widget>[
-            IconButton(icon: Icon(Icons.photo_camera), onPressed: () {}),
+            IconButton(
+                icon: Icon(Icons.photo_camera),
+                onPressed: () async {
+                  final File imgFile =
+                      await ImagePicker.pickImage(source: ImageSource.gallery);
+
+                  if (imgFile == null) {
+                    return;
+                  }
+                }),
             Expanded(
               child: TextField(
                   controller: _controller,
