@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 
 class TextComposer extends StatefulWidget {
   TextComposer(this.sendMessage);
-  Function(String) sendMessage;
+  Function({String text, File imgFile}) sendMessage;
 
   @override
   _TextComposerState createState() => _TextComposerState();
