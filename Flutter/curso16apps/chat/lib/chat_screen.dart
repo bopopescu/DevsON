@@ -49,15 +49,18 @@ class _ChatScreenState extends State<ChatScreen> {
                         child: CircularProgressIndicator(),
                       );
                     default:
-                      List<DocumentSnapshot> documents = snapshot.data.documents;
+                      List<DocumentSnapshot> documents =
+                          snapshot.data.documents;
 
                       return ListView.builder(
-                        itemCount: documents.length,
-                        reverse: true, //mensagens mostrar debaixo para cima
-                        itemBuilder: null);
+                          itemCount: documents.length,
+                          reverse: true, //mensagens mostrar debaixo para cima
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                                title: Text(documents[index].data['texto']));
+                          });
 
                       break;
-                    default:
                   }
                 },
               ),
