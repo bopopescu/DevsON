@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chat/text_composer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -21,7 +22,19 @@ class _ChatScreenState extends State<ChatScreen> {
           await googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
-    } catch (error) {}
+
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
+
+      final AuthResult authResult =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      //Pode ser utilizado com outros provedores, facebook, twitter etc
+
+      final FirebaseUser user = authResult.user;
+    } catch (error) {
+      print(error);
+    }
   }
 
   void _sendMessage({String text, File imgFile}) async {
