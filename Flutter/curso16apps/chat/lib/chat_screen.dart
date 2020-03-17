@@ -16,7 +16,20 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  void _getUser() async {
+  FirebaseUser _currentUser;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseAuth.instance.onAuthStateChanged.listen((user) {
+      _currentUser = user;
+    });
+  }
+
+  Future<FirebaseUser> _getUser() async {
+    if (_currentUser != null) return _currentUser;
+
     try {
       final GoogleSignInAccount googleSignInAccount =
           await googleSignIn.signIn();
@@ -32,12 +45,15 @@ class _ChatScreenState extends State<ChatScreen> {
       //Pode ser utilizado com outros provedores, facebook, twitter etc
 
       final FirebaseUser user = authResult.user;
+
+      return user;
     } catch (error) {
       print(error);
     }
   }
 
   void _sendMessage({String text, File imgFile}) async {
+    final FirebaseUser user = await _getUser();
     Map<String, dynamic> data = {};
 
     if (imgFile != null) {
