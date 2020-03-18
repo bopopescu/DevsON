@@ -1,0 +1,35 @@
+program ConversorDelphiSQLs;
+
+uses
+  Vcl.Forms,
+  GeradorSQLDelphi in 'GeradorSQLDelphi.pas' {sqlForDelphi},
+  Vcl.Themes,
+  Vcl.Styles,
+  VSM.Conversor in 'FormatSql\VSM.Conversor.pas',
+  VSM.Rest in 'C:\Fontes\Delphi\Modulos\Base\VSM.Rest.pas',
+  VSM.Conversor.SQL in 'FormatSql\VSM.Conversor.SQL.pas',
+  uVSMAtributos in 'C:\Fontes\Delphi\Modulos\Base\DAO\uVSMAtributos.pas',
+  VSMRestClientParamHeaderDto in 'C:\Fontes\Delphi\Modulos\Base\VSMRestClientParamHeaderDto.pas',
+  VSM.Rest.Auth in 'C:\Fontes\Delphi\Modulos\Base\VSM.Rest.Auth.pas',
+  VSM.Rest.Enumeradores in 'C:\Fontes\Delphi\Modulos\Base\VSM.Rest.Enumeradores.pas',
+  UN_WEBSERVICE in 'C:\Fontes\Delphi\Modulos\Base\UN_WEBSERVICE.pas',
+  UN_VSMLOGUTILS in 'C:\Fontes\Delphi\Modulos\Utils\UN_VSMLOGUTILS.pas',
+  UN_VSMConfigService in 'C:\Fontes\Delphi\Modulos\Config\UN_VSMConfigService.pas',
+  VSMEXECUTORSQL in 'C:\Fontes\Delphi\Modulos\Base\VSMEXECUTORSQL.pas',
+  uVSMErrorTypes in 'C:\Fontes\Delphi\Modulos\Base\uVSMErrorTypes.pas',
+  UN_VSMDEFUTILS in 'C:\Fontes\Delphi\Modulos\Utils\UN_VSMDEFUTILS.pas',
+  UN_VSMDATETIMEUTILS in 'C:\Fontes\Delphi\Modulos\Utils\UN_VSMDATETIMEUTILS.pas',
+  UN_VSMSTRINGUTILS in 'C:\Fontes\Delphi\Modulos\Utils\UN_VSMSTRINGUTILS.pas',
+  UN_VSMAPPISUTILS in 'C:\Fontes\Delphi\Modulos\Utils\UN_VSMAPPISUTILS.pas',
+  VSM.Entidade.WebServicesVinculos in 'C:\Fontes\Delphi\Modulos\Base\VSM.Entidade.WebServicesVinculos.pas',
+  UN_VSMPATHUTILS in 'C:\Fontes\Delphi\Modulos\Utils\UN_VSMPATHUTILS.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  TStyleManager.TrySetStyle('Windows10 SlateGray');
+  Application.CreateForm(TsqlForDelphi, sqlForDelphi);
+  Application.Run;
+end.

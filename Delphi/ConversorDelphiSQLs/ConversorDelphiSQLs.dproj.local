@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2019/10/10 09:42:49.000.205,=C:\Users\VSM\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/10/10 10:02:59.000.629,C:\Users\VSM\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\VSM\Documents\Embarcadero\GeradorSQL\GeradorSQLDelphi.pas</Transaction>
+    <Transaction>2019/10/10 10:02:59.000.629,C:\Users\VSM\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\VSM\Documents\Embarcadero\GeradorSQL\GeradorSQLDelphi.dfm</Transaction>
+    <Transaction>2019/10/10 10:03:20.000.043,C:\Users\VSM\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\VSM\Documents\Embarcadero\GeradorSQL\Gerador.dproj</Transaction>
+    <Transaction>2019/10/10 14:49:43.000.811,\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\GeradorSQL\Gerador.dproj=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\GeradorSQL\ConversorDelphiSQLs.dproj</Transaction>
+    <Transaction>2020/01/23 11:34:44.000.363,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\DAO\dbconnection.pas</Transaction>
+    <Transaction>2020/01/23 11:34:48.000.864,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\DAO\mysql_structures.pas</Transaction>
+    <Transaction>2020/01/23 11:42:35.000.138,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\DAO\gnugettext.pas</Transaction>
+    <Transaction>2020/01/23 11:46:09.000.943,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\DAO\apphelpers.pas</Transaction>
+    <Transaction>2020/01/23 12:00:06.000.350,\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\DAO\dbconnection.pas=</Transaction>
+    <Transaction>2020/01/23 12:00:06.000.316,\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\DAO\mysql_structures.pas=</Transaction>
+    <Transaction>2020/01/23 12:00:06.000.339,\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\DAO\gnugettext.pas=</Transaction>
+    <Transaction>2020/02/14 11:20:02.000.974,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\Unit1.pas</Transaction>
+    <Transaction>2020/02/14 11:20:31.000.274,\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\Unit1.pas=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\FormatSql\VSM.Conversor.pas</Transaction>
+    <Transaction>2020/02/14 11:22:22.000.888,=C:\Fontes\Delphi\Modulos\Base\VSM.Rest.pas</Transaction>
+    <Transaction>2020/02/14 11:24:15.000.252,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\Unit1.pas</Transaction>
+    <Transaction>2020/02/14 11:24:23.000.019,\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\Unit1.pas=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\FormatSql\VSM.Conversor.SQL.pas</Transaction>
+    <Transaction>2020/02/14 11:32:19.000.560,=C:\Fontes\Delphi\Modulos\Base\DAO\uVSMAtributos.pas</Transaction>
+    <Transaction>2020/02/14 11:33:35.000.151,=C:\Fontes\Delphi\Modulos\Base\VSMRestClientParamHeaderDto.pas</Transaction>
+    <Transaction>2020/02/14 11:34:07.000.165,=C:\Fontes\Delphi\Modulos\Base\VSM.Rest.Auth.pas</Transaction>
+    <Transaction>2020/02/14 11:34:30.000.411,=C:\Fontes\Delphi\Modulos\Base\VSM.Rest.Enumeradores.pas</Transaction>
+    <Transaction>2020/02/14 11:35:11.000.964,=C:\Fontes\Delphi\Modulos\Base\UN_WEBSERVICE.pas</Transaction>
+    <Transaction>2020/02/14 11:35:46.000.718,=C:\Fontes\Delphi\Modulos\Utils\UN_VSMLOGUTILS.pas</Transaction>
+    <Transaction>2020/02/14 11:36:15.000.822,=C:\Fontes\Delphi\Modulos\Config\UN_VSMConfigService.pas</Transaction>
+    <Transaction>2020/02/14 11:36:44.000.160,=C:\Fontes\Delphi\Modulos\Base\VSMEXECUTORSQL.pas</Transaction>
+    <Transaction>2020/02/14 11:37:01.000.493,=C:\Fontes\Delphi\Modulos\Base\uVSMErrorTypes.pas</Transaction>
+    <Transaction>2020/02/14 11:37:13.000.090,=C:\Fontes\Delphi\Modulos\Utils\UN_VSMDEFUTILS.pas</Transaction>
+    <Transaction>2020/02/14 11:37:42.000.220,=C:\Fontes\Delphi\Modulos\Utils\UN_VSMDATETIMEUTILS.pas</Transaction>
+    <Transaction>2020/02/14 11:38:11.000.220,=C:\Fontes\Delphi\Modulos\Utils\UN_VSMSTRINGUTILS.pas</Transaction>
+    <Transaction>2020/02/14 11:38:31.000.723,=C:\Fontes\Delphi\Modulos\Utils\UN_VSMAPPISUTILS.pas</Transaction>
+    <Transaction>2020/02/14 11:39:01.000.927,=C:\Fontes\Delphi\Modulos\Base\VSM.Entidade.WebServicesVinculos.pas</Transaction>
+    <Transaction>2020/02/14 11:39:24.000.418,=C:\Fontes\Delphi\Modulos\Utils\UN_VSMPATHUTILS.pas</Transaction>
+    <Transaction>2020/02/14 11:39:47.000.494,=C:\Fontes\Delphi\Modulos\Utils\UN_VSMREGWINDOWSUTILS.pas</Transaction>
+    <Transaction>2020/02/14 11:40:27.000.774,=C:\Fontes\Delphi\Modulos\Base\VSMConexoes.pas</Transaction>
+    <Transaction>2020/02/14 11:41:37.000.528,=C:\Fontes\Delphi\Modulos\Utils\uVSMObjectUtils.pas</Transaction>
+    <Transaction>2020/02/14 11:43:30.000.950,=C:\Fontes\Delphi\Modulos\Application\VSMApplication.pas</Transaction>
+    <Transaction>2020/03/12 19:54:11.795,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\Unit1.pas</Transaction>
+    <Transaction>2020/03/12 19:54:55.198,\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\FormatSql\VSM.SQLs.pas=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\Unit1.pas</Transaction>
+    <Transaction>2020/03/12 20:12:20.538,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\FormatSql\VSM.SQLs.pas</Transaction>
+    <Transaction>2020/03/12 21:29:02.470,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\FormatSql\VSM.Conversor.SQL.pas</Transaction>
+    <Transaction>2020/03/12 21:29:02.513,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\FormatSql\VSM.Rest.pas</Transaction>
+    <Transaction>2020/03/12 22:06:40.155,=\\172.20.75.5\desenvolvimento\Delphi\GerarSQLparaDelphi\ConversorDelphiSQLs\FormatSql\VSMApplication.pas</Transaction>
+  </Transactions>
+</BorlandProject>
