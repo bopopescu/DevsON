@@ -53,7 +53,7 @@ object sqlForDelphi: TsqlForDelphi
     end
     object btnClear: TVSMColorButton
       Left = 884
-      Top = 554
+      Top = 552
       Width = 150
       Height = 40
       Cursor = crHandPoint
@@ -154,7 +154,7 @@ object sqlForDelphi: TsqlForDelphi
         Align = alClient
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clMaroon
+        Font.Color = clTeal
         Font.Height = -12
         Font.Name = 'Segoe UI'
         Font.Style = []
@@ -289,8 +289,8 @@ object sqlForDelphi: TsqlForDelphi
             Font.Style = []
             ParentFont = False
             TabOrder = 6
-            BorderColor = 2359519
-            Caption = 'Delphi p/ SQL'
+            BorderColor = clWhite
+            Caption = 'Delphi->SQL  '
             Glyph.Data = {
               89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
               F4000000017352474201D9C92C7F000007ED4944415478DA9D575B7013E715FE
@@ -360,15 +360,16 @@ object sqlForDelphi: TsqlForDelphi
               30175F6621A9E10000000049454E44AE426082}
             GlyphMargin = 8
             PressedBorderColor = 2359519
-            PressedFontColor = 2359519
+            PressedColor = 2359519
+            PressedFontColor = clWhite
             SelectedBorderColor = 2359519
             SelectedColor = clWhite
             SelectedFontColor = 2359519
             DisableColor = 2359519
             BadgeNumber = 2
             Style = cbsRed
-            BadgeProperties.Color = clMaroon
-            BadgeProperties.Top = True
+            BadgeProperties.Color = clLime
+            BadgeProperties.Top = False
             BadgeProperties.Right = True
             BadgeProperties.FontSize = 11
             BadgeProperties.FontColor = 16184821
@@ -396,8 +397,8 @@ object sqlForDelphi: TsqlForDelphi
             Width = 353
             Height = 28
             Caption = 
-              'REMOVER O : "+" (Em caso de  pegar a SQL do Executor, '#13'pode desm' +
-              'arcar a op'#231#227'o pois j'#225' ter'#225' removido os + pelo Debug)'
+              'REMOVER: "+" (Em caso de  pegar a SQL do Executor, '#13'pode desmarc' +
+              'ar a op'#231#227'o pois j'#225' ter'#225' removido os + pelo Debug)'
             Color = clWhite
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clGreen
@@ -415,12 +416,14 @@ object sqlForDelphi: TsqlForDelphi
             Width = 97
             Height = 17
             Caption = 'Gerar Arquivo'
+            Checked = True
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -12
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]
             ParentFont = False
+            State = cbChecked
             TabOrder = 5
           end
           object chkUpper: TCheckBox
@@ -445,7 +448,7 @@ object sqlForDelphi: TsqlForDelphi
             Caption = 'Formatar SQL (Beta)'
             Checked = True
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
+            Font.Color = clRed
             Font.Height = -12
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]

@@ -5,13 +5,11 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzEdit, Vcl.ExtCtrls, Vcl.ComCtrls, RzLabel, Vcl.Mask, System.Actions,
-  Vcl.ActnList, VSMColorButton, Easysize, System.Generics.Collections, RzButton, RzRadChk;
+  Vcl.ActnList, Easysize, System.Generics.Collections, RzButton, RzRadChk;
 
 
 type
   TsqlForDelphi = class(TForm)
-    MemoSQL: TRzMemo;
-    MemoResultado: TRzMemo;
     Label1: TLabel;
     Panel1: TPanel;
     Label2: TLabel;
@@ -24,14 +22,14 @@ type
     memoCodigoTemplate: TRzMemo;
     Panel2: TPanel;
     Panel3: TPanel;
-    btnClear: TVSMColorButton;
-    btnCopy: TVSMColorButton;
+//    btnClear: TVSMColorButton;
+//    btnCopy: TVSMColorButton;
     ActionList1: TActionList;
     ACT_CLEAR: TAction;
     ACT_COPY: TAction;
-    btnSQL: TVSMColorButton;
-    btnDelphi: TVSMColorButton;
-    VSMColorButton2: TVSMColorButton;
+//    btnSQL: TVSMColorButton;
+//    btnDelphi: TVSMColorButton;
+//    VSMColorButton2: TVSMColorButton;
     ACT_DELPHISQL: TAction;
     ACT_SQLDELPHI: TAction;
     ACT_TEMPLATE: TAction;
@@ -44,8 +42,15 @@ type
     chkGerarArquivo: TCheckBox;
     lblArquivo: TLabel;
     chkFullScrean: TCheckBox;
-    chkRemoverX: TRzCheckBox;
     chkFormatarSQL: TCheckBox;
+    btnDelphi: TRzButton;
+    btnSQL: TRzButton;
+    btnClear: TRzButton;
+    btnCopy: TRzButton;
+    RzButton5: TRzButton;
+    MemoSQL: TMemo;
+    MemoResultado: TMemo;
+    chkRemoverX: TCheckBox;
     procedure FormShow(Sender: TObject);
     procedure ACT_CLEARExecute(Sender: TObject);
     procedure ACT_COPYExecute(Sender: TObject);
@@ -492,57 +497,7 @@ begin
 end;
 
 function TsqlForDelphi.TextoContainsSELECT(sArquivoTexto: String): string;
-var
-   valorTextoDepois, valorTextoAte : string;
-   iPosAntes, iPosDepois : Integer;
 begin
-   if sArquivoTexto.Contains('SELECT') then
-   begin
-//      ListaDivergencias.AppendLine('SELECT');
-      iPosAntes := Length(sArquivoTexto);
-      iPosDepois  :=  Pos('SELECT', sArquivoTexto)    ;
-
-      valorTextoAte := Trim(copy(sArquivoTexto, 1, iPosDepois - 1));
-
-//      ListaDivergencias.AppendLine(valorTextoAte);
-   //a := length(edt_endereco.Text);
-//b := pos(',', edt_endereco.Text);
-//
-//edt_numero.Text := Trim(copy(edt_endereco.Text, 1, b - 1)
-
-      valorTextoDepois    :=  Trim(copy(valorTextoAte, Pos('SELECT', sArquivoTexto) + 1, Length(sArquivoTexto) -  Pos('SELECT', sArquivoTexto)));
-
-//a := length(edt_endereco.Text);
-//b := pos(',', edt_endereco.Text);
-//
-//edt_numero.Text := Trim(copy(edt_endereco.Text, b + 1, a - b));
-//
-//      ListaDivergencias.AppendLine(valorTextoDepois);
-//
-//      valorTextoDepois := Copy(sArquivoTexto , Pos('SELECT', sArquivoTexto) + 6, Length(sArquivoTexto));
-//      ListaDivergencias.AppendLine(valorTextoAte);
-//      Result := ListaDivergencias.ToString;
-   end;
-
-   if valorTextoDepois.Contains('SELECT') then
-   begin
-      Result := TextoContainsSELECT(valorTextoDepois);
-   end;
-
-
-   //      Sintaxe : function Pos(Substr: string; S: string): Integer;
-//
-//         var
-//                  sNome: String;
-//                  nPos1: Byte;
-//                  nPos2: Byte;
-//                  nPos3: Byte;
-//         begin
-//                  sNome := \'Antonio Celio Morais\';
-//                  nPos1 := Pos(\'A\', sNome); // nPos1 será 1
-//                  nPos2 := Pos(\'Mor\', sNome); // nPos2 será 15
-//                  nPos3 := Pos(\'Marco\', sNome); // nPos3 sera 0
-//         end;
 end;
 
 procedure TsqlForDelphi.FormatarSQLTentativa2(sArquivoTexto: String);
@@ -550,6 +505,8 @@ var
   Lista: TStringList;
   srvConversor : TVSMFormataSQL;
   iContador : Integer;
+  sVarTexto : string;
+
 begin
   MemoResultado.Clear;
 
@@ -557,27 +514,16 @@ begin
   srvConversor := TVSMFormataSQL.Create;
   try
      sArquivoTexto := srvConversor.ConsumirSQL(UpperCase(sArquivoTexto));
-//     sArquivoTexto := StringReplace(sArquivoTexto,'    ','',[rfReplaceAll, rfIgnoreCase]);
      sArquivoTexto := StringReplace(sArquivoTexto,'\n',';',[rfReplaceAll]);
      sArquivoTexto := StringReplace(sArquivoTexto,'"}','',[rfReplaceAll, rfIgnoreCase]);
      sArquivoTexto := StringReplace(sArquivoTexto,'{"result":"','      ',[rfReplaceAll, rfIgnoreCase]);
 
 
      Lista.Delimiter := ';';
+     Lista.StrictDelimiter := True;
      Lista.DelimitedText := sArquivoTexto;
 
-//
-//     MontarArquivo(Lista.ToString);
-//      for iContador := 0 to Pred(Lista.Count) do
-//      begin
-//         if Lista[iContador].Contains('sLineBreak') then
-//         begin
-//            Lista[iContador] := StringReplace(Lista[iContador],'sLineBreak','      ',[rfReplaceAll, rfIgnoreCase]);
-//            Lista[iContador] := '      ' + Lista[iContador];
-//         end;
-//      end;
-//      MontarArquivo(Lista.ToString);
-      MemoResultado.Lines.AddStrings(Lista);
+     MemoResultado.Lines.AddStrings(Lista);
   finally
      srvConversor.Free;
      Lista.Free;
@@ -585,6 +531,41 @@ begin
 
 
 end;
+
+function ObterStringEmLinhas(StringOrigem: string;
+                               QtdeCaracteresLin: integer): string;
+  var
+    i, p, q: integer;
+    StringProc, s: string;
+    Lista: TStringList;
+  begin
+    Result := EmptyStr;
+    Lista  := TStringList.Create;
+    try
+        q := QtdeCaracteresLin + 1;
+        i := 1;
+        StringProc := Trim(StringOrigem);
+        while StringProc <> EmptyStr do
+          begin
+            s := Copy(StringProc, i, q);
+            if Length(s) < q then
+              begin
+                Lista.Add(s);
+                Delete(StringProc, 1, q);
+              end
+            else
+              begin
+//                p := Pos(' ', ReverseString(s));
+                Lista.Add(Copy(s, 1, q - p));
+                Delete(StringProc, 1, q - p);
+              end;
+            StringProc := Trim(StringProc);
+          end;
+        Result := Lista.Text;
+    finally
+        Lista.Free;
+    end;
+  end;
 
 function TsqlForDelphi.TratamentoSumCoalesceDelphi(sArquivoTexto: String): string;
 begin

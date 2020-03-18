@@ -11,6 +11,8 @@ object sqlForDelphi: TsqlForDelphi
   Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 15
@@ -56,13 +58,12 @@ object sqlForDelphi: TsqlForDelphi
       Height = 218
       Caption = 'Panel4'
       TabOrder = 0
-      object MemoResultado: TMemo
+      object MemoResultado: TRzMemo
         Left = 1
         Top = 1
         Width = 1182
         Height = 216
         Align = alClient
-        Color = clBtnFace
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clTeal
@@ -71,6 +72,9 @@ object sqlForDelphi: TsqlForDelphi
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        FrameColor = clWhite
+        ExplicitLeft = 0
+        ExplicitTop = 0
       end
     end
     object pgSQLDelphi: TPageControl
@@ -107,9 +111,23 @@ object sqlForDelphi: TsqlForDelphi
             Height = 15
             Caption = 'Texto Original'
           end
+          object MemoSQL: TRzMemo
+            Left = 5
+            Top = 17
+            Width = 1176
+            Height = 214
+            Color = clWhite
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -12
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 0
+          end
           object chkFullScrean: TCheckBox
-            Left = 517
-            Top = 263
+            Left = 637
+            Top = 259
             Width = 97
             Height = 17
             Caption = 'FullScreen'
@@ -122,9 +140,28 @@ object sqlForDelphi: TsqlForDelphi
             TabOrder = 3
             OnClick = chkFullScreanClick
           end
+          object chkRemoverX: TRzCheckBox
+            Left = 238
+            Top = 236
+            Width = 353
+            Height = 28
+            Caption = 
+              'REMOVER: "+" (Em caso de  pegar a SQL do Executor, '#13'pode desmarc' +
+              'ar a op'#231#227'o pois j'#225' ter'#225' removido os + pelo Debug)'
+            Color = clWhite
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clGreen
+            Font.Height = -11
+            Font.Name = 'Segoe UI'
+            Font.Style = [fsBold]
+            ParentColor = False
+            ParentFont = False
+            State = cbUnchecked
+            TabOrder = 1
+          end
           object chkGerarArquivo: TCheckBox
-            Left = 600
-            Top = 263
+            Left = 772
+            Top = 259
             Width = 97
             Height = 17
             Caption = 'Gerar Arquivo'
@@ -139,8 +176,8 @@ object sqlForDelphi: TsqlForDelphi
             TabOrder = 5
           end
           object chkUpper: TCheckBox
-            Left = 400
-            Top = 263
+            Left = 772
+            Top = 236
             Width = 97
             Height = 17
             Caption = 'Case Sensitive'
@@ -153,8 +190,8 @@ object sqlForDelphi: TsqlForDelphi
             TabOrder = 4
           end
           object chkFormatarSQL: TCheckBox
-            Left = 238
-            Top = 263
+            Left = 637
+            Top = 236
             Width = 133
             Height = 17
             Caption = 'Formatar SQL (Beta)'
@@ -169,51 +206,17 @@ object sqlForDelphi: TsqlForDelphi
             TabOrder = 2
             OnClick = chkFullScreanClick
           end
-          object MemoSQL: TMemo
-            Left = 5
-            Top = 17
-            Width = 1176
-            Height = 214
-            Color = clWhite
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -12
-            Font.Name = 'Segoe UI'
-            Font.Style = []
-            ParentFont = False
-            TabOrder = 0
-          end
-          object chkRemoverX: TCheckBox
-            Left = 238
-            Top = 236
-            Width = 659
-            Height = 21
-            Caption = 
-              'REMOVER: "+" (Em caso de  pegar a SQL do Executor, '#13'pode desmarc' +
-              'ar a op'#231#227'o pois j'#225' ter'#225' removido os + pelo Debug)'
-            Color = clWhite
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clGreen
-            Font.Height = -11
-            Font.Name = 'Segoe UI'
-            Font.Style = [fsBold]
-            ParentColor = False
-            ParentFont = False
-            TabOrder = 1
-          end
-          object btnDelphi: TButton
-            Left = 935
+          object RzButton1: TRzButton
+            Left = 936
             Top = 237
-            Width = 120
-            Height = 40
+            Width = 154
+            Height = 36
             Action = ACT_DELPHISQL
             TabOrder = 6
           end
-          object btnSQL: TButton
-            Left = 1061
-            Top = 237
-            Width = 120
-            Height = 40
+          object RzButton2: TRzButton
+            Left = 1096
+            Top = 254
             Action = ACT_SQLDELPHI
             TabOrder = 7
           end
@@ -289,7 +292,37 @@ object sqlForDelphi: TsqlForDelphi
             Font.Style = []
             ParentFont = False
           end
-          object memoCodigoTemplate: TMemo
+          object edtDescricaoTemplate: TRzEdit
+            Left = 144
+            Top = 28
+            Width = 295
+            Height = 21
+            Text = ''
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            MaxLength = 70
+            ParentFont = False
+            TabOrder = 1
+          end
+          object edtNomeTemplate: TRzEdit
+            Left = 143
+            Top = 2
+            Width = 121
+            Height = 21
+            Text = ''
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            MaxLength = 20
+            ParentFont = False
+            TabOrder = 0
+          end
+          object memoCodigoTemplate: TRzMemo
             Left = 3
             Top = 72
             Width = 960
@@ -302,58 +335,24 @@ object sqlForDelphi: TsqlForDelphi
             ParentFont = False
             TabOrder = 2
           end
-          object edtDescricaoTemplate: TEdit
-            Left = 144
-            Top = 28
-            Width = 295
-            Height = 21
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Segoe UI'
-            Font.Style = []
-            MaxLength = 70
-            ParentFont = False
-            TabOrder = 1
-          end
-          object edtNomeTemplate: TEdit
-            Left = 143
-            Top = 2
-            Width = 121
-            Height = 21
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Segoe UI'
-            Font.Style = []
-            MaxLength = 20
-            ParentFont = False
-            TabOrder = 0
-          end
-          object RzButton5: TButton
-            Left = 1088
-            Top = 246
-            Width = 75
-            Height = 25
+          object RzButton5: TRzButton
+            Left = 1104
+            Top = 254
             Action = ACT_TEMPLATE
             TabOrder = 3
           end
         end
       end
     end
-    object btnClear: TButton
-      Left = 940
-      Top = 553
-      Width = 120
-      Height = 40
+    object btnClear: TRzButton
+      Left = 1020
+      Top = 554
       Action = ACT_CLEAR
       TabOrder = 2
     end
-    object btnCopy: TButton
-      Left = 1066
-      Top = 553
-      Width = 120
-      Height = 40
+    object btnCopy: TRzButton
+      Left = 1101
+      Top = 570
       Action = ACT_COPY
       TabOrder = 3
     end

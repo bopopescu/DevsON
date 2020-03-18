@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, RzEdit, Vcl.ExtCtrls, Vcl.ComCtrls, RzLabel, Vcl.Mask, System.Actions,
-  Vcl.ActnList, VSMColorButton, Easysize, System.Generics.Collections, RzButton, RzRadChk;
+  Vcl.ActnList, Easysize, System.Generics.Collections, RzButton, RzRadChk;
 
 
 type
@@ -24,14 +24,14 @@ type
     memoCodigoTemplate: TRzMemo;
     Panel2: TPanel;
     Panel3: TPanel;
-    btnClear: TVSMColorButton;
-    btnCopy: TVSMColorButton;
+//    btnClear: TVSMColorButton;
+//    btnCopy: TVSMColorButton;
     ActionList1: TActionList;
     ACT_CLEAR: TAction;
     ACT_COPY: TAction;
-    btnSQL: TVSMColorButton;
-    btnDelphi: TVSMColorButton;
-    VSMColorButton2: TVSMColorButton;
+//    btnSQL: TVSMColorButton;
+//    btnDelphi: TVSMColorButton;
+//    VSMColorButton2: TVSMColorButton;
     ACT_DELPHISQL: TAction;
     ACT_SQLDELPHI: TAction;
     ACT_TEMPLATE: TAction;
@@ -46,6 +46,11 @@ type
     chkFullScrean: TCheckBox;
     chkRemoverX: TRzCheckBox;
     chkFormatarSQL: TCheckBox;
+    btnDelphi: TRzButton;
+    btnSQL: TRzButton;
+    btnClear: TRzButton;
+    btnCopy: TRzButton;
+    RzButton5: TRzButton;
     procedure FormShow(Sender: TObject);
     procedure ACT_CLEARExecute(Sender: TObject);
     procedure ACT_COPYExecute(Sender: TObject);
@@ -204,7 +209,7 @@ begin
       sDescricao := edtDescricaoTemplate.Text;
       MemoResultado.Clear;
 
-      for i := 0 to memoCodigoTemplate.Lines.Count -1 do
+      for i := 0 to Pred(memoCodigoTemplate.Lines.Count) do
       begin
          MemoResultado.Lines.Add('|*|'  + memoCodigoTemplate.Lines.Strings[i]);
       end;
@@ -237,11 +242,15 @@ begin
    sTempSQL := RetornaTratamentoSumCoalesceDelphi(sTempSQL);
 
    if chkFormatarSQL.Checked then
-      FormatarSQLTentativa2(sTempSQL)
+   begin
+      FormatarSQLTentativa2(sTempSQL) ;
+      MontarArquivo(MemoResultado.Text);
+   end
    else
+   begin
       MemoResultado.Text := sTempSQL;
-
-   MontarArquivo(sTempSQL);
+      MontarArquivo(sTempSQL);
+   end;
 end;
 
 procedure TsqlForDelphi.MontarArquivo(sTextoArquivo: String);
@@ -283,10 +292,13 @@ begin
 //   list := TStringList.Create;
 //
 //   MemoResultado.Text := sTextoArquivo;
-   FormatarSQLTentativa2(MemoSQL.Text);
-   MemoSQL.Text := MemoResultado.Text;
+   if chkFormatarSQL.Checked then
+   begin
+      FormatarSQLTentativa2(MemoSQL.Text);
+      MemoSQL.Text := MemoResultado.Text;
+   end;
 
-   for i := 0 to MemoSQL.Lines.Count -1 do
+   for i := 0 to Pred(MemoSQL.Lines.Count) do
    begin
       sTempSQL := StringReplace(MemoSQL.Lines.Strings[i],'''','''''',[rfReplaceAll, rfIgnoreCase]);
       sTempSQL := StringReplace(sTempSQL,'`','',[rfReplaceAll, rfIgnoreCase]);
@@ -543,29 +555,92 @@ var
   Lista: TStringList;
   srvConversor : TVSMFormataSQL;
   iContador : Integer;
+  sVarTexto : string;
+
 begin
   MemoResultado.Clear;
 
-  srvConversor := TVSMFormataSQL.Create;
-  sArquivoTexto := srvConversor.ConsumirSQL(UpperCase(sArquivoTexto));
-
-  sArquivoTexto := StringReplace(sArquivoTexto,'\n','\sLineBreak',[rfReplaceAll]);
-  sArquivoTexto := StringReplace(sArquivoTexto,'"}','',[rfReplaceAll, rfIgnoreCase]);
-  sArquivoTexto := StringReplace(sArquivoTexto,'{"result":"','      ',[rfReplaceAll, rfIgnoreCase]);
-
   Lista := TStringList.Create;
-  Lista.Delimiter := '\';
-  Lista.DelimitedText := sArquivoTexto;
+  srvConversor := TVSMFormataSQL.Create;
+  try
+     sArquivoTexto := srvConversor.ConsumirSQL(UpperCase(sArquivoTexto));
+//     sArquivoTexto := StringReplace(sArquivoTexto,'    ','',[rfReplaceAll, rfIgnoreCase]);
+     sArquivoTexto := StringReplace(sArquivoTexto,'\n',';',[rfReplaceAll]);
+     sArquivoTexto := StringReplace(sArquivoTexto,'"}','',[rfReplaceAll, rfIgnoreCase]);
+     sArquivoTexto := StringReplace(sArquivoTexto,'{"result":"','      ',[rfReplaceAll, rfIgnoreCase]);
 
-  MemoResultado.Lines.AddStrings(Lista);
 
-   for iContador := 0 to MemoResultado.Lines.Count -1 do
-   begin
-      MemoSQL.Lines.Strings[iContador] := StringReplace(MemoSQL.Lines.Strings[iContador],'sLineBreak','      ',[rfReplaceAll, rfIgnoreCase]);
-   end;
+     Lista.Delimiter := ';';
+     Lista.StrictDelimiter := True;
+     Lista.DelimitedText := sArquivoTexto;
+
+     MemoResultado.Lines.AddStrings(Lista);
+
+//      for iContador := 0 to Pred(Lista.Count) do
+//      begin
+//         if not Lista[iContador].Contains(',') then
+//         begin
+//            sVarTexto := sVarTexto +  '' + Lista[iContador];
+//            Lista[iContador] := '      ' + Lista[iContador];
+//            continue;
+//         end;
+//
+//         if sVarTexto <> EmptyStr then
+//         begin
+//            MemoResultado.Lines.Add(sVarTexto);
+//            sVarTexto := '';
+//         end
+//         else
+//            MemoResultado.Lines.Add(Lista[iContador]);
+//
+//
+//
+//
+//      end;
+
+
+  finally
+     srvConversor.Free;
+     Lista.Free;
+  end;
 
 
 end;
+
+function ObterStringEmLinhas(StringOrigem: string;
+                               QtdeCaracteresLin: integer): string;
+  var
+    i, p, q: integer;
+    StringProc, s: string;
+    Lista: TStringList;
+  begin
+    Result := EmptyStr;
+    Lista  := TStringList.Create;
+    try
+        q := QtdeCaracteresLin + 1;
+        i := 1;
+        StringProc := Trim(StringOrigem);
+        while StringProc <> EmptyStr do
+          begin
+            s := Copy(StringProc, i, q);
+            if Length(s) < q then
+              begin
+                Lista.Add(s);
+                Delete(StringProc, 1, q);
+              end
+            else
+              begin
+//                p := Pos(' ', ReverseString(s));
+                Lista.Add(Copy(s, 1, q - p));
+                Delete(StringProc, 1, q - p);
+              end;
+            StringProc := Trim(StringProc);
+          end;
+        Result := Lista.Text;
+    finally
+        Lista.Free;
+    end;
+  end;
 
 function TsqlForDelphi.TratamentoSumCoalesceDelphi(sArquivoTexto: String): string;
 begin
