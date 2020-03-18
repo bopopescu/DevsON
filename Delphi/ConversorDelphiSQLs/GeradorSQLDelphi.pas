@@ -72,12 +72,8 @@ type
    procedure GerarArquivo(sCaminho, sTexto : String);
    procedure MontarArquivo(sTextoArquivo: String);
 
-
-    procedure SetListaDivergencias(const Value: TStringBuilder);
-
     { Private declarations }
   public
- function Explode(Separator, Text: String): TStringList;
     { Public declarations }
   end;
 
@@ -285,30 +281,6 @@ begin
    MontarArquivo(sTextoArquivo);
 end;
 
-
-
-function TsqlForDelphi.Explode(Separator, Text: String): TStringList;
-var
-  i: Integer;
-  Item: String;
-begin
-  // Explode a string by separator into a TStringList
-  Result := TStringList.Create;
-  while true do begin
-    i := Pos(Separator, Text);
-    if i = 0 then begin
-      // Last or only segment: Add to list if it's the last. Add also if it's not empty and list is empty.
-      // Do not add if list is empty and text is also empty.
-      if (Result.Count > 0) or (Text <> '') then
-        Result.Add(Text);
-      break;
-    end;
-    Item := Trim(Copy(Text, 1, i-1));
-    Result.Add(Item);
-    Delete(Text, 1, i-1+Length(Separator));
-  end;
-end;
-
 function TsqlForDelphi.RemoveFormatacoesDelphi(sArquivoTexto: String): string;
 begin
    if chkRemoverX.Checked then
@@ -353,12 +325,6 @@ begin
 
    Result := StringReplace(sArquivoTexto,'COALESCE4COALESCE','+ COALESCE',[rfReplaceAll, rfIgnoreCase]);
 end;
-
-procedure TsqlForDelphi.SetListaDivergencias(const Value: TStringBuilder);
-begin
-//  FListaDivergencias := Value;
-end;
-
 
 procedure TsqlForDelphi.FormatarSQLTentativa2(sArquivoTexto: String);
 var
