@@ -115,7 +115,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           reverse: true, //mensagens mostrar debaixo para cima
                           itemBuilder: (context, index) {
                             return ListTile(
-                                title: ChatMessage(documents[index].data));
+                                title:
+                                    ChatMessage(documents[index].data, true));
                           });
 
                       break;
