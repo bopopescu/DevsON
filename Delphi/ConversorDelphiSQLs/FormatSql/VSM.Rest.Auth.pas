@@ -60,7 +60,7 @@ type TVSMRestAutentication = class
 implementation
 
 uses
-  UN_WEBSERVICE, Soap.EncdDecd, UN_VSMLOGUTILS, System.SysUtils, VSM.Base.WebService.Utils, UN_VSMConfigService;
+  Soap.EncdDecd, System.SysUtils;
 
 { TVSMRestAutentication }
 
@@ -104,52 +104,52 @@ end;
 class function TVSMRestAuthFactory.GetRestAuth(solucao: TSolucoesAuth; bAutenticacaoToken : Boolean = False): TVSMRestAutentication;
 var
    restAuth: TVSMRestAutentication;
-   wsWebService : TWebService;
+//   wsWebService : TWebService;
 begin
-   try
+//   try
       restAuth := TVSMRestAutentication.Create();
-      wsWebService := TWebService.Create;
-      try
-         case solucao of
-            VSMCard      : wsWebService := TVSMWebServiceUtils.GetWebService('OAC');
-            VSMEcommerce : wsWebService := TVSMWebServiceUtils.GetWebService('OAT');
-            Orizon       : wsWebService := TVSMWebServiceUtils.GetWebService('ORZ');
-         end;
+//      wsWebService := TWebService.Create;
+//      try
+//         case solucao of
+//            VSMCard      : wsWebService := TVSMWebServiceUtils.GetWebService('OAC');
+//            VSMEcommerce : wsWebService := TVSMWebServiceUtils.GetWebService('OAT');
+//            Orizon       : wsWebService := TVSMWebServiceUtils.GetWebService('ORZ');
+//         end;
 
-         restAuth.Type_Authorizarion_API := TVSMRestTipoAutenticacao(wsWebService.Type_Authorizarion_API);
+//         restAuth.Type_Authorizarion_API := TVSMRestTipoAutenticacao(wsWebService.Type_Authorizarion_API);
 
-         case restAuth.Type_Authorizarion_API of
-            tpBasicAuth :
-               begin
-                  restAuth.Encode    := 'Basic ' + EncodeString(TVSMConfigLojaService.getInstance.LerString('PBM_ORIZON_USER') +':'+TVSMConfigLojaService.getInstance.LerString('PBM_ORIZON_PASS'));
-                  restAuth.Token     := TVSMConfigLojaService.getInstance.LerString('PBM_ORIZON_APIKEY') ;
-               end;
-            tpOAuth2 :
-               begin
-                  restAuth.User      := wsWebService.Usuario;
-                  restAuth.Pass      := wsWebService.Senha;
-               end;
-            tpBearerToken :
-               begin
-//                  restAuth.Token     := 'Bearer ' + wsWebService.ApiKeyLoja;
-               end;
-         end;
+//         case restAuth.Type_Authorizarion_API of
+//            tpBasicAuth :
+//               begin
+//                  restAuth.Encode    := 'Basic ' + EncodeString(TVSMConfigLojaService.getInstance.LerString('PBM_ORIZON_USER') +':'+TVSMConfigLojaService.getInstance.LerString('PBM_ORIZON_PASS'));
+//                  restAuth.Token     := TVSMConfigLojaService.getInstance.LerString('PBM_ORIZON_APIKEY') ;
+//               end;
+//            tpOAuth2 :
+//               begin
+//                  restAuth.User      := wsWebService.Usuario;
+//                  restAuth.Pass      := wsWebService.Senha;
+//               end;
+//            tpBearerToken :
+//               begin
+////                  restAuth.Token     := 'Bearer ' + wsWebService.ApiKeyLoja;
+//               end;
+//         end;
 
-         restAuth.Url       := wsWebService.Url;
-         restAuth.TimeOut   := 10000;
-         restAuth.grantType := 'grant_type=client_credentials';
-      finally
-         wsWebService.Free;
-      end;
+//         restAuth.Url       := wsWebService.Url;
+//         restAuth.TimeOut   := 10000;
+//         restAuth.grantType := 'grant_type=client_credentials';
+//      finally
+//         wsWebService.Free;
+//      end;
 
-      Result := restAuth;
-   except
-      on E:Exception do
-      begin
-         TVSMLogUtils.GetInstance.LogE('TVSMRestAuthFactory.GetRestAuth - Ocorreu uma falha ao retornar o conteúdo do WebService. ' + E.Message);
-         raise;
-      end;
-   end;
+//      Result := restAuth;
+//   except
+//      on E:Exception do
+//      begin
+//         TVSMLogUtils.GetInstance.LogE('TVSMRestAuthFactory.GetRestAuth - Ocorreu uma falha ao retornar o conteúdo do WebService. ' + E.Message);
+//         raise;
+//      end;
+//   end;
 end;
 
 end.

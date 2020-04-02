@@ -121,7 +121,7 @@ uses
 implementation
 
 uses
-  System.Classes, System.StrUtils, System.SysUtils, REST.Json, System.TypInfo, uVSMObjectUtils,
+  System.Classes, System.StrUtils, System.SysUtils, REST.Json, System.TypInfo, //uVSMObjectUtils,
   System.NetEncoding, VSM.Rest.Enumeradores;
 
 

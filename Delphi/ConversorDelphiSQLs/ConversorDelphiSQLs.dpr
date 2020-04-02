@@ -6,7 +6,13 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   VSM.Conversor.SQL in 'FormatSql\VSM.Conversor.SQL.pas',
-  VSM.Rest in 'FormatSql\VSM.Rest.pas';
+  VSM.Rest in 'FormatSql\VSM.Rest.pas',
+  uVSMAtributos in 'FormatSql\uVSMAtributos.pas',
+  VSM.Model.RetornoJson in 'FormatSql\VSM.Model.RetornoJson.pas',
+  VSMRestClientParamHeaderDto in 'FormatSql\VSMRestClientParamHeaderDto.pas',
+  uLkJSON in 'FormatSql\uLkJSON.pas',
+  VSM.Rest.Auth in 'FormatSql\VSM.Rest.Auth.pas',
+  VSM.Rest.Enumeradores in 'FormatSql\VSM.Rest.Enumeradores.pas';
 
 {$R *.res}
 

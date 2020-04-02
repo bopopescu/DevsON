@@ -15,6 +15,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   FirebaseUser _currentUser;
 
@@ -49,12 +50,25 @@ class _ChatScreenState extends State<ChatScreen> {
       return user;
     } catch (error) {
       print(error);
+      return null;
     }
   }
 
   void _sendMessage({String text, File imgFile}) async {
     final FirebaseUser user = await _getUser();
-    Map<String, dynamic> data = {};
+
+    if (user == null) {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text('Não foi possível fazer o login, tente novamente.'),
+        backgroundColor: Colors.red,
+      ));
+    }
+
+    Map<String, dynamic> data = {
+      "uid": user.uid,
+      'senderName': user.displayName,
+      'senderPhotoUrl': user.photoUrl
+    };
 
     if (imgFile != null) {
       StorageUploadTask task = FirebaseStorage.instance
@@ -73,6 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+        key: _scaffoldKey,
         appBar: new AppBar(
           title: Text('App Name'),
           elevation: 0,
