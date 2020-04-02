@@ -31,6 +31,7 @@ class ChatMessage extends StatelessWidget {
                       )
                     : Text(
                         data['text'],
+                        textAlign: mine ? TextAlign.end : TextAlign.start,
                         style: TextStyle(fontSize: 16),
                       ),
                 Text(data['senderName'],
