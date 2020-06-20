@@ -1,0 +1,60 @@
+unit Cloud.Pessoa.View;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Cloud.Pessoa;
+
+type
+  TCloudPessoaView = class(TForm)
+    edtNome: TEdit;
+    edtCPF: TEdit;
+    edtTelefone: TEdit;
+    edtRG: TEdit;
+    edtEmail: TEdit;
+    btnConfirmar: TButton;
+    btnCancelar: TButton;
+    Label1: TLabel;
+    lblCPF: TLabel;
+    lblRG: TLabel;
+    lblTelefone: TLabel;
+    lblEmail: TLabel;
+    procedure btnConfirmarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    iId : Integer;
+    Pessoa : TCloudPessoa;
+    { Public declarations }
+  end;
+
+var
+  CloudPessoaView: TCloudPessoaView;
+
+implementation
+
+{$R *.dfm}
+
+procedure TCloudPessoaView.btnCancelarClick(Sender: TObject);
+begin
+   Close;
+end;
+
+procedure TCloudPessoaView.btnConfirmarClick(Sender: TObject);
+begin
+   if edtNome.Text <> '' then
+   begin
+     Pessoa.Nome := edtNome.Text;
+     Pessoa.CPF  := edtCPF.Text;
+     Pessoa.Identidade := edtRg.Text;
+     Pessoa.Telefone   := edtTelefone.Text;
+     Pessoa.Identidade :=  edtRG.Text;
+   end;
+
+   ModalResult := mrOk;
+end;
+
+end.

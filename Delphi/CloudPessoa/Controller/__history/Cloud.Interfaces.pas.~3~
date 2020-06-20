@@ -1,0 +1,16 @@
+unit Cloud.Interfaces;
+
+
+
+interface
+uses DBClient;
+
+  type
+    ICloudController = interface
+      ['{D297498B-F1A8-4C82-B541-D5D11DA7FBAC}']
+      procedure PreencherDataSet(var ClientDataSet: TClientDataSet);
+    end;
+
+implementation
+
+end.
