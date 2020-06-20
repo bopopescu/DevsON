@@ -72,7 +72,7 @@ procedure TCloudPessoaView.btnConfirmarClick(Sender: TObject);
 begin
    if edtNome.Text <> '' then
    begin
-     Dados := [iID.ToString, edtNome.Text,edtCPF.Text, edtRg.Text,  edtTelefone.Text, edtRG.Text]
+      Dados := [iID.ToString, edtNome.Text,edtCPF.Text, edtRg.Text,  edtTelefone.Text, edtRG.Text]
    end;
 
    ModalResult := mrOk;

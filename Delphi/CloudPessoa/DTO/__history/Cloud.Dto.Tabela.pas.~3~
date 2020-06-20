@@ -1,0 +1,11 @@
+unit Cloud.Dto.Tabela;
+
+interface
+   type
+   TCloudTabela = class
+
+   end;
+
+implementation
+
+end.

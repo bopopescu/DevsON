@@ -3,10 +3,11 @@ unit Cloud.Dto.Pessoa.Endereco;
 interface
 
 uses
-  Vcl.Graphics;
+  Vcl.Graphics,
+  Cloud.Dto.Tabela;
 
 type
-  TCloudEndereco = class
+  TCloudEndereco = class(TCloudTabela)
   private
     Fid: integer;
     FBairro: string;

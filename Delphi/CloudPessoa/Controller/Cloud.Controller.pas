@@ -3,14 +3,15 @@ unit Cloud.Controller;
 interface
 
 uses Cloud.Interfaces,
-     DBClient,
      Generics.Collections,
      Cloud.Dto.Pessoa,
      Cloud.Dto.Pessoa.Endereco,
      System.SysUtils,
      Cloud.Pessoa.View,
      Vcl.Forms,
-     vcl.controls;
+     vcl.controls,
+     DBClient,
+     Cloud.Dto.Tabela;
 
   type
     TCloudController = class(TInterfacedObject ,ICloudController)
@@ -20,18 +21,16 @@ uses Cloud.Interfaces,
     protected
 
     public
-
       class function New : ICloudController;
-      procedure PreencherDataSet(var ClientDataSet: TClientDataSet;
-                              FListaFuncionarios: TObjectList<TCloudPessoa>);
       function IncluirPessoaNaLista(Dados: array of variant): TCloudPessoa;
       function IncluirEnderenco (Dados: array of variant): TCloudEndereco;
-      procedure CriarCliente(var FListaFuncionarios: TObjectList<TCloudPessoa>);
-      function AddPessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>) : Boolean;
-      function DeletePessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIdDeletar : Integer): Boolean;
-      function UpdatePessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
-      function CadastrarEndereco(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
-      function EnviarEmail(Pessoa : TCloudPessoa; emailDestino : string): Boolean;
+      procedure CriarCliente(var FListaPessoas: TObjectList<TCloudPessoa>);
+      function AddPessoa(var FListaPessoas: TObjectList<TCloudPessoa>) : Boolean;
+      function DeletePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIdDeletar : Integer): Boolean;
+      function UpdatePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
+      function CadastrarEndereco(var FListaPessoas: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
+      function EnviarEmail(Pessoa : TCloudPessoa; emailDestino : string): String;
+      class procedure PreencherDataSet<T : TCloudTabela>(var ClientDataSet: TClientDataSet; FLista: TObjectList<T>);
     published
 
     end;
@@ -39,21 +38,21 @@ uses Cloud.Interfaces,
 implementation
 
 uses
-  System.RTTI,
   Cloud.Pessoa.Endereco.View,
-  Cloud.Model.EnvioEmail;
-{ TCloudController }
+  Cloud.Model.EnvioEmail, Cloud.Model.Pessoa;
 
-function TCloudController.AddPessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>) : Boolean;
+  { TCloudController }
+
+function TCloudController.AddPessoa(var FListaPessoas: TObjectList<TCloudPessoa>) : Boolean;
 begin
    Result := False;
    Application.CreateForm(TCloudPessoaView, CloudPessoaView);
    try
-      CloudPessoaView.iId := FListaFuncionarios.Count + 1;
+      CloudPessoaView.iId := FListaPessoas.Count + 1;
 
       if CloudPessoaView.ShowModal = mrOk then
       begin
-          FListaFuncionarios.Add(IncluirPessoaNaLista(CloudPessoaView.Dados));
+          FListaPessoas.Add(IncluirPessoaNaLista(CloudPessoaView.Dados));
           Result := True;
       end;
 
@@ -62,7 +61,7 @@ begin
    end;
 end;
 
-function TCloudController.CadastrarEndereco(var FListaFuncionarios: TObjectList<TCloudPessoa>; iIDAtualizar: Integer): Boolean;
+function TCloudController.CadastrarEndereco(var FListaPessoas: TObjectList<TCloudPessoa>; iIDAtualizar: Integer): Boolean;
 var
    endTemp : TCloudEndereco;
 begin
@@ -71,11 +70,11 @@ begin
    endTemp := TCloudEndereco.Create;
    try
       CloudPessoaEnderecoView.iIdPessoa := iIDAtualizar;
-      CloudPessoaEnderecoView.iId := FListaFuncionarios[iIDAtualizar].Endereco.Count + 1;
+      CloudPessoaEnderecoView.iId := FListaPessoas[iIDAtualizar].Endereco.Count + 1;
       if CloudPessoaEnderecoView.ShowModal = mrOk then
       begin
          endTemp := IncluirEnderenco(CloudPessoaEnderecoView.Dados);
-         FListaFuncionarios[iIDAtualizar].Endereco.Add(endTemp);
+         FListaPessoas[iIDAtualizar].Endereco.Add(endTemp);
 
          Result := True;
       end;
@@ -90,45 +89,45 @@ begin
 end;
 
 procedure TCloudController.CriarCliente(
-  var FListaFuncionarios: TObjectList<TCloudPessoa>);
+  var FListaPessoas: TObjectList<TCloudPessoa>);
 begin
      // Cria a lista de objetos
-  FListaFuncionarios := TObjectList<TCloudPessoa>.Create;
+  FListaPessoas := TObjectList<TCloudPessoa>.Create;
 
-  FListaFuncionarios.Add(IncluirPessoaNaLista(['1', 'Hugo Weaving', 'Solteiro(a)', 'Masculino',
+  FListaPessoas.Add(IncluirPessoaNaLista(['1', 'Hugo Weaving', 'Solteiro(a)', 'Masculino',
     '3', '22/01/1985']));
 
-  FListaFuncionarios.Add(IncluirPessoaNaLista(['2', 'Sarah Connor', 'Casado(a)', 'Feminino',
+  FListaPessoas.Add(IncluirPessoaNaLista(['2', 'Sarah Connor', 'Casado(a)', 'Feminino',
     '5', '07/05/1978']));
 
-  FListaFuncionarios.Add(IncluirPessoaNaLista(['3', 'Lara Croft', 'Viúvo(a)', 'Feminino',
+  FListaPessoas.Add(IncluirPessoaNaLista(['3', 'Lara Croft', 'Viúvo(a)', 'Feminino',
     '9', '18/12/1991']));
 
-  FListaFuncionarios.Add(IncluirPessoaNaLista(['4', 'Martin Riggs', 'Casado(a)', 'Masculino',
+  FListaPessoas.Add(IncluirPessoaNaLista(['4', 'Martin Riggs', 'Casado(a)', 'Masculino',
     '2', '30/04/1982']));
 
-  FListaFuncionarios.Add(IncluirPessoaNaLista(['5', 'Tony Stark', 'Divorciado(a)', 'Masculino',
+  FListaPessoas.Add(IncluirPessoaNaLista(['5', 'Tony Stark', 'Divorciado(a)', 'Masculino',
     '4', '05/06/1975']));
 
-  FListaFuncionarios.Add(IncluirPessoaNaLista(['6', 'Beatrice Prior', 'Solteiro(a)', 'Feminino',
+  FListaPessoas.Add(IncluirPessoaNaLista(['6', 'Beatrice Prior', 'Solteiro(a)', 'Feminino',
     '6', '20/07/1993']));
 
-  FListaFuncionarios.Add(IncluirPessoaNaLista(['7', 'John Mcclane', 'Casado(a)', 'Masculino',
+  FListaPessoas.Add(IncluirPessoaNaLista(['7', 'John Mcclane', 'Casado(a)', 'Masculino',
     '1', '11/09/1980']));
 
-  FListaFuncionarios.Add(IncluirPessoaNaLista(['8', 'Ellie Sattler', 'Solteiro(a)', 'Feminino',
+  FListaPessoas.Add(IncluirPessoaNaLista(['8', 'Ellie Sattler', 'Solteiro(a)', 'Feminino',
     '8', '27/10/1995']));
 end;
 
-function TCloudController.DeletePessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIdDeletar : Integer): Boolean;
+function TCloudController.DeletePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIdDeletar : Integer): Boolean;
 var
    iContador : Integer;
 begin
-   for iContador := 0 to Pred(FListaFuncionarios.Count) do
+   for iContador := 0 to Pred(FListaPessoas.Count) do
    begin
-      if FListaFuncionarios[iContador].ID = iIdDeletar then
+      if FListaPessoas[iContador].ID = iIdDeletar then
       begin
-         FListaFuncionarios.Delete(iContador);
+         FListaPessoas.Delete(iContador);
          Exit(True);
       end;
 
@@ -142,18 +141,26 @@ begin
   inherited;
 end;
 
-function TCloudController.EnviarEmail(Pessoa: TCloudPessoa;
-  emailDestino: string): Boolean;
+function TCloudController.EnviarEmail(Pessoa : TCloudPessoa; emailDestino : string): String;
 begin
-   Result := False;
+   Result := '';
+   if not TCloudModelPessoa.New.ValidaEmail(emailDestino) then
+   begin
+      Result := 'Informe um e-mail válido';
+      Exit;
+   end;
+
    if (Pessoa <> nil) and (Pessoa.ID > 0) and (emailDestino <> EmptyStr) then
    begin
-      Result := TCloudModelEnvioEmail.
+      if TCloudModelEnvioEmail.
                                New.
                                setPessoa(Pessoa).
                                setEmailDestino(emailDestino).
                                &End.
-                               EnviarEmail;
+                               EnviarEmail then
+         Result := 'E-mail enviado com sucesso para: '+ emailDestino
+      else
+         Result := 'Não foi possível Enviar a Mensagem';
    end;
 end;
 
@@ -162,54 +169,30 @@ begin
    Result := Self.Create;
 end;
 
-procedure TCloudController.PreencherDataSet(var ClientDataSet: TClientDataSet;
-  FListaFuncionarios: TObjectList<TCloudPessoa>);
-var
-  Contexto: TRttiContext;
-  Tipo: TRttiType;
-  PropriedadeNome: TRttiProperty;
-  Funcionario: TCloudPessoa;
+class procedure TCloudController.PreencherDataSet<T>(var ClientDataSet: TClientDataSet; FLista: TObjectList<T>);
 begin
-   ClientDataSet.Close;
-   ClientDataSet.CreateDataSet;
-   // Cria o contexto do RTTI
-   Contexto := TRttiContext.Create;
-   try
-      // Obtém as informações de RTTI da classe TFuncionario
-      Tipo := Contexto.GetType(TCloudPessoa.ClassInfo);
-
-      // Obtém um objeto referente à propriedade "Nome" da classe TFuncionario
-      PropriedadeNome := Tipo.GetProperty('Nome');
-
-      // Percorre a lista de objetos, inserindo o valor da propriedade "Nome" do ClientDataSet
-      for Funcionario in FListaFuncionarios do
-      ClientDataSet.AppendRecord([PropriedadeNome.GetValue(Funcionario).AsString]);
-
-      ClientDataSet.First;
-   finally
-      Contexto.Free;
-   end;
+   TCloudTabela.PreencherDataSet<T>(ClientDataSet,FLista);
 end;
 
-function TCloudController.UpdatePessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
+function TCloudController.UpdatePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
 begin
    Result := False;
    Application.CreateForm(TCloudPessoaView, CloudPessoaView);
    try
       CloudPessoaView.iId := iIDAtualizar;
-      CloudPessoaView.edtNome.Text := FListaFuncionarios[iIDAtualizar].Nome;
-      CloudPessoaView.edtCPF.Text := FListaFuncionarios[iIDAtualizar].cpf;
-      CloudPessoaView.edtRG.Text := FListaFuncionarios[iIDAtualizar].Identidade;
-      CloudPessoaView.edtTelefone.Text := FListaFuncionarios[iIDAtualizar].Telefone;
-      CloudPessoaView.edtEmail.Text := FListaFuncionarios[iIDAtualizar].Email;
+      CloudPessoaView.edtNome.Text := FListaPessoas[iIDAtualizar].Nome;
+      CloudPessoaView.edtCPF.Text := FListaPessoas[iIDAtualizar].cpf;
+      CloudPessoaView.edtRG.Text := FListaPessoas[iIDAtualizar].Identidade;
+      CloudPessoaView.edtTelefone.Text := FListaPessoas[iIDAtualizar].Telefone;
+      CloudPessoaView.edtEmail.Text := FListaPessoas[iIDAtualizar].Email;
 
       if CloudPessoaView.ShowModal = mrOk then
       begin
-         FListaFuncionarios[iIDAtualizar].Nome := CloudPessoaView.edtNome.Text;
-         FListaFuncionarios[iIDAtualizar].cpf := CloudPessoaView.edtCPF.Text ;
-         FListaFuncionarios[iIDAtualizar].Identidade := CloudPessoaView.edtRG.Text ;
-         FListaFuncionarios[iIDAtualizar].Telefone := CloudPessoaView.edtTelefone.Text;
-         FListaFuncionarios[iIDAtualizar].Email := CloudPessoaView.edtEmail.Text ;
+         FListaPessoas[iIDAtualizar].Nome := CloudPessoaView.edtNome.Text;
+         FListaPessoas[iIDAtualizar].cpf := CloudPessoaView.edtCPF.Text ;
+         FListaPessoas[iIDAtualizar].Identidade := CloudPessoaView.edtRG.Text ;
+         FListaPessoas[iIDAtualizar].Telefone := CloudPessoaView.edtTelefone.Text;
+         FListaPessoas[iIDAtualizar].Email := CloudPessoaView.edtEmail.Text ;
          Result := True;
       end;
 

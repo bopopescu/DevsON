@@ -1,0 +1,11 @@
+unit Cloud.Dto.Tabela;
+
+interface
+   type
+   CloudTabela = class
+
+   end;
+
+implementation
+
+end.

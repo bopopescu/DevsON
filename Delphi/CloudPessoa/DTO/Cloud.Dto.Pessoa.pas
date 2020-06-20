@@ -5,10 +5,11 @@ interface
 uses
   Vcl.Graphics,
   Cloud.Dto.Pessoa.Endereco,
-  Generics.Collections;
+  Generics.Collections,
+  Cloud.Dto.Tabela;
 
 type
-  TCloudPessoa = class
+  TCloudPessoa = class(TCloudTabela)
   private
     Fid: integer;
     FNome: string;

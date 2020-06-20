@@ -14,7 +14,8 @@ uses
   CloudServiceEmail in 'Componentes\CloudServiceEmail.pas',
   CloudServiceXML in 'Componentes\CloudServiceXML.pas',
   Cloud.Dto.Email in 'DTO\Cloud.Dto.Email.pas',
-  Cloud.Model.Pessoa in 'Model\Cloud.Model.Pessoa.pas';
+  Cloud.Model.Pessoa in 'Model\Cloud.Model.Pessoa.pas',
+  Cloud.Dto.Tabela in 'DTO\Cloud.Dto.Tabela.pas';
 
 {$R *.res}
 
