@@ -1,0 +1,308 @@
+unit CloudServiceXML;
+
+interface
+
+uses
+  System.Classes,  Xml.XMLDoc, XMLIntf, System.SysUtils,
+  Forms, System.StrUtils, System.DateUtils,
+  System.Math,
+  Cloud.Dto.Pessoa;
+
+
+type
+   TCloudServiceXML = class(TComponent)
+   private
+    FendXml: IXMLNode;
+    Fxml: TXMLDocument;
+    FloteXML: TXMLDocument;
+    FpessoaXML: IXMLNode;
+    FendPessoasXML: IXMLNode;
+    procedure NovoXML;
+    procedure GeraRaiz;
+    procedure GeraInfNFe(pessoa: TCloudPessoa);
+    procedure GeraIde(pessoa: TCloudPessoa);
+    procedure Setxml(const Value: TXMLDocument);
+    procedure SetloteXML(const Value: TXMLDocument);
+
+
+   public
+
+    function GeraXML(pessoa: TCloudPessoa): string;
+    function SalvaXML: String;
+
+
+    function GeraLote(iId: Integer; pessoa: TCloudPessoa): TXMLDocument;
+    procedure SalvaLoteDisco(iModelo: Integer);
+	  procedure GeraEmit(pessoa: TCloudPessoa);
+    constructor Create(AOwner: TComponent);
+      property endXml: IXMLNode read FendXml write FendXml;
+      property xml: TXMLDocument read Fxml write Setxml;
+      property loteXML: TXMLDocument read FloteXML write SetloteXML;
+      property pessoaXML: IXMLNode read FpessoaXML write FpessoaXML;
+      property endPessoasXML: IXMLNode read FendPessoasXML write FendPessoasXML;
+   published
+
+
+
+end;
+
+implementation
+
+uses
+  Cloud.Dto.Pessoa.Endereco;
+
+{ TCloudServiceXML }
+
+function TCloudServiceXML.GeraXML(pessoa: TCloudPessoa): string;
+var
+   i: Integer;
+begin
+   Result := nil;
+   NovoXML;
+   GeraRaiz;
+   GeraInfNFe(pessoa);
+//   GeraIde(pessoa);
+   Result := GeraLote(pessoa.ID, pessoa).ToString;
+end;
+
+procedure TCloudServiceXML.NovoXML;
+begin
+   xml :=  TXMLDocument.Create(Self);;
+   xml.Active  := True;
+end;
+
+procedure TCloudServiceXML.SalvaLoteDisco(iModelo: Integer);
+var
+   sNomeArquivo: String;
+begin
+   sNomeArquivo := ExtractFilePath(ParamStr(0)) + 'Pessoas\' + pessoaXML.ChildNodes['idLote'].NodeValue + '-env-lot.xml';
+   loteXML.Active := True;
+
+   try
+      loteXML.SaveToFile(sNomeArquivo);
+   except
+
+   end;
+end;
+
+function TCloudServiceXML.SalvaXML: String;
+var
+   sNomeArquivo, sChaveAcesso: String;
+begin
+   sChaveAcesso := StringReplace(endPessoasXML.Attributes['Id'],'NFe','',[]);
+   sNomeArquivo := ExtractFilePath(ParamStr(0)) + 'Pessoas\' + sChaveAcesso + '-nfe.xml';
+
+   xml.Options := [doNodeAutoIndent];
+   xml.Active := True;
+   xml.SaveToFile(sNomeArquivo);
+
+   Result := sNomeArquivo;
+end;
+
+procedure TCloudServiceXML.SetloteXML(const Value: TXMLDocument);
+begin
+  FloteXML := Value;
+end;
+
+procedure TCloudServiceXML.Setxml(const Value: TXMLDocument);
+begin
+  Fxml := Value;
+end;
+
+constructor TCloudServiceXML.Create(AOwner: TComponent);
+begin
+
+end;
+
+
+procedure TCloudServiceXML.GeraEmit(pessoa: TCloudPessoa);
+var
+   enderEmit: IXMLNode;
+begin
+//   endXml := endPessoasXML.AddChild('emit');
+//
+//   if Length(pessoa.emiCnpj) > 11 then
+//        endXml.AddChild('CNPJ').NodeValue := pessoa.emiCnpj
+//   else endXml.AddChild('CPF').NodeValue  := pessoa.emiCpf;
+//
+//   endXml.AddChild('xNome').NodeValue := pessoa.emiNome;
+//   endXml.AddChild('xFant').NodeValue := pessoa.emiNomeFantasia;
+//
+//   enderEmit := endXml.AddChild('enderEmit');
+//   enderEmit.AddChild('xLgr').NodeValue := RemoveAcentos(pessoa.emiEndLogradouro);
+//   enderEmit.AddChild('nro').NodeValue  := pessoa.emiEndNumero;
+//   if pessoa.emiEndComplemento <> '' then
+//      enderEmit.AddChild('xCpl').NodeValue := pessoa.emiEndComplemento;
+//   enderEmit.AddChild('xBairro').NodeValue := pessoa.emiEndBairro;
+//   enderEmit.AddChild('cMun').NodeValue    := pessoa.emiEndCodMunicipio;
+//   enderEmit.AddChild('xMun').NodeValue    := pessoa.emiEndNomeMunicipio;
+//   enderEmit.AddChild('UF').NodeValue      := pessoa.emiUf;
+//   enderEmit.AddChild('CEP').NodeValue     := pessoa.emiCep;
+//   if pessoa.emiCodPais <> 0 then
+//      enderEmit.AddChild('cPais').NodeValue:= pessoa.emiCodPais;
+//   if pessoa.emiNomePais <> '' then
+//      enderEmit.AddChild('xPais').NodeValue:= pessoa.emiNomePais;
+//   if Length(IntToStr(pessoa.emifone)) >= 8 then
+//      enderEmit.AddChild('fone').NodeValue := pessoa.emiFone;
+//
+//   endXml.AddChild('IE').NodeValue           := pessoa.emiIe;
+//   if pessoa.emiIeST <> '' then
+//   begin
+//      //Validação C18-14 Operação interestadual OU operação interna ou com exterior, seguir configuração
+//      if (pessoa.idDest = '2') or
+//         (getConfig(pessoa.emiUf,'NFE_ENVIAR_IEST_OP_INT_EXT') = 'S') then
+//         endXml.AddChild('IEST').NodeValue   := pessoa.emiIeST;
+//   end;
+//   if pessoa.emiIm <> '' then
+//      endXml.AddChild('IM').NodeValue        := pessoa.emiIm;
+//   if pessoa.emiCnae <> '' then
+//      endXml.AddChild('CNAE').NodeValue      := pessoa.emiCnae;
+//   endXml.AddChild('CRT').NodeValue          := pessoa.emiCrt;
+end;
+
+procedure TCloudServiceXML.GeraIde(pessoa: TCloudPessoa);
+var
+   nfRef, refNF: IXMLNode;
+   i: Integer;
+  sVersaoSistema: String;
+begin
+//   ide := endPessoasXML.AddChild('ide');
+//
+//   ide.AddChild('cUF').NodeValue      := pessoa.codUf;
+//   ide.AddChild('cNF').NodeValue      := FormatFloat('00000000',pessoa.numAleatorio);
+//   ide.AddChild('natOp').NodeValue    := LeftStr(pessoa.naturezaOp,60);
+//
+//   if pessoa.layout < 4.00 then
+//      ide.AddChild('indPag').NodeValue := pessoa.indiceFormaPagto;
+//
+//   ide.AddChild('mod').NodeValue      := pessoa.modelo;
+//   ide.AddChild('serie').NodeValue    := pessoa.serie;
+//   ide.AddChild('nNF').NodeValue      := pessoa.numero;
+//
+//   ide.AddChild('dhEmi').NodeValue    := FormatDateTime('yyyy-mm-dd"T"hh:mm:ss', pessoa.dataHoraEmissao) + ObterUTCInternet;
+//
+//   if pessoa.modelo = 55 then
+//      ide.AddChild('dhSaiEnt').NodeValue := FormatDateTime('yyyy-mm-dd"T"hh:mm:ss', pessoa.dataSaidaEntrada) + ObterUTCInternet;
+//
+//   ide.AddChild('tpNF').NodeValue     := pessoa.tpNF;
+//   ide.AddChild('idDest').NodeValue   := pessoa.idDest;
+//   ide.AddChild('cMunFG').NodeValue   := pessoa.codMunicipio;
+//
+//   ide.AddChild('tpImp').NodeValue    := pessoa.formatoImpressao;
+//   ide.AddChild('tpEmis').NodeValue   := pessoa.tipoEmissao;
+//   ide.AddChild('cDV').NodeValue      := RightStr(pessoa.chaveAcesso, 1); //Dígito da Chave de Acesso
+//   ide.AddChild('tpAmb').NodeValue    := pessoa.ambiente;
+//   ide.AddChild('finNFe').NodeValue   := pessoa.finalidade;
+//
+//   ide.AddChild('indFinal').NodeValue := pessoa.indfinal;
+//   ide.AddChild('indPres').NodeValue  := pessoa.indPres;
+//
+//   ide.AddChild('procEmi').NodeValue  := 0;
+//
+//   sVersaoSistema  := '1';
+//   try
+//      sVersaoSistema  := LeftStr(fileInfoG.Versao,20);
+//   except
+//   end;
+//   ide.AddChild('verProc').NodeValue := LeftStr(sVersaoSistema,20) + '|' + OrigemNota(pessoa.OrigemEmissaoNF);
+//
+//   for i := 0 to Length(pessoa.notasRef)-1 do
+//   begin
+//      nfRef := ide.AddChild('NFref');
+//
+//      if (pessoa.notasRef[i].tipo = 'NFE') and (pessoa.notasRef[i].chaveAcesso <> '') then
+//      begin
+//         nfRef.AddChild('refNFe').NodeValue := pessoa.notasRef[i].chaveAcesso;
+//      end
+//      else
+//      begin
+//         //Modelo 1 e 1A
+//         if pessoa.notasRef[i].tipo = 'NF' then
+//         begin
+//            refNF := nfRef.AddChild('refNF');
+//            refNF.AddChild('cUF').NodeValue   := pessoa.notasRef[i].codUf;
+//            refNF.AddChild('AAMM').NodeValue  := FormatDateTime('yymm',pessoa.notasRef[i].dtEmissao);
+//            refNF.AddChild('CNPJ').NodeValue  := pessoa.notasRef[i].cnpj;
+//            refNF.AddChild('mod').NodeValue   := pessoa.notasRef[i].modelo;
+//            refNF.AddChild('serie').NodeValue := pessoa.notasRef[i].serie;
+//            refNF.AddChild('nNF').NodeValue   := pessoa.notasRef[i].numero;
+//         end
+//         else if pessoa.notasRef[i].tipo = 'ECF' then
+//         begin
+//            refNF := nfRef.AddChild('refECF');
+//            refNF.AddChild('mod').NodeValue   := pessoa.notasRef[i].modelo;
+//            refNF.AddChild('nECF').NodeValue  := pessoa.notasRef[i].nECF;
+//            refNF.AddChild('nCOO').NodeValue  := RightStr(IntToStrDefVSM(pessoa.notasRef[i].nCOO), 6);
+//         end;
+//      end;
+//   end;
+end;
+
+procedure TCloudServiceXML.GeraInfNFe(pessoa: TCloudPessoa);
+begin
+   endPessoasXML.Attributes['Id'] := 'Pessoa' + pessoa.ID.ToString;
+   endPessoasXML.Attributes['versao'] := '1.0';
+end;
+
+function TCloudServiceXML.GeraLote(iId: Integer;
+  pessoa: TCloudPessoa): TXMLDocument;
+var
+  sVersao: String;
+  iContador : Integer;
+begin
+   Result := nil;
+
+   loteXML := TXMLDocument.Create(Self);
+   loteXML.Active := True;
+   loteXML.Version  := '1.0';
+   loteXML.Encoding := 'UTF-8';
+
+   pessoaXML := loteXML.AddChild('enviNFe', 'http://www.portalfiscal.inf.br/nfe');
+//   enviNFe.Attributes['versao'] := pessoa.versao;
+
+   pessoaXML.AddChild('idLote').NodeValue     := FormatFloat('0000000', iId);
+   pessoaXML.AddChild('nome').NodeValue       := pessoa.Nome;
+   pessoaXML.AddChild('identidade').NodeValue := pessoa.identidade;
+   pessoaXML.AddChild('cpf').NodeValue        := pessoa.CPF;
+   pessoaXML.AddChild('telefone').NodeValue   := pessoa.Telefone;
+   pessoaXML.AddChild('email').NodeValue      := pessoa.Email;
+
+   if (pessoa.Endereco <> nil) and (pessoa.Endereco.Count > 0) then
+   begin
+      for iContador := 0 to Pred(pessoa.endereco.Count) do
+      begin
+         endPessoasXML := pessoaXML.AddChild('enderecos');
+
+         endXML := endPessoasXML.AddChild('endXML');
+
+         endXML.AddChild('idPessoa').NodeValue  := pessoa.Endereco[iContador].id;
+         endXML.AddChild('endereco').NodeValue  := pessoa.Endereco[iContador].endereco;
+         endXML.AddChild('Cep').NodeValue       := pessoa.Endereco[iContador].Cep;
+         endXML.AddChild('Numero').NodeValue    := pessoa.Endereco[iContador].Numero;
+         endXML.AddChild('Complemento').NodeValue   := pessoa.Endereco[iContador].Complemento;
+         endXML.AddChild('Bairro').NodeValue   := pessoa.Endereco[iContador].Bairro;
+         endXML.AddChild('Cidade').NodeValue   := pessoa.Endereco[iContador].Cidade;
+         endXML.AddChild('Estado').NodeValue   := pessoa.Endereco[iContador].Estado;
+         endXML.AddChild('Pais').NodeValue      := pessoa.Endereco[iContador].Pais;
+      end;
+   end;
+
+   xml.Active := True;
+   pessoaXML.ChildNodes.Add(xml.DocumentElement);
+
+   SalvaLoteDisco(pessoa.id);
+
+   Result := loteXML;
+end;
+
+procedure TCloudServiceXML.GeraRaiz;
+var
+   raiz: IXMLNode;
+begin
+//   Configuracao;
+//   gsRemoveCaracteres := 'S';
+   raiz := xml.AddChild('NFe','http://www.portalfiscal.inf.br/nfe');
+   endPessoasXML := raiz.AddChild('infNFe');
+end;
+
+end.

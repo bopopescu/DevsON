@@ -1,0 +1,54 @@
+unit Cloud.Interfaces;
+{  Utilizar a linguagem Delphi (Qualquer versão);
+    Criar uma tela de cadastro de clientes, com os seguintes campos:
+    Dados do Cadastro:
+
+      Nome
+      Identidade
+      CPF
+      Telefone
+      Email
+        Endereço
+        Cep
+        Logradouro
+        Numero
+        Complemento
+        Bairro
+        Cidade
+        Estado
+        Pais
+    Ao informar um Cep o sistema deve realizar a busca dos dados relacionados ao mesmo no seguinte endereço: https://viacep.com.br/;
+    A forma de consumo da API do via Cep, deverá ser utiliza JSON;
+    Ao termino do cadastro o usuário deverá enviar um e-mail contendo as informações cadastrais e anexar um arquivo no formato XML com o mesmo conteúdo;
+    Os registros devem ficar salvo em memória, não é necessário criar um banco de dados ou arquivo para o armazenamento dos dados;
+    Disponibilizar o código fonte do projeto no github;
+}
+interface
+
+uses DBClient,
+     Generics.Collections,
+
+     Cloud.Dto.Pessoa.Endereco;
+
+type
+  ICloudController = interface
+    ['{D297498B-F1A8-4C82-B541-D5D11DA7FBAC}']
+   function AddPessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>) : Boolean;
+   function DeletePessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIdDeletar : Integer): Boolean;
+   function UpdatePessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
+   function IncluirFuncionario(Dados: array of variant): TCloudPessoa;
+   procedure CriarCliente(var FListaFuncionarios: TObjectList<TCloudPessoa>);
+   procedure PreencherDataSet(var ClientDataSet: TClientDataSet;
+                              FListaFuncionarios: TObjectList<TCloudPessoa>);
+   function CadastrarEndereco(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
+  end;
+
+  ICloudCep = interface
+     ['{B7E6986D-0B46-4280-8A84-E2AF70811088}']
+     function setCep(Value : string) : ICloudCep;
+     function proLocalizaCep : Boolean;
+  end;
+
+implementation
+
+end.

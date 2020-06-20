@@ -17,10 +17,10 @@ uses
   Vcl.ExtCtrls,
   Vcl.ComCtrls,
   DBClient,
-  Cloud.Pessoa,
   Data.DB, Vcl.Grids,
   Vcl.DBGrids,
-  Cloud.Controller;
+  Cloud.Controller,
+  Cloud.Dto.Pessoa;
 
 type
   TfFormulario = class(TForm)
@@ -41,10 +41,22 @@ type
     CampoCPF: TEdit;
     CampoTelefone: TEdit;
     CampoEmail: TEdit;
+    btnDelPessoa: TButton;
+    btnAtualizarPessoa: TButton;
+    btnCadEndereco: TButton;
+    btnEnvioEmail: TButton;
+    edtEmailDestino: TEdit;
+    pnlTitulo: TPanel;
+    lblTitulo: TLabel;
+    Panel1: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure ClientDataSetAfterScroll(DataSet: TDataSet);
     procedure FormDestroy(Sender: TObject);
     procedure btnAddPessoaClick(Sender: TObject);
+    procedure btnDelPessoaClick(Sender: TObject);
+    procedure btnAtualizarPessoaClick(Sender: TObject);
+    procedure btnCadEnderecoClick(Sender: TObject);
+    procedure btnEnvioEmailClick(Sender: TObject);
   private
     FListaFuncionarios: TObjectList<TCloudPessoa>;
 
@@ -62,10 +74,55 @@ uses
 {$R *.dfm}
 
 procedure TfFormulario.btnAddPessoaClick(Sender: TObject);
-var
-   Pessoa : TCloudPessoa;
 begin
-   if TCloudController.New.AddCliente(FListaFuncionarios) then
+   if TCloudController.New.AddPessoa(FListaFuncionarios) then
+   begin
+      TCloudController.New.PreencherDataSet(ClientDataSet,FListaFuncionarios);
+   end;
+end;
+
+procedure TfFormulario.btnDelPessoaClick(Sender: TObject);
+begin
+   if FListaFuncionarios[Pred(ClientDataSet.RecNo)].ID > 0 then
+   begin
+      if TCloudController.New.DeletePessoa(FListaFuncionarios,FListaFuncionarios[Pred(ClientDataSet.RecNo)].ID) then
+      begin
+         TCloudController.New.PreencherDataSet(ClientDataSet,FListaFuncionarios);
+      end;
+
+   end;
+end;
+
+procedure TfFormulario.btnEnvioEmailClick(Sender: TObject);
+begin
+   if edtEmailDestino.Text = '' then
+   begin
+      ShowMessage('Por favor insira um e-mail válido');
+      Exit;
+   end;
+
+   if FListaFuncionarios[Pred(ClientDataSet.RecNo)].ID > 0 then
+   begin
+      if TCloudController.New.EnviarEmail(FListaFuncionarios[Pred(ClientDataSet.RecNo)],
+                                        edtEmailDestino.Text) then
+         ShowMessage('E-mail enviado com sucesso para: ' + edtEmailDestino.Text)
+      else
+         ShowMessage('Não foi possível Enviar a Mensagem');
+
+   end;
+end;
+
+procedure TfFormulario.btnAtualizarPessoaClick(Sender: TObject);
+begin
+   if TCloudController.New.UpdatePessoa(FListaFuncionarios,FListaFuncionarios[Pred(ClientDataSet.RecNo)].ID) then
+   begin
+      TCloudController.New.PreencherDataSet(ClientDataSet,FListaFuncionarios);
+   end;
+end;
+
+procedure TfFormulario.btnCadEnderecoClick(Sender: TObject);
+begin
+   if TCloudController.New.CadastrarEndereco(FListaFuncionarios,FListaFuncionarios[Pred(ClientDataSet.RecNo)].ID) then
    begin
       TCloudController.New.PreencherDataSet(ClientDataSet,FListaFuncionarios);
    end;
@@ -132,8 +189,8 @@ begin
 
 //      // (Plano de Saúde)
 //      // Testa se o componente é da classe "TCheckBox" para acessar a propriedade "Checked"
-//      if Componente is TCheckBox then
-//        (Componente as TCheckBox).Checked := Valor;
+      if Componente is TCheckBox then
+        (Componente as TCheckBox).Checked := Valor;
 
       // (Senioridade)
       // Testa se o componente é da classe "TTrackBar" para acessar a propriedade "Position"
@@ -147,16 +204,13 @@ begin
 
 //      // (Cor do Uniforme)
 //      // Testa se o componente é da classe "TShape" para acessar a propriedade "Brush.Color"
-//      if Componente is TShape then
-//        (Componente as TShape).Brush.Color := Valor;
+      if Componente is TShape then
+        (Componente as TShape).Brush.Color := Valor;
     end;
   finally
     Contexto.Free;
   end;
 end;
 
-
-initialization
-  ReportMemoryLeaksOnShutdown := True;
 
 end.

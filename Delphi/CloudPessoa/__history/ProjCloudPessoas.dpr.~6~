@@ -1,0 +1,21 @@
+program ProjCloudPessoas;
+
+uses
+  Vcl.Forms,
+  uFormulario in 'uFormulario.pas' {fFormulario},
+  Cloud.Pessoa in 'DTO\Cloud.Pessoa.pas',
+  Cloud.Controller in 'Controller\Cloud.Controller.pas',
+  Cloud.Interfaces in 'Controller\Cloud.Interfaces.pas',
+  Cloud.Pessoa.Endereco.View in 'View\Cloud.Pessoa.Endereco.View.pas' {Form1},
+  Cloud.Endereco in 'DTO\Cloud.Endereco.pas',
+  Cloud.Pessoa.View in 'View\Cloud.Pessoa.View.pas' {CloudPessoaView},
+  CloudBuscaCEP in 'Componentes\CloudBuscaCEP.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfFormulario, fFormulario);
+  Application.Run;
+end.

@@ -27,17 +27,36 @@ interface
 
 uses DBClient,
      Generics.Collections,
-     Cloud.Pessoa;
+     Cloud.Dto.Pessoa,
+     Cloud.Dto.Pessoa.Endereco;
 
 type
   ICloudController = interface
     ['{D297498B-F1A8-4C82-B541-D5D11DA7FBAC}']
-    function AddCliente(var FListaFuncionarios: TObjectList<TCloudPessoa>) : Boolean;
-    function IncluirFuncionario(Dados: array of variant): TCloudPessoa;
-    procedure CriarCliente(var FListaFuncionarios: TObjectList<TCloudPessoa>);
-    procedure PreencherDataSet(var ClientDataSet: TClientDataSet;
+   function AddPessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>) : Boolean;
+   function DeletePessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIdDeletar : Integer): Boolean;
+   function UpdatePessoa(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
+   function IncluirPessoaNaLista(Dados: array of variant): TCloudPessoa;
+   procedure CriarCliente(var FListaFuncionarios: TObjectList<TCloudPessoa>);
+   procedure PreencherDataSet(var ClientDataSet: TClientDataSet;
                               FListaFuncionarios: TObjectList<TCloudPessoa>);
+   function CadastrarEndereco(var FListaFuncionarios: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
+   function EnviarEmail(Pessoa : TCloudPessoa;emailDestino : string) : Boolean;
   end;
+
+  IModelEnvioEmail = interface
+    ['{95FD0A6B-EE09-4C6A-A4FA-4EA98FB6F3A9}']
+   function setPessoa(Pessoa : TCloudPessoa) : IModelEnvioEmail;
+   function setEmailDestino(emailDestino : string) : IModelEnvioEmail;
+   function &End : IModelEnvioEmail;
+   function EnviarEmail : Boolean;
+  end;
+
+  ICloudModelPessoa = interface
+     ['{BA7D4C2D-ED8A-4DD3-8398-1560C2FCBC92}']
+     function ValidaEmail(email: String): Boolean;
+  end;
+
 
 implementation
 

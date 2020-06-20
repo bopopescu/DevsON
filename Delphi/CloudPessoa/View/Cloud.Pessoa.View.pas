@@ -5,15 +5,11 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  Cloud.Pessoa;
+  Cloud.Dto.Pessoa, Vcl.ExtCtrls, Vcl.Mask;
 
 type
   TCloudPessoaView = class(TForm)
-    edtNome: TEdit;
-    edtCPF: TEdit;
-    edtTelefone: TEdit;
-    edtRG: TEdit;
-    edtEmail: TEdit;
+
     btnConfirmar: TButton;
     btnCancelar: TButton;
     Label1: TLabel;
@@ -21,11 +17,28 @@ type
     lblRG: TLabel;
     lblTelefone: TLabel;
     lblEmail: TLabel;
+    edtNome: TEdit;
+    pnlTitulo: TPanel;
+    lblTitulo: TLabel;
+    Panel1: TPanel;
+    edtCPF: TMaskEdit;
+    edtTelefone: TMaskEdit;
+    edtRG: TEdit;
+    edtEmail: TEdit;
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
+    procedure edtNomeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtCPFKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtRGKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtTelefoneKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtEmailKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    function ValidaEmailS: Boolean;
+    procedure edtEmailExit(Sender: TObject);
   private
     { Private declarations }
   public
+
+
     iId : Integer;
     Dados: array of variant
     { Public declarations }
@@ -36,7 +49,19 @@ var
 
 implementation
 
+uses
+  Cloud.Model.Pessoa;
+
 {$R *.dfm}
+
+function TCloudPessoaView.ValidaEmailS: Boolean;
+begin
+   if not TCloudModelPessoa.New.ValidaEmail(edtEmail.Text) then
+   begin
+      ShowMessage('Informe um e-mail válido');
+      edtEmail.SetFocus;
+   end;
+end;
 
 procedure TCloudPessoaView.btnCancelarClick(Sender: TObject);
 begin
@@ -51,6 +76,41 @@ begin
    end;
 
    ModalResult := mrOk;
+end;
+
+procedure TCloudPessoaView.edtCPFKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+   if Key = VK_RETURN then
+      perform(WM_NEXTDLGCTL,0,0);
+end;
+
+procedure TCloudPessoaView.edtEmailExit(Sender: TObject);
+begin
+   ValidaEmailS;
+end;
+
+procedure TCloudPessoaView.edtEmailKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+   if Key = VK_RETURN then
+      perform(WM_NEXTDLGCTL,0,0);
+end;
+
+procedure TCloudPessoaView.edtNomeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+   if Key = VK_RETURN then
+      perform(WM_NEXTDLGCTL,0,0);
+end;
+
+procedure TCloudPessoaView.edtRGKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+   if Key = VK_RETURN then
+      perform(WM_NEXTDLGCTL,0,0);
+end;
+
+procedure TCloudPessoaView.edtTelefoneKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+//   if Key = VK_RETURN then
+//      perform(WM_NEXTDLGCTL,0,0);
 end;
 
 end.
