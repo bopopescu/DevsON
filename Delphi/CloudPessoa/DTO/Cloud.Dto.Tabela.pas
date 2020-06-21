@@ -44,7 +44,6 @@ begin
       // Obtém as informações de RTTI da classe TFuncionario
       AuxValue := GetTypeData(PTypeInfo(TypeInfo(T)))^.ClassType.Create;
       TipoRtti := Contexto.GetType(AuxValue.AsObject.ClassInfo);
-//      TipoRtti := Contexto.GetType(TCloudTabela.ClassInfo);
 
       // Obtém um objeto referente à propriedade "Nome" da classe TFuncionario
       PropriedadeNome := TipoRtti.GetProperty(sField);

@@ -2,7 +2,7 @@ program ProjCloudPessoas;
 
 uses
   Vcl.Forms,
-  uFormulario in 'uFormulario.pas' {fFormulario},
+  Cloud.Principal.View in 'View\Cloud.Principal.View.pas' {CloudPrincipalView},
   Cloud.Controller in 'Controller\Cloud.Controller.pas',
   Cloud.Interfaces in 'Controller\Cloud.Interfaces.pas',
   Cloud.Pessoa.Endereco.View in 'View\Cloud.Pessoa.Endereco.View.pas' {Form1},
@@ -22,6 +22,6 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TfFormulario, fFormulario);
+  Application.CreateForm(TCloudPrincipalView, CloudPrincipalView);
   Application.Run;
 end.

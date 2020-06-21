@@ -179,19 +179,19 @@ begin
    Application.CreateForm(TCloudPessoaView, CloudPessoaView);
    try
       CloudPessoaView.iId := iIDAtualizar;
-      CloudPessoaView.edtNome.Text := FListaPessoas[iIDAtualizar].Nome;
-      CloudPessoaView.edtCPF.Text := FListaPessoas[iIDAtualizar].cpf;
-      CloudPessoaView.edtRG.Text := FListaPessoas[iIDAtualizar].Identidade;
+      CloudPessoaView.edtNome.Text     := FListaPessoas[iIDAtualizar].Nome;
+      CloudPessoaView.edtCPF.Text      := FListaPessoas[iIDAtualizar].cpf;
+      CloudPessoaView.edtRG.Text       := FListaPessoas[iIDAtualizar].Identidade;
       CloudPessoaView.edtTelefone.Text := FListaPessoas[iIDAtualizar].Telefone;
-      CloudPessoaView.edtEmail.Text := FListaPessoas[iIDAtualizar].Email;
+      CloudPessoaView.edtEmail.Text    := FListaPessoas[iIDAtualizar].Email;
 
       if CloudPessoaView.ShowModal = mrOk then
       begin
-         FListaPessoas[iIDAtualizar].Nome := CloudPessoaView.edtNome.Text;
-         FListaPessoas[iIDAtualizar].cpf := CloudPessoaView.edtCPF.Text ;
+         FListaPessoas[iIDAtualizar].Nome       := CloudPessoaView.edtNome.Text;
+         FListaPessoas[iIDAtualizar].cpf        := CloudPessoaView.edtCPF.Text ;
          FListaPessoas[iIDAtualizar].Identidade := CloudPessoaView.edtRG.Text ;
-         FListaPessoas[iIDAtualizar].Telefone := CloudPessoaView.edtTelefone.Text;
-         FListaPessoas[iIDAtualizar].Email := CloudPessoaView.edtEmail.Text ;
+         FListaPessoas[iIDAtualizar].Telefone   := CloudPessoaView.edtTelefone.Text;
+         FListaPessoas[iIDAtualizar].Email      := CloudPessoaView.edtEmail.Text ;
          Result := True;
       end;
 
