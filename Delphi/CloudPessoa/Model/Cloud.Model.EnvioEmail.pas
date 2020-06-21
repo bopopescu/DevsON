@@ -3,20 +3,20 @@ unit Cloud.Model.EnvioEmail;
 interface
 
 uses Cloud.Interfaces,
-     Cloud.Dto.Pessoa;
+     Cloud.Dto.Cliente;
 
 
 type
    TCloudModelEnvioEmail = class(TInterfacedObject, IModelEnvioEmail)
          private
     FEmailDest: string;
-    FPessoaEnvio: TCloudPessoa;
+    FPessoaEnvio: TCloudCliente;
       constructor Create;
       destructor Destroy; override;
-      property pessoaEnvio : TCloudPessoa read FPessoaEnvio write FPessoaEnvio;
+      property pessoaEnvio : TCloudCliente read FPessoaEnvio write FPessoaEnvio;
       property emailDest   : string read FEmailDest write FEmailDest;
     protected
-     function setPessoa(Pessoa : TCloudPessoa) : IModelEnvioEmail;
+     function setPessoa(Pessoa : TCloudCliente) : IModelEnvioEmail;
      function setEmailDestino(emailDestino : string) : IModelEnvioEmail;
      function &End : IModelEnvioEmail;
      function EnviarEmail : Boolean;
@@ -103,7 +103,7 @@ begin
 end;
 
 function TCloudModelEnvioEmail.setPessoa(
-  Pessoa: TCloudPessoa): IModelEnvioEmail;
+  Pessoa: TCloudCliente): IModelEnvioEmail;
 begin
    Result := Self;
    FPessoaEnvio := Pessoa;

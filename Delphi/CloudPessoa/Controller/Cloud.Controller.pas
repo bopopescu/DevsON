@@ -4,7 +4,7 @@ interface
 
 uses Cloud.Interfaces,
      Generics.Collections,
-     Cloud.Dto.Pessoa,
+     Cloud.Dto.Cliente,
      Cloud.Dto.Pessoa.Endereco,
      System.SysUtils,
      Cloud.Pessoa.View,
@@ -22,14 +22,15 @@ uses Cloud.Interfaces,
 
     public
       class function New : ICloudController;
-      function IncluirPessoaNaLista(Dados: array of variant): TCloudPessoa;
+      function IncluirPessoaNaLista(Dados: array of variant): TCloudCliente;
       function IncluirEnderenco (Dados: array of variant): TCloudEndereco;
-      procedure CriarCliente(var FListaPessoas: TObjectList<TCloudPessoa>);
-      function AddPessoa(var FListaPessoas: TObjectList<TCloudPessoa>) : Boolean;
-      function DeletePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIdDeletar : Integer): Boolean;
-      function UpdatePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
-      function CadastrarEndereco(var FListaPessoas: TObjectList<TCloudPessoa>; iIDAtualizar: Integer): Boolean;
-      function EnviarEmail(Pessoa : TCloudPessoa; emailDestino : string): String;
+      procedure CriarCliente(var FListaPessoas: TObjectList<TCloudCliente>);
+      function AddPessoa(var FListaPessoas: TObjectList<TCloudCliente>) : Boolean;
+      function DeletePessoa(var FListaPessoas: TObjectList<TCloudCliente>;iIdDeletar : Integer): Boolean;
+      function UpdatePessoa(var FListaPessoas: TObjectList<TCloudCliente>;iIDAtualizar : Integer): Boolean;
+      function CadastrarEndereco(var FListaPessoas: TObjectList<TCloudCliente>; iIDAtualizar: Integer): Boolean;
+      function EnviarEmail(Pessoa : TCloudCliente; emailDestino : string): String;
+      function AtualizarEndereco(var Flista: TCloudEndereco; iIdPessoa, iIdRegistro: Integer): Boolean;
       class procedure PreencherDataSet<T : TCloudTabela>(var ClientDataSet: TClientDataSet; FLista: TObjectList<T>;sField : string = 'Nome');
     published
 
@@ -43,7 +44,7 @@ uses
 
   { TCloudController }
 
-function TCloudController.AddPessoa(var FListaPessoas: TObjectList<TCloudPessoa>) : Boolean;
+function TCloudController.AddPessoa(var FListaPessoas: TObjectList<TCloudCliente>) : Boolean;
 begin
    Result := False;
    Application.CreateForm(TCloudPessoaView, CloudPessoaView);
@@ -61,7 +62,67 @@ begin
    end;
 end;
 
-function TCloudController.CadastrarEndereco(var FListaPessoas: TObjectList<TCloudPessoa>; iIDAtualizar: Integer): Boolean;
+function TCloudController.AtualizarEndereco(var Flista: TCloudEndereco; iIdPessoa, iIdRegistro: Integer): Boolean;
+begin
+   Result := False;
+   Application.CreateForm(TCloudPessoaEnderecoView, CloudPessoaEnderecoView);
+   try
+      if  (Flista.CEP <> '') then
+      begin
+         CloudPessoaEnderecoView.edtCep.Text         := Flista.CEP;
+         CloudPessoaEnderecoView.CampoLogradouro.Text:= Flista.Logradouro;
+         CloudPessoaEnderecoView.CampoComplemento.Text:= Flista.Complemento;
+         CloudPessoaEnderecoView.CampoNumero.Text:= Flista.Numero;
+         CloudPessoaEnderecoView.CampoBairro.Text:= Flista.Bairro;
+         CloudPessoaEnderecoView.CampoCidade.Text:= Flista.Cidade;
+         CloudPessoaEnderecoView.CampoEstado.Text:= Flista.Estado;
+         CloudPessoaEnderecoView.CampoPais.Text:= Flista.Pais;
+
+         if CloudPessoaEnderecoView.ShowModal = mrOk then
+         begin
+            Flista.CEP         := CloudPessoaEnderecoView.Dados[3];
+            Flista.Logradouro  := CloudPessoaEnderecoView.Dados[2];
+            Flista.Complemento := CloudPessoaEnderecoView.Dados[5];
+            Flista.Numero      := CloudPessoaEnderecoView.Dados[4];
+            Flista.Bairro      := CloudPessoaEnderecoView.Dados[6];
+            Flista.Cidade      := CloudPessoaEnderecoView.Dados[7];
+            Flista.Estado      := CloudPessoaEnderecoView.Dados[8];
+            Flista.Pais        := CloudPessoaEnderecoView.Dados[9];
+
+            Result := True;
+         end;
+      end;
+//      if  (Flista.Count > 0) then
+//      begin
+//         CloudPessoaEnderecoView.edtCep.Text         := FListaPessoas[iIdPessoa].Endereco[iIdRegistro].CEP;
+//         CloudPessoaEnderecoView.CampoLogradouro.Text:= FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Logradouro;
+//         CloudPessoaEnderecoView.CampoComplemento.Text:= FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Complemento;
+//         CloudPessoaEnderecoView.CampoNumero.Text:= FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Numero;
+//         CloudPessoaEnderecoView.CampoBairro.Text:= FListaPessoas[iIdPessoa].Endereco[iIdPessoa].Bairro;
+//         CloudPessoaEnderecoView.CampoCidade.Text:= FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Cidade;
+//         CloudPessoaEnderecoView.CampoEstado.Text:= FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Estado;
+//         CloudPessoaEnderecoView.CampoPais.Text:= FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Pais;
+//
+//         if CloudPessoaEnderecoView.ShowModal = mrOk then
+//         begin
+//            FListaPessoas[iIdPessoa].Endereco[iIdRegistro].CEP         := CloudPessoaEnderecoView.Dados[3];
+//            FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Logradouro  := CloudPessoaEnderecoView.Dados[2];
+//            FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Complemento := CloudPessoaEnderecoView.Dados[5];
+//            FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Numero      := CloudPessoaEnderecoView.Dados[4];
+//            FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Bairro      := CloudPessoaEnderecoView.Dados[6];
+//            FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Cidade      := CloudPessoaEnderecoView.Dados[7];
+//            FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Estado      := CloudPessoaEnderecoView.Dados[8];
+//            FListaPessoas[iIdPessoa].Endereco[iIdRegistro].Pais        := CloudPessoaEnderecoView.Dados[9];
+//
+//            Result := True;
+//         end;
+//      end;
+   finally
+      CloudPessoaEnderecoView.Free;
+   end;
+end;
+
+function TCloudController.CadastrarEndereco(var FListaPessoas: TObjectList<TCloudCliente>; iIDAtualizar: Integer): Boolean;
 begin
    Result := False;
    Application.CreateForm(TCloudPessoaEnderecoView, CloudPessoaEnderecoView);
@@ -88,10 +149,10 @@ begin
 end;
 
 procedure TCloudController.CriarCliente(
-  var FListaPessoas: TObjectList<TCloudPessoa>);
+  var FListaPessoas: TObjectList<TCloudCliente>);
 begin
      // Cria a lista de objetos
-  FListaPessoas := TObjectList<TCloudPessoa>.Create;
+  FListaPessoas := TObjectList<TCloudCliente>.Create;
 
   FListaPessoas.Add(IncluirPessoaNaLista(['1', 'Hugo Weaving', '4655442115', '042.888.210-29',
     '(18)98806-8389', 'wg.o.costa@gmail.com']));
@@ -118,7 +179,7 @@ begin
     '(18)98806-8389', 'chamados.vsm@gmail.com']));
 end;
 
-function TCloudController.DeletePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIdDeletar : Integer): Boolean;
+function TCloudController.DeletePessoa(var FListaPessoas: TObjectList<TCloudCliente>;iIdDeletar : Integer): Boolean;
 var
    iContador : Integer;
 begin
@@ -140,7 +201,7 @@ begin
   inherited;
 end;
 
-function TCloudController.EnviarEmail(Pessoa : TCloudPessoa; emailDestino : string): String;
+function TCloudController.EnviarEmail(Pessoa : TCloudCliente; emailDestino : string): String;
 begin
    Result := '';
    if not TCloudModelPessoa.New.ValidaEmail(emailDestino) then
@@ -173,7 +234,7 @@ begin
    TCloudTabela.PreencherDataSet<T>(ClientDataSet,FLista,sField);
 end;
 
-function TCloudController.UpdatePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
+function TCloudController.UpdatePessoa(var FListaPessoas: TObjectList<TCloudCliente>;iIDAtualizar : Integer): Boolean;
 begin
    Result := False;
    Application.CreateForm(TCloudPessoaView, CloudPessoaView);
@@ -215,9 +276,9 @@ begin
    result.Pais          := Dados[9];
 end;
 
-function TCloudController.IncluirPessoaNaLista(Dados: array of variant): TCloudPessoa;
+function TCloudController.IncluirPessoaNaLista(Dados: array of variant): TCloudCliente;
 begin
-   result := TCloudPessoa.Create;
+   result := TCloudCliente.Create;
    result.id := Dados[0];
    result.Nome := Dados[1];
    result.Identidade := Dados[2];

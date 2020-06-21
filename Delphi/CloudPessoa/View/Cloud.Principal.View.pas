@@ -20,7 +20,7 @@ uses
   Data.DB, Vcl.Grids,
   Vcl.DBGrids,
   Cloud.Controller,
-  Cloud.Dto.Pessoa,
+  Cloud.Dto.Cliente,
   Cloud.Dto.Tabela;
 
 type
@@ -74,8 +74,7 @@ type
     Panel2: TPanel;
     Label2: TLabel;
     Label3: TLabel;
-    btnDelEnd: TButton;
-    btnAtuEnd: TButton;
+    btnAtualizarEndereco: TButton;
     procedure FormCreate(Sender: TObject);
     procedure CDS_PESSOASAfterScroll(DataSet: TDataSet);
     procedure FormDestroy(Sender: TObject);
@@ -85,11 +84,11 @@ type
     procedure btnCadEnderecoClick(Sender: TObject);
     procedure btnEnvioEmailClick(Sender: TObject);
     procedure CDS_ENDERECOSAfterScroll(DataSet: TDataSet);
-    procedure btnDelEndClick(Sender: TObject);
-    procedure btnAtuEndClick(Sender: TObject);
+
+    procedure btnAtualizarEnderecoClick(Sender: TObject);
 
   private
-    FListaPessoas: TObjectList<TCloudPessoa>;
+    FListaPessoas: TObjectList<TCloudCliente>;
     procedure PreencherCampos<T : TCloudTabela>(objeto: TCloudTabela);
 
   end;
@@ -108,7 +107,7 @@ procedure TCloudPrincipalView.btnAddPessoaClick(Sender: TObject);
 begin
    if TCloudController.New.AddPessoa(FListaPessoas) then
    begin
-      TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaPessoas);
+      TCloudController.PreencherDataSet<TCloudCliente>(CDS_PESSOAS,FListaPessoas);
    end;
 end;
 
@@ -118,7 +117,7 @@ begin
    begin
       if TCloudController.New.DeletePessoa(FListaPessoas,Pred(CDS_PESSOAS.RecNo)) then
       begin
-         TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaPessoas);
+         TCloudController.PreencherDataSet<TCloudCliente>(CDS_PESSOAS,FListaPessoas);
       end;
 
    end;
@@ -142,21 +141,30 @@ begin
    end;
 end;
 
-procedure TCloudPrincipalView.btnDelEndClick(Sender: TObject);
+procedure TCloudPrincipalView.btnAtualizarEnderecoClick(Sender: TObject);
+var
+   iIdRegistro,iIdPessoa : Integer;
+   temp : TCloudEndereco;
 begin
-//
-end;
+   iIdRegistro := Pred(CDS_ENDERECOS.RecNo);
+   iIdPessoa   := Pred(CDS_PESSOAS.RecNo);
+   if (FListaPessoas[iIdPessoa].Endereco <> nil) and (FListaPessoas[iIdPessoa].Endereco <> nil) then
+   begin
+      temp := FListaPessoas[iIdPessoa].Endereco[iIdRegistro];
+      if TCloudController.New.AtualizarEndereco(temp,iIdPessoa,iIdRegistro) then
+      begin
+         FListaPessoas[iIdPessoa].Endereco[iIdRegistro] := temp;
+         CDS_PESSOASAfterScroll(CDS_PESSOAS);
 
-procedure TCloudPrincipalView.btnAtuEndClick(Sender: TObject);
-begin
- //
+      end;
+   end;
 end;
 
 procedure TCloudPrincipalView.btnAtualizarPessoaClick(Sender: TObject);
 begin
    if TCloudController.New.UpdatePessoa(FListaPessoas,FListaPessoas[Pred(CDS_PESSOAS.RecNo)].ID) then
    begin
-      TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaPessoas);
+      TCloudController.PreencherDataSet<TCloudCliente>(CDS_PESSOAS,FListaPessoas);
    end;
 end;
 
@@ -181,8 +189,26 @@ procedure TCloudPrincipalView.CDS_PESSOASAfterScroll(DataSet: TDataSet);
 begin
   // Chama o método para preencher os controles visuais da tela,
   // informando o objeto posicionado no índice "RecNo - 1" do ClientDataSet
-  PreencherCampos<TCloudPessoa>(FListaPessoas[Pred(CDS_PESSOAS.RecNo)]);
-  PreencherCampos<TCloudEndereco>(FListaPessoas[Pred(CDS_PESSOAS.RecNo)].Endereco[Pred(CDS_ENDERECOS.RecNo)]);
+  PreencherCampos<TCloudCliente>(FListaPessoas[Pred(CDS_PESSOAS.RecNo)]);
+
+  CDS_ENDERECOS.Close;
+  CDS_ENDERECOS.CreateDataSet;
+  if (FListaPessoas[Pred(CDS_PESSOAS.RecNo)].Endereco <> nil) and (FListaPessoas[Pred(CDS_PESSOAS.RecNo)].Endereco.Count > 0) then
+  begin
+      TCloudController.PreencherDataSet<TCloudEndereco>(CDS_ENDERECOS,FListaPessoas[Pred(CDS_PESSOAS.RecNo)].Endereco,'CEP');
+      PreencherCampos<TCloudEndereco>(FListaPessoas[Pred(CDS_PESSOAS.RecNo)].Endereco[Pred(CDS_ENDERECOS.RecNo)]);
+  end
+  else
+  begin
+      CampoBairro.Text := '';
+      CampoCidade.Text := '';
+      CampoComplemento.Text := '';
+      CampoEstado.Text := '';
+      CampoLogradouro.Text := '';
+      CampoNumero.Text := '';
+      CampoPais.Text := '';
+      CampoCep.Text := '';
+  end;
 end;
 
 procedure TCloudPrincipalView.FormCreate(Sender: TObject);
@@ -190,7 +216,7 @@ begin
    TCloudController.New.CriarCliente(FListaPessoas);
 
   // Popula o ClientDataSet com o objeto
-   TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaPessoas);
+   TCloudController.PreencherDataSet<TCloudCliente>(CDS_PESSOAS,FListaPessoas);
 end;
 
 procedure TCloudPrincipalView.FormDestroy(Sender: TObject);

@@ -9,7 +9,12 @@ uses
 
    type
       TCloudTabela = class
-
+  private
+    Fid: integer;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property ID: integer read Fid write Fid;
       end;
 
       TVSMCloudTabelaHelper = class helper for TCloudTabela
@@ -32,6 +37,7 @@ var
   TipoRtti: TRttiType;
   PropriedadeNome: TRttiProperty;
   tabela: TCloudTabela;
+  tempDataSet: TClientDataSet;
 begin
    ClientDataSet.Close;
    ClientDataSet.CreateDataSet;
@@ -57,5 +63,21 @@ begin
       Contexto.Free;
    end;
 end;
+
+{ TCloudTabela }
+
+constructor TCloudTabela.Create;
+begin
+   Self.Fid := 0;
+end;
+
+destructor TCloudTabela.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TCloudTabela }
+
 
 end.

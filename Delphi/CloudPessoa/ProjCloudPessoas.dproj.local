@@ -28,19 +28,19 @@
     <Transaction>2020/06/19 21:33:42.000.592,C:\DevsON\Delphi\Delphi - Updates e Cases\Cloud\Controller\Cloud.Interfaces.pas=C:\DevsON\Delphi\Delphi - Updates e Cases\Cloud\Unit1.pas</Transaction>
     <Transaction>2020/06/19 22:19:17.000.356,C:\DevsON\Delphi\Delphi - Updates e Cases\Cloud\DTO\Cloud.Pessoa.pas=C:\DevsON\Delphi\Delphi - Updates e Cases\Cloud\uFuncionario.pas</Transaction>
     <Transaction>2020/06/19 22:34:38.000.709,=C:\DevsON\Delphi\CloudPessoa\Unit1.pas</Transaction>
-    <Transaction>2020/06/19 22:35:06.000.843,C:\DevsON\Delphi\CloudPessoa\View\Cloud.Pessoa.View.pas=C:\DevsON\Delphi\CloudPessoa\Unit1.pas</Transaction>
     <Transaction>2020/06/19 22:35:06.000.843,C:\DevsON\Delphi\CloudPessoa\View\Cloud.Pessoa.View.dfm=C:\DevsON\Delphi\CloudPessoa\Unit1.dfm</Transaction>
+    <Transaction>2020/06/19 22:35:06.000.843,C:\DevsON\Delphi\CloudPessoa\View\Cloud.Pessoa.View.pas=C:\DevsON\Delphi\CloudPessoa\Unit1.pas</Transaction>
     <Transaction>2020/06/19 22:55:16.000.395,=C:\DevsON\Delphi\CloudPessoa\DTO\Cloud.Endereco.pas</Transaction>
     <Transaction>2020/06/20 00:06:19.000.816,C:\DevsON\Delphi\CloudPessoa\ProjCloudPessoas.dproj=C:\DevsON\Delphi\CloudPessoa\PreenchimentoComRTTI.dproj</Transaction>
-    <Transaction>2020/06/20 00:55:39.000.071,C:\TEMP_WG\CloudPessoa\View\Cloud.Pessoa.Endereco.View.dfm=C:\TEMP_WG\CloudPessoa\View\Cloud.Pessoa.View.dfm</Transaction>
     <Transaction>2020/06/20 00:55:39.000.071,C:\TEMP_WG\CloudPessoa\View\Cloud.Pessoa.Endereco.View.pas=C:\TEMP_WG\CloudPessoa\View\Cloud.Pessoa.View.pas</Transaction>
+    <Transaction>2020/06/20 00:55:39.000.071,C:\TEMP_WG\CloudPessoa\View\Cloud.Pessoa.Endereco.View.dfm=C:\TEMP_WG\CloudPessoa\View\Cloud.Pessoa.View.dfm</Transaction>
     <Transaction>2020/06/20 01:07:43.000.989,=C:\TEMP_WG\CloudPessoa\Componentes\VSMCidade.pas</Transaction>
     <Transaction>2020/06/20 01:07:44.000.019,=C:\TEMP_WG\CloudPessoa\Componentes\VSMEndereco.pas</Transaction>
     <Transaction>2020/06/20 01:09:06.000.237,=C:\TEMP_WG\CloudPessoa\Componentes\VSMEntidade.pas</Transaction>
     <Transaction>2020/06/20 01:32:36.000.895,=C:\TEMP_WG\CloudPessoa\View\Cloud.Pessoa.View.pas</Transaction>
     <Transaction>2020/06/20 01:38:44.000.450,=C:\TEMP_WG\CloudPessoa\Componentes\CloudBuscaCEP.pas</Transaction>
-    <Transaction>2020/06/20 01:58:55.000.160,=C:\TEMP_WG\CloudPessoa\DTO\Cloud.Dto.Pessoa.Endereco.pas</Transaction>
     <Transaction>2020/06/20 01:58:55.000.213,=C:\TEMP_WG\CloudPessoa\DTO\Cloud.Dto.Pessoa.pas</Transaction>
+    <Transaction>2020/06/20 01:58:55.000.160,=C:\TEMP_WG\CloudPessoa\DTO\Cloud.Dto.Pessoa.Endereco.pas</Transaction>
     <Transaction>2020/06/20 10:32:12.000.539,=C:\DevsON\Delphi\CloudPessoa\Unit1.pas</Transaction>
     <Transaction>2020/06/20 10:32:38.000.317,C:\DevsON\Delphi\CloudPessoa\Model\Cloud.Model.EnvioEmail.pas=C:\DevsON\Delphi\CloudPessoa\Unit1.pas</Transaction>
     <Transaction>2020/06/20 10:47:02.000.855,=C:\DevsON\Delphi\CloudPessoa\Componentes\CloudServiceEmail.pas</Transaction>
@@ -51,7 +51,8 @@
     <Transaction>2020/06/20 17:27:49.000.153,C:\TEMP_WG\CloudPessoa\Unit1.pas=C:\TEMP_WG\CloudPessoa\Model\Cloud.Model.Pessoa.pas</Transaction>
     <Transaction>2020/06/20 18:31:36.000.356,=C:\TEMP_WG\CloudPessoa\Unit1.pas</Transaction>
     <Transaction>2020/06/20 18:31:59.000.343,C:\TEMP_WG\CloudPessoa\DTO\Cloud.Dto.Tabela.pas=C:\TEMP_WG\CloudPessoa\Unit1.pas</Transaction>
-    <Transaction>2020/06/21 00:13:00.863,=C:\TEMP_WG\CloudPessoa\View\Cloud.Principal.View.pas</Transaction>
+    <Transaction>2020/06/21 00:13:00.000.863,=C:\TEMP_WG\CloudPessoa\View\Cloud.Principal.View.pas</Transaction>
+    <Transaction>2020/06/21 10:48:09.000.143,=C:\TEMP_WG\CloudPessoa\DTO\Cloud.Dto.Cliente.pas</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
 		<NoProfile iOSSimulator="iPhone5"/>

@@ -6,7 +6,7 @@ uses
   System.Classes,  Xml.XMLDoc, XMLIntf, System.SysUtils,
   Forms, System.StrUtils, System.DateUtils,
   System.Math,
-  Cloud.Dto.Pessoa;
+  Cloud.Dto.Cliente;
 
 
 type
@@ -19,13 +19,13 @@ type
     FendPessoasXML: IXMLNode;
     procedure NovoXML;
     procedure GeraRaiz;
-    procedure GeraInfNFe(pessoa: TCloudPessoa);
+    procedure GeraInfNFe(pessoa: TCloudCliente);
     procedure Setxml(const Value: TXMLDocument);
     procedure SetloteXML(const Value: TXMLDocument);
    public
     sNomeArquivo : string;
-    function GeraXML(pessoa: TCloudPessoa): string;
-    function GeraLote(iId: Integer; pessoa: TCloudPessoa): TXMLDocument;
+    function GeraXML(pessoa: TCloudCliente): string;
+    function GeraLote(iId: Integer; pessoa: TCloudCliente): TXMLDocument;
     procedure SalvaLoteDisco(iIdPessoa: Integer);
     constructor Create(AOwner: TComponent);
       property endXml: IXMLNode read FendXml write FendXml;
@@ -46,7 +46,7 @@ uses
 
 { TCloudServiceXML }
 
-function TCloudServiceXML.GeraXML(pessoa: TCloudPessoa): string;
+function TCloudServiceXML.GeraXML(pessoa: TCloudCliente): string;
 begin
    Result := '';
    NovoXML;
@@ -88,14 +88,14 @@ begin
    sNomeArquivo := '';
 end;
 
-procedure TCloudServiceXML.GeraInfNFe(pessoa: TCloudPessoa);
+procedure TCloudServiceXML.GeraInfNFe(pessoa: TCloudCliente);
 begin
    endPessoasXML.Attributes['Id'] := 'Pessoa' + pessoa.ID.ToString;
    endPessoasXML.Attributes['versao'] := '1.0';
 end;
 
 function TCloudServiceXML.GeraLote(iId: Integer;
-  pessoa: TCloudPessoa): TXMLDocument;
+  pessoa: TCloudCliente): TXMLDocument;
 var
   sVersao: String;
   iContador : Integer;

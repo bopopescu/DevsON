@@ -11,18 +11,12 @@ uses
 type
   TCloudPessoa = class(TCloudTabela)
   private
-    Fid: integer;
     FNome: string;
-    FIdentidade: string;
-    FCPF: string;
     FTelefone: string;
     FEmail: string;
     FEndereco: TObjectList<TCloudEndereco>;
   public
-    property ID: integer read Fid write Fid;
     property Nome: string read FNome write FNome;
-    property Identidade: string read FIdentidade write FIdentidade;
-    property CPF: string read FCPF write FCPF;
     property Telefone: string read FTelefone write FTelefone;
     property Email : string read FEmail write FEmail;
     property Endereco : TObjectList<TCloudEndereco> read FEndereco write FEndereco;
@@ -36,6 +30,9 @@ implementation
 
 constructor TCloudPessoa.Create;
 begin
+   Self.FNome := '';
+   Self.FTelefone := '';
+   Self.FEmail    := '';
    FEndereco := TObjectList<TCloudEndereco>.Create(False);
 end;
 

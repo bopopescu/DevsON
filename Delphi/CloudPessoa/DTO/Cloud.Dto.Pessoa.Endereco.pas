@@ -9,7 +9,6 @@ uses
 type
   TCloudEndereco = class(TCloudTabela)
   private
-    Fid: integer;
     FBairro: string;
     FCep: string;
     FNumero: String;
@@ -20,7 +19,6 @@ type
     FLogradouro: string;
     FEstado: string;
   public
-    property ID: integer read Fid write Fid;
     property idPessoa: integer read FidPessoa write FidPessoa;
     property Logradouro: string read FLogradouro write FLogradouro;
     property Cep: string read FCep write FCep;

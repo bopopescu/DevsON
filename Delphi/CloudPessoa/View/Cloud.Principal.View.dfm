@@ -4,7 +4,7 @@ object CloudPrincipalView: TCloudPrincipalView
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Gerenciador de Clientes'
-  ClientHeight = 461
+  ClientHeight = 443
   ClientWidth = 714
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
@@ -47,7 +47,7 @@ object CloudPrincipalView: TCloudPrincipalView
     Left = 0
     Top = 38
     Width = 714
-    Height = 252
+    Height = 246
     Align = alClient
     ParentBackground = False
     ParentColor = True
@@ -117,7 +117,7 @@ object CloudPrincipalView: TCloudPrincipalView
       Left = 1
       Top = 1
       Width = 169
-      Height = 219
+      Height = 213
       Align = alLeft
       DataSource = DS_PESSOAS
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -228,7 +228,7 @@ object CloudPrincipalView: TCloudPrincipalView
     end
     object Panel2: TPanel
       Left = 1
-      Top = 220
+      Top = 214
       Width = 712
       Height = 31
       Align = alBottom
@@ -256,9 +256,9 @@ object CloudPrincipalView: TCloudPrincipalView
   end
   object pnlEndereco: TPanel
     Left = 0
-    Top = 290
+    Top = 284
     Width = 714
-    Height = 171
+    Height = 159
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -394,7 +394,7 @@ object CloudPrincipalView: TCloudPrincipalView
       Left = 1
       Top = 1
       Width = 169
-      Height = 169
+      Height = 157
       Align = alLeft
       DataSource = DS_ENDERECOS
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -413,31 +413,22 @@ object CloudPrincipalView: TCloudPrincipalView
         end>
     end
     object btnCadEndereco: TButton
-      Left = 177
-      Top = 138
-      Width = 117
+      Left = 548
+      Top = 104
+      Width = 158
       Height = 25
       Caption = 'Cadastrar Endere'#231'o'
       TabOrder = 9
       OnClick = btnCadEnderecoClick
     end
-    object btnDelEnd: TButton
-      Left = 304
-      Top = 139
-      Width = 117
+    object btnAtualizarEndereco: TButton
+      Left = 548
+      Top = 64
+      Width = 158
       Height = 25
-      Caption = 'Cadastrar Endere'#231'o'
+      Caption = 'Atualizar Cliente'
       TabOrder = 10
-      OnClick = btnDelEndClick
-    end
-    object btnAtuEnd: TButton
-      Left = 431
-      Top = 138
-      Width = 117
-      Height = 25
-      Caption = 'Cadastrar Endere'#231'o'
-      TabOrder = 11
-      OnClick = btnAtuEndClick
+      OnClick = btnAtualizarEnderecoClick
     end
   end
   object DS_PESSOAS: TDataSource
