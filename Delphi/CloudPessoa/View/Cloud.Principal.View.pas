@@ -148,7 +148,7 @@ var
 begin
    iIdRegistro := Pred(CDS_ENDERECOS.RecNo);
    iIdPessoa   := Pred(CDS_PESSOAS.RecNo);
-   if (FListaPessoas[iIdPessoa].Endereco <> nil) and (FListaPessoas[iIdPessoa].Endereco <> nil) then
+   if (FListaPessoas[iIdPessoa].Endereco <> nil) and (FListaPessoas[iIdPessoa].Endereco.Count > 0) then
    begin
       temp := FListaPessoas[iIdPessoa].Endereco[iIdRegistro];
       if TCloudController.New.AtualizarEndereco(temp,iIdPessoa,iIdRegistro) then

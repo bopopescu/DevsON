@@ -3,11 +3,7 @@ unit CloudBuscaCEP;
 interface
 
 uses
-  System.SysUtils, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc, Xml.Win.msxmldom,Vcl.Forms,
-//    Winapi.Windows, Winapi.Messages, System.Variants, System.Classes,
-//  Data.DBXJSON,
-JSON,
-//  DBXJSONReflect, idHTTP, IdSSLOpenSSL,
+  System.SysUtils, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc, Xml.Win.msxmldom,Vcl.Forms,JSON,
   Cloud.Interfaces,
   Cloud.Dto.Pessoa.Endereco;
 
@@ -52,8 +48,6 @@ type
     FbLocalizado: Boolean;
     procedure SetBairro(const Value: string);
     procedure SetLogradouro(const Value: string);
-
-    procedure CarregaDadosCepJson(JSON : TJSONObject);
    public
       constructor Create(const Cep: string); overload;
       destructor Destroy; override;
@@ -69,21 +63,9 @@ type
 implementation
 
 uses
-   Rest.Json, REST.Client, REST.types    , Cloud.Dto.ViaCep, VSM.Rest;
+   Rest.Json, REST.Client, REST.types    , Cloud.Dto.ViaCep, Cloud.Rest;
 
 { TEndereco }
-
-procedure TCloudModelCep.CarregaDadosCepJson(JSON : TJSONObject);
-begin
-    FCep := JSON.Get('cep').JsonValue.Value;
-    Logradouro := AnsiUpperCase(JSON.Get('logradouro').JsonValue.Value);
-    Bairro := AnsiUpperCase(JSON.Get('bairro').JsonValue.Value);
-    FCidade.Nome := AnsiUpperCase(JSON.Get('localidade').JsonValue.Value);
-    FCidade.UF := AnsiUpperCase(JSON.Get('uf').JsonValue.Value);
-    FCidade.FIBGE :=  JSON.Get('ibge').JsonValue.Value;
-    FCidade.FUFIBGE :=  Copy(Cidade.IBGE,1,2);
-    Self.FbLocalizado := Logradouro <> '';
-end;
 
 constructor TCloudModelCep.Create(const Cep: string);
 begin
@@ -102,20 +84,11 @@ end;
 
 function TCloudModelCep.getCEPJson : Boolean;
 var
-//  HTTP: TIdHTTP;
-//  IDSSLHandler: TIdSSLIOHandlerSocketOpenSSL;
-//  Response: TStringStream;
-  JsonArray: TJSONArray;
-  jsonObject: TJSONObject;
-  sResposta : String;
-  RESTClient: TRESTClient;
-  RESTRequest: TRESTRequest;
-  RESTResponse: TRESTResponse;
   sURL : string;
   viacep : TCloudViaCep;
 begin
   viacep := TCloudViaCep.Create;
-  viacep := TVSMRest.New('https://viacep.com.br/ws/' + FCEP + '/json/')
+  viacep := TCloudRest.New('https://viacep.com.br/ws/' + FCEP + '/json/')
                 .build(GET)
                 .executar
                 .response.converter.get<TCloudViaCep>;
@@ -131,71 +104,6 @@ begin
     FCidade.FUFIBGE :=  Copy(Cidade.IBGE,1,2);
     Self.FbLocalizado := Logradouro <> '';
     Result := Self.FbLocalizado;
-  end;
-
-//  Result := False;
-//
-//   sURL := 'https://viacep.com.br/ws/' + FCEP + '/json/';
-//   RESTClient   := TRESTClient.Create(nil);
-//   RESTRequest  := TRESTRequest.Create(RESTClient);
-//   RESTResponse := TRESTResponse.Create(RESTClient);
-  try
-
-
-//      try
-//         RESTClient.BaseURL   := sUrl;
-//         RESTRequest.Client   := RESTClient;
-//         RESTRequest.Method   := rmGET;
-//         RESTRequest.Response := RESTResponse;
-//         RESTRequest.Timeout  := 10000;
-//         RESTRequest.Params.AddHeader('Content-Type' ,'application/json');
-//         RESTRequest.Accept := 'application/json';
-//         RESTRequest.Execute;
-//
-//         if RESTResponse.Content <> '' then
-//         begin
-//            viacep := TCloudViaCep.Create;
-//            viacep :=  TJson.JsonToObject<TCloudViaCep>(RESTResponse.JSONValue.ToJSON);
-//            CarregaDadosCepJson(jsonObject);
-//         end;
-//      except
-//         Result := False;
-//      end;
-
-
-//      HTTP := TIdHTTP.Create;
-//      IDSSLHandler := TIdSSLIOHandlerSocketOpenSSL.Create;
-//
-//      IDSSLHandler.SSLOptions.Method := sslvTLSv1_1;
-//      IDSSLHandler.SSLOptions.Mode := sslmUnassigned;
-//
-//      HTTP.IOHandler := IDSS
-//      HTTP.ReadTimeout := 30000;
-//      IDSSLHandler.SSLOptLHandler;
-//      Response := TStringStream.Create('');
-//
-//
-//      HTTP.Get('viacep.com.br/ws/' + FCEP + '/json/', Response);
-//      if (HTTP.ResponseCode = 200) and not (UTF8ToString(Response.DataString) = '{'#$A'  "erro": true'#$A'}') then
-//      begin
-//        sResposta := UTF8ToString(Response.DataString);
-//        jsonObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(UTF8ToString(Response.DataString)), 0) as TJSONObject;
-//      end
-//      else
-//        raise Exception.Create('CEP inexistente!');
-
-
-
-  finally
-//    RESTClient.Free;
-//    RESTRequest.Free;
-//    RESTResponse.Free;
-//    FreeAndNil(HTTP);
-//    FreeAndNil(IDSSLHandler);
-//    Response.Destroy;
-
-
-
   end;
 end;
 

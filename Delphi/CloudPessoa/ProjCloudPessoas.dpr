@@ -18,10 +18,10 @@ uses
   Cloud.Dto.Tabela in 'DTO\Cloud.Dto.Tabela.pas',
   Cloud.Dto.Cliente in 'DTO\Cloud.Dto.Cliente.pas',
   Cloud.Dto.ViaCep in 'DTO\Cloud.Dto.ViaCep.pas',
-  VSM.Rest in 'Componentes\VSM.Rest.pas',
-  VSMRestClientParamHeaderDto in 'Componentes\VSMRestClientParamHeaderDto.pas',
+  Cloud.Rest in 'Componentes\Cloud.Rest.pas',
+  Cloud.Rest.Client.ParamHeaderDto in 'Componentes\Cloud.Rest.Client.ParamHeaderDto.pas',
   uLkJSON in 'Componentes\uLkJSON.pas',
-  VSM.Model.RetornoJson in 'Componentes\VSM.Model.RetornoJson.pas';
+  Cloud.Model.RetornoJson in 'Componentes\Cloud.Model.RetornoJson.pas';
 
 {$R *.res}
 
