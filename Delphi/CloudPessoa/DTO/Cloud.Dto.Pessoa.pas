@@ -36,12 +36,12 @@ implementation
 
 constructor TCloudPessoa.Create;
 begin
-   Endereco := TObjectList<TCloudEndereco>.Create;
+   FEndereco := TObjectList<TCloudEndereco>.Create(False);
 end;
 
 destructor TCloudPessoa.Destroy;
 begin
-   Endereco.Free;
+//   Endereco.Free;
   inherited;
 end;
 

@@ -4,13 +4,13 @@ object fFormulario: TfFormulario
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Exemplo de preenchimento de campos com RTTI'
-  ClientHeight = 489
+  ClientHeight = 461
   ClientWidth = 714
-  Color = clBtnFace
+  Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
@@ -34,7 +34,7 @@ object fFormulario: TfFormulario
       Height = 44
       Align = alClient
       Alignment = taCenter
-      Caption = 'Cadastro de Pessoas'
+      Caption = 'Gereciador de Pessoas'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 16184821
       Font.Height = -24
@@ -47,14 +47,14 @@ object fFormulario: TfFormulario
     Left = 0
     Top = 46
     Width = 714
-    Height = 246
+    Height = 244
     Align = alClient
-    Color = clWhite
     ParentBackground = False
+    ParentColor = True
     TabOrder = 1
     object LabelNome: TLabel
-      Left = 311
-      Top = 59
+      Left = 244
+      Top = 15
       Width = 31
       Height = 13
       Caption = 'Nome:'
@@ -66,15 +66,15 @@ object fFormulario: TfFormulario
       ParentFont = False
     end
     object LabelSenioridade: TLabel
-      Left = 183
-      Top = 95
-      Width = 60
+      Left = 317
+      Top = 64
+      Width = 18
       Height = 13
-      Caption = 'Senioridade:'
+      Caption = 'RG:'
     end
     object LabelCodigo: TLabel
-      Left = 200
-      Top = 59
+      Left = 178
+      Top = 14
       Width = 37
       Height = 13
       Caption = 'C'#243'digo:'
@@ -86,31 +86,46 @@ object fFormulario: TfFormulario
       ParentFont = False
     end
     object LabelCorUniforme: TLabel
-      Left = 343
-      Top = 135
-      Width = 82
+      Left = 293
+      Top = 112
+      Width = 34
       Height = 13
-      Caption = 'Cor do Uniforme:'
+      Caption = 'E-mail:'
     end
     object LabelDataNascimento: TLabel
-      Left = 325
-      Top = 95
-      Width = 100
+      Left = 178
+      Top = 66
+      Width = 22
       Height = 13
-      Caption = 'Data de Nascimento:'
+      Caption = 'CPF:'
+    end
+    object Label1: TLabel
+      Left = 178
+      Top = 113
+      Width = 47
+      Height = 13
+      Caption = 'Telefone:'
+    end
+    object Label3: TLabel
+      Left = 548
+      Top = 130
+      Width = 142
+      Height = 13
+      Caption = 'Enviar Pessoa para o E-mail:'
     end
     object DBGrid1: TDBGrid
-      Left = 8
-      Top = 56
+      Left = 1
+      Top = 1
       Width = 169
-      Height = 197
+      Height = 211
+      Align = alLeft
       DataSource = DS_PESSOAS
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
-      TitleFont.Name = 'Tahoma'
+      TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
       Columns = <
         item
@@ -121,172 +136,202 @@ object fFormulario: TfFormulario
         end>
     end
     object btnAddPessoa: TButton
-      Left = 584
-      Top = 77
-      Width = 113
+      Left = 179
+      Top = 177
+      Width = 117
       Height = 25
       Caption = 'Cadastrar Pessoa'
-      TabOrder = 1
+      TabOrder = 7
       OnClick = btnAddPessoaClick
     end
     object btnAtualizarPessoa: TButton
-      Left = 583
-      Top = 136
-      Width = 75
+      Left = 425
+      Top = 177
+      Width = 117
       Height = 25
       Caption = 'Alterar Pessoa'
-      TabOrder = 2
+      TabOrder = 8
       OnClick = btnAtualizarPessoaClick
     end
     object btnDelPessoa: TButton
-      Left = 583
-      Top = 105
-      Width = 75
+      Left = 302
+      Top = 177
+      Width = 117
       Height = 25
       Caption = 'Deletar Pessoa'
-      TabOrder = 3
+      TabOrder = 9
       OnClick = btnDelPessoaClick
     end
     object btnEnvioEmail: TButton
-      Left = 590
-      Top = 210
-      Width = 101
+      Left = 548
+      Top = 177
+      Width = 158
       Height = 25
       Caption = 'Enviar Pessoa por E-mail'
-      TabOrder = 4
+      TabOrder = 10
       OnClick = btnEnvioEmailClick
     end
     object CampoCPF: TEdit
-      Left = 431
-      Top = 94
-      Width = 127
+      Left = 178
+      Top = 84
+      Width = 131
       Height = 21
       ReadOnly = True
-      TabOrder = 5
+      TabOrder = 3
     end
     object CampoEmail: TEdit
-      Left = 431
-      Top = 132
-      Width = 127
+      Left = 290
+      Top = 131
+      Width = 244
       Height = 21
       ReadOnly = True
       TabOrder = 6
     end
     object CampoID: TEdit
-      Left = 243
-      Top = 56
+      Left = 178
+      Top = 37
       Width = 43
       Height = 21
       ReadOnly = True
-      TabOrder = 7
+      TabOrder = 1
     end
     object CampoIdentidade: TEdit
-      Left = 243
-      Top = 94
-      Width = 92
+      Left = 318
+      Top = 84
+      Width = 213
       Height = 21
       ReadOnly = True
-      TabOrder = 8
+      TabOrder = 4
     end
     object CampoNome: TEdit
-      Left = 346
-      Top = 56
-      Width = 251
+      Left = 243
+      Top = 36
+      Width = 288
       Height = 21
       ReadOnly = True
-      TabOrder = 9
+      TabOrder = 2
     end
     object CampoTelefone: TEdit
-      Left = 243
-      Top = 132
-      Width = 92
+      Left = 178
+      Top = 131
+      Width = 106
       Height = 21
       ReadOnly = True
-      TabOrder = 10
+      TabOrder = 5
     end
     object edtEmailDestino: TEdit
-      Left = 457
-      Top = 214
-      Width = 126
+      Left = 548
+      Top = 149
+      Width = 158
       Height = 21
       TabOrder = 11
+    end
+    object Panel2: TPanel
+      Left = 1
+      Top = 212
+      Width = 712
+      Height = 31
+      Align = alBottom
+      Color = 7884599
+      ParentBackground = False
+      TabOrder = 12
+      object Label2: TLabel
+        Left = 1
+        Top = 1
+        Width = 710
+        Height = 29
+        Align = alClient
+        Alignment = taCenter
+        Caption = 'Endere'#231'o:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 16184821
+        Font.Height = -20
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+      end
     end
   end
   object pnlEndereco: TPanel
     Left = 0
-    Top = 292
+    Top = 290
     Width = 714
-    Height = 197
+    Height = 171
+    Margins.Left = 0
+    Margins.Top = 0
+    Margins.Right = 0
+    Margins.Bottom = 0
     Align = alBottom
-    Color = clWhite
     ParentBackground = False
+    ParentColor = True
     TabOrder = 2
+    StyleElements = []
     object lblBairro: TLabel
-      Left = 534
-      Top = 6
-      Width = 32
+      Left = 537
+      Top = 4
+      Width = 33
       Height = 13
       Caption = 'Bairro:'
     end
     object lblCEP: TLabel
-      Left = 198
+      Left = 178
       Top = 6
-      Width = 23
+      Width = 22
       Height = 13
       Caption = 'CEP:'
     end
     object lblCidade: TLabel
-      Left = 198
+      Left = 178
       Top = 90
-      Width = 37
+      Width = 39
       Height = 13
       Caption = 'Cidade:'
     end
     object lblComplemento: TLabel
-      Left = 316
-      Top = 48
-      Width = 69
+      Left = 305
+      Top = 47
+      Width = 75
       Height = 13
       Caption = 'Complemento:'
     end
     object lblEstado: TLabel
-      Left = 336
-      Top = 90
-      Width = 37
+      Left = 305
+      Top = 91
+      Width = 38
       Height = 13
       Caption = 'Estado:'
     end
     object lblLogradouro: TLabel
-      Left = 315
-      Top = 6
+      Left = 305
+      Top = 5
       Width = 23
       Height = 13
       Caption = 'Rua:'
     end
     object lblNumero: TLabel
-      Left = 198
+      Left = 178
       Top = 48
-      Width = 41
+      Width = 44
       Height = 13
       Caption = 'N'#250'mero:'
     end
     object lblPais: TLabel
-      Left = 396
+      Left = 360
       Top = 90
       Width = 23
       Height = 13
       Caption = 'Pa'#237's:'
     end
     object CampoBairro: TEdit
-      Left = 534
-      Top = 23
-      Width = 121
+      Left = 537
+      Top = 21
+      Width = 169
       Height = 21
       ReadOnly = True
       TabOrder = 2
     end
     object CampoCidade: TEdit
-      Left = 198
+      Left = 178
       Top = 107
       Width = 121
       Height = 21
@@ -294,82 +339,103 @@ object fFormulario: TfFormulario
       TabOrder = 5
     end
     object CampoComplemento: TEdit
-      Left = 316
-      Top = 65
-      Width = 337
+      Left = 305
+      Top = 64
+      Width = 225
       Height = 21
+      ReadOnly = True
       TabOrder = 4
     end
     object CampoEstado: TEdit
-      Left = 336
-      Top = 107
+      Left = 305
+      Top = 108
       Width = 46
       Height = 21
       ReadOnly = True
       TabOrder = 6
     end
     object CampoLogradouro: TEdit
-      Left = 315
-      Top = 23
-      Width = 201
+      Left = 305
+      Top = 22
+      Width = 225
       Height = 21
       NumbersOnly = True
       ReadOnly = True
       TabOrder = 1
     end
     object CampoNumero: TEdit
-      Left = 198
-      Top = 65
-      Width = 97
+      Left = 178
+      Top = 67
+      Width = 121
       Height = 21
+      ReadOnly = True
       TabOrder = 3
     end
     object CampoPais: TEdit
-      Left = 396
+      Left = 360
       Top = 107
-      Width = 121
+      Width = 170
       Height = 21
       ReadOnly = True
       TabOrder = 7
     end
-    object edtCep: TEdit
-      Left = 193
-      Top = 24
-      Width = 97
+    object CampoCep: TEdit
+      Left = 178
+      Top = 25
+      Width = 121
       Height = 21
       NumbersOnly = True
+      ReadOnly = True
       TabOrder = 0
     end
     object dbEnderencos: TDBGrid
-      Left = 9
-      Top = 18
+      Left = 1
+      Top = 1
       Width = 169
-      Height = 174
+      Height = 169
+      Align = alLeft
       DataSource = DS_ENDERECOS
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       TabOrder = 8
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
-      TitleFont.Name = 'Tahoma'
+      TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
       Columns = <
         item
           Expanded = False
-          FieldName = 'Nome'
-          Title.Caption = 'Rua'
+          FieldName = 'CEP'
           Width = 135
           Visible = True
         end>
     end
     object btnCadEndereco: TButton
-      Left = 468
-      Top = 155
-      Width = 101
+      Left = 177
+      Top = 138
+      Width = 117
       Height = 25
       Caption = 'Cadastrar Endere'#231'o'
       TabOrder = 9
       OnClick = btnCadEnderecoClick
+    end
+    object btnDelEnd: TButton
+      Left = 304
+      Top = 139
+      Width = 117
+      Height = 25
+      Caption = 'Cadastrar Endere'#231'o'
+      TabOrder = 10
+      OnClick = btnDelEndClick
+    end
+    object btnAtuEnd: TButton
+      Left = 431
+      Top = 138
+      Width = 117
+      Height = 25
+      Caption = 'Cadastrar Endere'#231'o'
+      TabOrder = 11
+      OnClick = btnAtuEndClick
     end
   end
   object DS_PESSOAS: TDataSource
@@ -398,17 +464,13 @@ object fFormulario: TfFormulario
     Top = 346
   end
   object CDS_ENDERECOS: TClientDataSet
-    PersistDataPacket.Data = {
-      330000009619E0BD0100000018000000010000000000030000003300044E6F6D
-      6501004900000001000557494454480200020064000000}
-    Active = True
     Aggregates = <>
     Params = <>
     AfterScroll = CDS_ENDERECOSAfterScroll
     Left = 103
     Top = 319
-    object StringField1: TStringField
-      FieldName = 'Nome'
+    object CEP: TStringField
+      FieldName = 'CEP'
       Size = 100
     end
   end

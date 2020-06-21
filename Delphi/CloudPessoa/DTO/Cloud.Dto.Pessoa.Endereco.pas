@@ -17,12 +17,12 @@ type
     FComplemento: string;
     FCidade: string;
     FPais: string;
-    Fendereco: string;
+    FLogradouro: string;
     FEstado: string;
   public
     property ID: integer read Fid write Fid;
     property idPessoa: integer read FidPessoa write FidPessoa;
-    property endereco: string read Fendereco write Fendereco;
+    property Logradouro: string read FLogradouro write FLogradouro;
     property Cep: string read FCep write FCep;
     property Numero: String read FNumero write FNumero;
     property Complemento: string read FComplemento write FComplemento;

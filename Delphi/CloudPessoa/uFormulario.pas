@@ -20,7 +20,8 @@ uses
   Data.DB, Vcl.Grids,
   Vcl.DBGrids,
   Cloud.Controller,
-  Cloud.Dto.Pessoa;
+  Cloud.Dto.Pessoa,
+  Cloud.Dto.Tabela;
 
 type
   TfFormulario = class(TForm)
@@ -51,7 +52,7 @@ type
     Panel1: TPanel;
     DS_ENDERECOS: TDataSource;
     CDS_ENDERECOS: TClientDataSet;
-    StringField1: TStringField;
+    CEP: TStringField;
     pnlEndereco: TPanel;
     lblBairro: TLabel;
     lblCEP: TLabel;
@@ -68,7 +69,13 @@ type
     CampoLogradouro: TEdit;
     CampoNumero: TEdit;
     CampoPais: TEdit;
-    edtCep: TEdit;
+    CampoCep: TEdit;
+    Label1: TLabel;
+    Panel2: TPanel;
+    Label2: TLabel;
+    Label3: TLabel;
+    btnDelEnd: TButton;
+    btnAtuEnd: TButton;
     procedure FormCreate(Sender: TObject);
     procedure CDS_PESSOASAfterScroll(DataSet: TDataSet);
     procedure FormDestroy(Sender: TObject);
@@ -78,10 +85,13 @@ type
     procedure btnCadEnderecoClick(Sender: TObject);
     procedure btnEnvioEmailClick(Sender: TObject);
     procedure CDS_ENDERECOSAfterScroll(DataSet: TDataSet);
-  private
-    FListaFuncionarios: TObjectList<TCloudPessoa>;
+    procedure btnDelEndClick(Sender: TObject);
+    procedure btnAtuEndClick(Sender: TObject);
 
-    procedure PreencherCampos(Funcionario: TCloudPessoa);
+  private
+    FListaPessoas: TObjectList<TCloudPessoa>;
+    procedure PreencherCampos<T : TCloudTabela>(objeto: TCloudTabela);
+
   end;
 
 var
@@ -90,25 +100,25 @@ var
 implementation
 
 uses
-  System.RTTI;
+  System.RTTI, System.TypInfo, Cloud.Dto.Pessoa.Endereco;
 
 {$R *.dfm}
 
 procedure TfFormulario.btnAddPessoaClick(Sender: TObject);
 begin
-   if TCloudController.New.AddPessoa(FListaFuncionarios) then
+   if TCloudController.New.AddPessoa(FListaPessoas) then
    begin
-      TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaFuncionarios);
+      TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaPessoas);
    end;
 end;
 
 procedure TfFormulario.btnDelPessoaClick(Sender: TObject);
 begin
-   if FListaFuncionarios[Pred(CDS_PESSOAS.RecNo)].ID > 0 then
+   if FListaPessoas[Pred(CDS_PESSOAS.RecNo)].ID > 0 then
    begin
-      if TCloudController.New.DeletePessoa(FListaFuncionarios,FListaFuncionarios[Pred(CDS_PESSOAS.RecNo)].ID) then
+      if TCloudController.New.DeletePessoa(FListaPessoas,Pred(CDS_PESSOAS.RecNo)) then
       begin
-         TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaFuncionarios);
+         TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaPessoas);
       end;
 
    end;
@@ -122,77 +132,93 @@ begin
       Exit;
    end;
 
-   if FListaFuncionarios[Pred(CDS_PESSOAS.RecNo)].ID > 0 then
+   if FListaPessoas[Pred(CDS_PESSOAS.RecNo)].ID > 0 then
    begin
       ShowMessage(TCloudController.
                               New.
-                              EnviarEmail(FListaFuncionarios[Pred(CDS_PESSOAS.RecNo)],
+                              EnviarEmail(FListaPessoas[Pred(CDS_PESSOAS.RecNo)],
                                         edtEmailDestino.Text));
 
    end;
 end;
 
+procedure TfFormulario.btnDelEndClick(Sender: TObject);
+begin
+//
+end;
+
+procedure TfFormulario.btnAtuEndClick(Sender: TObject);
+begin
+ //
+end;
+
 procedure TfFormulario.btnAtualizarPessoaClick(Sender: TObject);
 begin
-   if TCloudController.New.UpdatePessoa(FListaFuncionarios,FListaFuncionarios[Pred(CDS_PESSOAS.RecNo)].ID) then
+   if TCloudController.New.UpdatePessoa(FListaPessoas,FListaPessoas[Pred(CDS_PESSOAS.RecNo)].ID) then
    begin
-      TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaFuncionarios);
+      TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaPessoas);
    end;
 end;
 
 procedure TfFormulario.btnCadEnderecoClick(Sender: TObject);
+var
+   iIdRegistro : Integer;
+
 begin
-   if TCloudController.New.CadastrarEndereco(FListaFuncionarios,FListaFuncionarios[Pred(CDS_PESSOAS.RecNo)].ID) then
+   iIdRegistro := Pred(CDS_PESSOAS.RecNo);
+   if TCloudController.New.CadastrarEndereco(FListaPessoas,iIdRegistro) then
    begin
-      TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaFuncionarios);
+      TCloudController.PreencherDataSet<TCloudEndereco>(CDS_ENDERECOS,FListaPessoas[iIdRegistro].Endereco,'CEP');
    end;
 end;
 
 procedure TfFormulario.CDS_ENDERECOSAfterScroll(DataSet: TDataSet);
 begin
-//
+   PreencherCampos<TCloudEndereco>(FListaPessoas[Pred(CDS_PESSOAS.RecNo)].Endereco[Pred(CDS_ENDERECOS.RecNo)]);
 end;
 
 procedure TfFormulario.CDS_PESSOASAfterScroll(DataSet: TDataSet);
 begin
   // Chama o método para preencher os controles visuais da tela,
   // informando o objeto posicionado no índice "RecNo - 1" do ClientDataSet
-  PreencherCampos(FListaFuncionarios[Pred(CDS_PESSOAS.RecNo)]);
+  PreencherCampos<TCloudPessoa>(FListaPessoas[Pred(CDS_PESSOAS.RecNo)]);
 end;
 
 procedure TfFormulario.FormCreate(Sender: TObject);
 begin
-   TCloudController.New.CriarCliente(FListaFuncionarios);
+   TCloudController.New.CriarCliente(FListaPessoas);
 
   // Popula o ClientDataSet com os funcionários cadastrados
-   TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaFuncionarios);
+   TCloudController.PreencherDataSet<TCloudPessoa>(CDS_PESSOAS,FListaPessoas);
 end;
 
 procedure TfFormulario.FormDestroy(Sender: TObject);
 begin
-  FListaFuncionarios.Free;
+  FListaPessoas.Free;
 end;
 
-procedure TfFormulario.PreencherCampos(Funcionario: TCloudPessoa);
+procedure TfFormulario.PreencherCampos<T>(objeto: TCloudTabela);
 var
   Contexto: TRttiContext;
-  Tipo: TRttiType;
+  TipoRtti: TRttiType;
   Propriedade: TRttiProperty;
   Valor: variant;
   Componente: TComponent;
+  AuxValue: TValue;
 begin
   // Cria o contexto do RTTI
   Contexto := TRttiContext.Create;
 
   // Obtém as informações de RTTI da classe TFuncionario
-  Tipo := Contexto.GetType(TCloudPessoa.ClassInfo);
-
+//  Tipo := Contexto.GetType(TCloudTabela.ClassInfo);
+   AuxValue := GetTypeData(PTypeInfo(TypeInfo(T)))^.ClassType.Create;
+   TipoRtti := Contexto.GetType(AuxValue.AsObject.ClassInfo);
   try
     // Faz uma iteração nas propriedades do objeto
-    for Propriedade in Tipo.GetProperties do
+    for Propriedade in TipoRtti.GetProperties do
     begin
       // Obtém o valor da propriedade
-      Valor := Propriedade.GetValue(Funcionario).AsVariant;
+      Valor := Propriedade.GetValue(objeto).AsVariant;
 
       // Encontra o componente relacionado, como, por exemplo, "CampoNome"
       Componente := FindComponent('Campo' + Propriedade.Name);

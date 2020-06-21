@@ -1,23 +1,24 @@
 object CloudPessoaEnderecoView: TCloudPessoaEnderecoView
   Left = 0
   Top = 0
+  BorderStyle = bsSingle
   Caption = 'Cadastrar Cliente'
-  ClientHeight = 221
-  ClientWidth = 490
+  ClientHeight = 231
+  ClientWidth = 500
   Color = clBtnFace
-  DefaultMonitor = dmMainForm
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTitulo: TPanel
     Left = 0
     Top = 0
-    Width = 490
+    Width = 500
     Height = 46
     Align = alTop
     Color = 7884599
@@ -26,7 +27,7 @@ object CloudPessoaEnderecoView: TCloudPessoaEnderecoView
     object lblTitulo: TLabel
       Left = 1
       Top = 1
-      Width = 488
+      Width = 498
       Height = 44
       Align = alClient
       Alignment = taCenter
@@ -42,8 +43,8 @@ object CloudPessoaEnderecoView: TCloudPessoaEnderecoView
   object pnlCentro: TPanel
     Left = 0
     Top = 46
-    Width = 490
-    Height = 175
+    Width = 500
+    Height = 185
     Align = alClient
     Color = clWhite
     ParentBackground = False

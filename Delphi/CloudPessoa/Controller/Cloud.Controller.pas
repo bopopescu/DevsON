@@ -28,9 +28,9 @@ uses Cloud.Interfaces,
       function AddPessoa(var FListaPessoas: TObjectList<TCloudPessoa>) : Boolean;
       function DeletePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIdDeletar : Integer): Boolean;
       function UpdatePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
-      function CadastrarEndereco(var FListaPessoas: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
+      function CadastrarEndereco(var FListaPessoas: TObjectList<TCloudPessoa>; iIDAtualizar: Integer): Boolean;
       function EnviarEmail(Pessoa : TCloudPessoa; emailDestino : string): String;
-      class procedure PreencherDataSet<T : TCloudTabela>(var ClientDataSet: TClientDataSet; FLista: TObjectList<T>);
+      class procedure PreencherDataSet<T : TCloudTabela>(var ClientDataSet: TClientDataSet; FLista: TObjectList<T>;sField : string = 'Nome');
     published
 
     end;
@@ -62,20 +62,19 @@ begin
 end;
 
 function TCloudController.CadastrarEndereco(var FListaPessoas: TObjectList<TCloudPessoa>; iIDAtualizar: Integer): Boolean;
-var
-   endTemp : TCloudEndereco;
 begin
    Result := False;
    Application.CreateForm(TCloudPessoaEnderecoView, CloudPessoaEnderecoView);
-   endTemp := TCloudEndereco.Create;
    try
       CloudPessoaEnderecoView.iIdPessoa := iIDAtualizar;
-      CloudPessoaEnderecoView.iId := FListaPessoas[iIDAtualizar].Endereco.Count + 1;
+      if (FListaPessoas[iIDAtualizar].Endereco <> nil) and (FListaPessoas[iIDAtualizar].Endereco.Count > 0) then
+         CloudPessoaEnderecoView.iId := FListaPessoas[iIDAtualizar].Endereco.Count + 1
+      else
+         CloudPessoaEnderecoView.iId := 1;
+
       if CloudPessoaEnderecoView.ShowModal = mrOk then
       begin
-         endTemp := IncluirEnderenco(CloudPessoaEnderecoView.Dados);
-         FListaPessoas[iIDAtualizar].Endereco.Add(endTemp);
-
+         FListaPessoas[iIDAtualizar].Endereco.Add(IncluirEnderenco(CloudPessoaEnderecoView.Dados));
          Result := True;
       end;
    finally
@@ -94,29 +93,29 @@ begin
      // Cria a lista de objetos
   FListaPessoas := TObjectList<TCloudPessoa>.Create;
 
-  FListaPessoas.Add(IncluirPessoaNaLista(['1', 'Hugo Weaving', 'Solteiro(a)', 'Masculino',
-    '3', '22/01/1985']));
+  FListaPessoas.Add(IncluirPessoaNaLista(['1', 'Hugo Weaving', '4655442115', '042.888.210-29',
+    '(18)98806-8389', 'wg.o.costa@gmail.com']));
 
-  FListaPessoas.Add(IncluirPessoaNaLista(['2', 'Sarah Connor', 'Casado(a)', 'Feminino',
-    '5', '07/05/1978']));
+  FListaPessoas.Add(IncluirPessoaNaLista(['2', 'Sarah Connor', '270622986', '592.482.300-83',
+    '(18)98806-8389', 'wg.o.costa@gmail.com']));
 
-  FListaPessoas.Add(IncluirPessoaNaLista(['3', 'Lara Croft', 'Viúvo(a)', 'Feminino',
-    '9', '18/12/1991']));
+  FListaPessoas.Add(IncluirPessoaNaLista(['3', 'Lara Croft', '473309543', '873.041.730-92',
+    '(18)98806-8389', 'wg.o.costa@gmail.com']));
 
-  FListaPessoas.Add(IncluirPessoaNaLista(['4', 'Martin Riggs', 'Casado(a)', 'Masculino',
-    '2', '30/04/1982']));
+  FListaPessoas.Add(IncluirPessoaNaLista(['4', 'Martin Riggs', '163254837', '663.309.170-27',
+    '(18)98806-8389', 'chamados.vsm@gmail.com']));
 
-  FListaPessoas.Add(IncluirPessoaNaLista(['5', 'Tony Stark', 'Divorciado(a)', 'Masculino',
-    '4', '05/06/1975']));
+  FListaPessoas.Add(IncluirPessoaNaLista(['5', 'Tony Stark', '492436642', '765.994.940-30',
+    '(18)98806-8389', 'wg.o.costa@gmail.com']));
 
-  FListaPessoas.Add(IncluirPessoaNaLista(['6', 'Beatrice Prior', 'Solteiro(a)', 'Feminino',
-    '6', '20/07/1993']));
+  FListaPessoas.Add(IncluirPessoaNaLista(['6', 'Beatrice Prior', '188516281', '723.685.450-69',
+    '(18)98806-8389', 'wg.o.costa@gmail.com']));
 
-  FListaPessoas.Add(IncluirPessoaNaLista(['7', 'John Mcclane', 'Casado(a)', 'Masculino',
-    '1', '11/09/1980']));
+  FListaPessoas.Add(IncluirPessoaNaLista(['7', 'John Mcclane', '162520256', '375.524.420-93',
+    '(18)98806-8389', 'chamados.vsm@gmail.com']));
 
-  FListaPessoas.Add(IncluirPessoaNaLista(['8', 'Ellie Sattler', 'Solteiro(a)', 'Feminino',
-    '8', '27/10/1995']));
+  FListaPessoas.Add(IncluirPessoaNaLista(['8', 'Ellie Sattler', '207529085', '888.569.350-40',
+    '(18)98806-8389', 'chamados.vsm@gmail.com']));
 end;
 
 function TCloudController.DeletePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIdDeletar : Integer): Boolean;
@@ -169,9 +168,9 @@ begin
    Result := Self.Create;
 end;
 
-class procedure TCloudController.PreencherDataSet<T>(var ClientDataSet: TClientDataSet; FLista: TObjectList<T>);
+class procedure TCloudController.PreencherDataSet<T>(var ClientDataSet: TClientDataSet; FLista: TObjectList<T>;sField : string = 'Nome');
 begin
-   TCloudTabela.PreencherDataSet<T>(ClientDataSet,FLista);
+   TCloudTabela.PreencherDataSet<T>(ClientDataSet,FLista,sField);
 end;
 
 function TCloudController.UpdatePessoa(var FListaPessoas: TObjectList<TCloudPessoa>;iIDAtualizar : Integer): Boolean;
@@ -206,7 +205,7 @@ begin
    result := TCloudEndereco.Create;
    result.ID            := Dados[0];
    result.idPessoa      := Dados[1];
-   result.endereco      := Dados[2];
+   result.logradouro    := Dados[2];
    result.Cep           := Dados[3];
    result.Numero        := Dados[4];
    result.Complemento   := Dados[5];

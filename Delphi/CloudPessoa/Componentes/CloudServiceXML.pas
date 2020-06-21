@@ -125,7 +125,7 @@ begin
          endXML := endPessoasXML.AddChild('endXML');
 
          endXML.AddChild('idPessoa').NodeValue  := pessoa.Endereco[iContador].id;
-         endXML.AddChild('endereco').NodeValue  := pessoa.Endereco[iContador].endereco;
+         endXML.AddChild('endereco').NodeValue  := pessoa.Endereco[iContador].Logradouro;
          endXML.AddChild('Cep').NodeValue       := pessoa.Endereco[iContador].Cep;
          endXML.AddChild('Numero').NodeValue    := pessoa.Endereco[iContador].Numero;
          endXML.AddChild('Complemento').NodeValue   := pessoa.Endereco[iContador].Complemento;
