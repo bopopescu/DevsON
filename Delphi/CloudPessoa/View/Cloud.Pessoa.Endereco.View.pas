@@ -32,6 +32,7 @@ type
     pnlTitulo: TPanel;
     pnlCentro: TPanel;
     lblTitulo: TLabel;
+    rdViacEP: TRadioGroup;
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure BuscarCep;
@@ -82,15 +83,6 @@ begin
    end;
 
    ModalResult := mrOk;
-//   result.idPessoa      := Dados[1];
-//   result.endereco      := Dados[2];
-//   result.Cep           := Dados[3];
-//   result.Numero        := Dados[4];
-//   result.Complemento   := Dados[5];
-//   result.Bairro        := Dados[6];
-//   result.Cidade        := Dados[7];
-//   result.Estado        := Dados[8];
-//   result.Pais          := Dados[9];
 end;
 
 procedure TCloudPessoaEnderecoView.BuscarCep;
@@ -101,6 +93,11 @@ begin
    begin
       buscaCep := TCloudModelCep.Create(edtCep.Text);
       try
+         if rdViacEP.ItemIndex = 0 then
+            buscaCep.getCEPJson
+         else
+            buscaCep.getCEPWebservices;
+
          if buscaCep.bLocalizado then
          begin
             CampoCidade.Text     := buscaCep.Cidade.Nome;

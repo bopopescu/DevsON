@@ -3,11 +3,26 @@ unit CloudBuscaCEP;
 interface
 
 uses
-  System.SysUtils, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc, Xml.Win.msxmldom,Vcl.Forms, 
+  System.SysUtils, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc, Xml.Win.msxmldom,Vcl.Forms,
+//    Winapi.Windows, Winapi.Messages, System.Variants, System.Classes,
+//  Data.DBXJSON,
+JSON,
+//  DBXJSONReflect, idHTTP, IdSSLOpenSSL,
   Cloud.Interfaces,
   Cloud.Dto.Pessoa.Endereco;
 
 type
+  TEnderecoCompleto = record
+    CEP,
+    logradouro,
+    complemento,
+    bairro,
+    localidade,
+    uf,
+    unidade,
+    IBGE : string
+  end;
+
    TCidade = class(Tobject)
    private
       FUF: String;
@@ -37,7 +52,8 @@ type
     FbLocalizado: Boolean;
     procedure SetBairro(const Value: string);
     procedure SetLogradouro(const Value: string);
-    function proLocalizaCep: Boolean;
+
+    procedure CarregaDadosCepJson(JSON : TJSONObject);
    public
       constructor Create(const Cep: string); overload;
       destructor Destroy; override;
@@ -46,12 +62,28 @@ type
       property Bairro: string read FBairro write SetBairro;
       property Cidade: TCidade read FCidade;
       property bLocalizado : Boolean read FbLocalizado write FbLocalizado;
-      
+      function getCEPWebservices: Boolean;
+      function getCEPJson : Boolean;
   end;
 
 implementation
 
+uses
+   Rest.Json, REST.Client, REST.types    , Cloud.Dto.ViaCep, VSM.Rest;
+
 { TEndereco }
+
+procedure TCloudModelCep.CarregaDadosCepJson(JSON : TJSONObject);
+begin
+    FCep := JSON.Get('cep').JsonValue.Value;
+    Logradouro := AnsiUpperCase(JSON.Get('logradouro').JsonValue.Value);
+    Bairro := AnsiUpperCase(JSON.Get('bairro').JsonValue.Value);
+    FCidade.Nome := AnsiUpperCase(JSON.Get('localidade').JsonValue.Value);
+    FCidade.UF := AnsiUpperCase(JSON.Get('uf').JsonValue.Value);
+    FCidade.FIBGE :=  JSON.Get('ibge').JsonValue.Value;
+    FCidade.FUFIBGE :=  Copy(Cidade.IBGE,1,2);
+    Self.FbLocalizado := Logradouro <> '';
+end;
 
 constructor TCloudModelCep.Create(const Cep: string);
 begin
@@ -60,7 +92,6 @@ begin
    FLogradouro := '';
    FBairro := '';
    Self.FbLocalizado := False;
-   proLocalizaCep;
 end;
 
 destructor TCloudModelCep.Destroy;
@@ -69,7 +100,106 @@ begin
    inherited;
 end;
 
-function TCloudModelCep.proLocalizaCep : Boolean;
+function TCloudModelCep.getCEPJson : Boolean;
+var
+//  HTTP: TIdHTTP;
+//  IDSSLHandler: TIdSSLIOHandlerSocketOpenSSL;
+//  Response: TStringStream;
+  JsonArray: TJSONArray;
+  jsonObject: TJSONObject;
+  sResposta : String;
+  RESTClient: TRESTClient;
+  RESTRequest: TRESTRequest;
+  RESTResponse: TRESTResponse;
+  sURL : string;
+  viacep : TCloudViaCep;
+begin
+  viacep := TCloudViaCep.Create;
+  viacep := TVSMRest.New('https://viacep.com.br/ws/' + FCEP + '/json/')
+                .build(GET)
+                .executar
+                .response.converter.get<TCloudViaCep>;
+
+  if viacep.logradouro <> '' then
+  begin
+    FCep := viacep.cep;
+    Logradouro := viacep.logradouro;
+    Bairro := viacep.bairro;
+    FCidade.Nome := viacep.localidade;
+    FCidade.UF := viacep.uf;
+    FCidade.FIBGE :=  viacep.ibge;
+    FCidade.FUFIBGE :=  Copy(Cidade.IBGE,1,2);
+    Self.FbLocalizado := Logradouro <> '';
+    Result := Self.FbLocalizado;
+  end;
+
+//  Result := False;
+//
+//   sURL := 'https://viacep.com.br/ws/' + FCEP + '/json/';
+//   RESTClient   := TRESTClient.Create(nil);
+//   RESTRequest  := TRESTRequest.Create(RESTClient);
+//   RESTResponse := TRESTResponse.Create(RESTClient);
+  try
+
+
+//      try
+//         RESTClient.BaseURL   := sUrl;
+//         RESTRequest.Client   := RESTClient;
+//         RESTRequest.Method   := rmGET;
+//         RESTRequest.Response := RESTResponse;
+//         RESTRequest.Timeout  := 10000;
+//         RESTRequest.Params.AddHeader('Content-Type' ,'application/json');
+//         RESTRequest.Accept := 'application/json';
+//         RESTRequest.Execute;
+//
+//         if RESTResponse.Content <> '' then
+//         begin
+//            viacep := TCloudViaCep.Create;
+//            viacep :=  TJson.JsonToObject<TCloudViaCep>(RESTResponse.JSONValue.ToJSON);
+//            CarregaDadosCepJson(jsonObject);
+//         end;
+//      except
+//         Result := False;
+//      end;
+
+
+//      HTTP := TIdHTTP.Create;
+//      IDSSLHandler := TIdSSLIOHandlerSocketOpenSSL.Create;
+//
+//      IDSSLHandler.SSLOptions.Method := sslvTLSv1_1;
+//      IDSSLHandler.SSLOptions.Mode := sslmUnassigned;
+//
+//      HTTP.IOHandler := IDSS
+//      HTTP.ReadTimeout := 30000;
+//      IDSSLHandler.SSLOptLHandler;
+//      Response := TStringStream.Create('');
+//
+//
+//      HTTP.Get('viacep.com.br/ws/' + FCEP + '/json/', Response);
+//      if (HTTP.ResponseCode = 200) and not (UTF8ToString(Response.DataString) = '{'#$A'  "erro": true'#$A'}') then
+//      begin
+//        sResposta := UTF8ToString(Response.DataString);
+//        jsonObject := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(UTF8ToString(Response.DataString)), 0) as TJSONObject;
+//      end
+//      else
+//        raise Exception.Create('CEP inexistente!');
+
+
+
+  finally
+//    RESTClient.Free;
+//    RESTRequest.Free;
+//    RESTResponse.Free;
+//    FreeAndNil(HTTP);
+//    FreeAndNil(IDSSLHandler);
+//    Response.Destroy;
+
+
+
+  end;
+end;
+
+function TCloudModelCep.getCEPWebservices : Boolean;
 resourcestring
    __rCEP_INVALIDO = 'O número do CEP deve ser composto por 8 Digitos.';
    __rCEP_NAO_ENCONTRADO = 'Cep não encontrado.';

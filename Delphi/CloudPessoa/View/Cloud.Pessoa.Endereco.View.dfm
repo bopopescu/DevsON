@@ -196,5 +196,22 @@ object CloudPessoaEnderecoView: TCloudPessoaEnderecoView
       OnExit = edtCepExit
       OnKeyDown = edtCepKeyDown
     end
+    object rdViacEP: TRadioGroup
+      Left = 16
+      Top = 135
+      Width = 214
+      Height = 39
+      BiDiMode = bdLeftToRight
+      Caption = 'Busca ViaCep'
+      Columns = 2
+      DoubleBuffered = False
+      ItemIndex = 0
+      Items.Strings = (
+        'Json'
+        'WebService')
+      ParentBiDiMode = False
+      ParentDoubleBuffered = False
+      TabOrder = 10
+    end
   end
 end

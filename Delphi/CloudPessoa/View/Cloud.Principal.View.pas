@@ -99,7 +99,7 @@ var
 implementation
 
 uses
-  System.RTTI, System.TypInfo, Cloud.Dto.Pessoa.Endereco;
+  System.RTTI, System.TypInfo, Cloud.Dto.Pessoa.Endereco, CloudBuscaCEP;
 
 {$R *.dfm}
 

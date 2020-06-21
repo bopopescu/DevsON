@@ -281,6 +281,10 @@ begin
   try
     HTTP := TIdHTTP.Create;
     IDSSLHandler := TIdSSLIOHandlerSocketOpenSSL.Create;
+          IDSSLHandler.SSLOptions.Method := sslvTLSv1;
+      IDSSLHandler.SSLOptions.Method := sslvTLSv1_2;
+      IDSSLHandler.SSLOptions.Mode := sslmUnassigned;
+
     HTTP.IOHandler := IDSSLHandler;
     Response := TStringStream.Create('');
 

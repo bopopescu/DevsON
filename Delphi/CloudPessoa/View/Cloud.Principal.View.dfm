@@ -41,6 +41,8 @@ object CloudPrincipalView: TCloudPrincipalView
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      ExplicitWidth = 241
+      ExplicitHeight = 32
     end
   end
   object Panel1: TPanel
@@ -251,6 +253,8 @@ object CloudPrincipalView: TCloudPrincipalView
         Font.Style = []
         ParentColor = False
         ParentFont = False
+        ExplicitWidth = 85
+        ExplicitHeight = 28
       end
     end
   end
