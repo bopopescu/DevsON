@@ -33,6 +33,7 @@ type
     pnlCentro: TPanel;
     lblTitulo: TLabel;
     rdViacEP: TRadioGroup;
+    btnPesquisarCEP: TButton;
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure BuscarCep;
@@ -46,6 +47,8 @@ type
     procedure CampoCidadeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure CampoEstadoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure CampoPaisKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnPesquisarCEPClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -83,6 +86,11 @@ begin
    end;
 
    ModalResult := mrOk;
+end;
+
+procedure TCloudPessoaEnderecoView.btnPesquisarCEPClick(Sender: TObject);
+begin
+    BuscarCep;
 end;
 
 procedure TCloudPessoaEnderecoView.BuscarCep;
@@ -173,6 +181,11 @@ procedure TCloudPessoaEnderecoView.edtCepKeyDown(Sender: TObject; var Key: Word;
 begin
    if Key = VK_RETURN then
       perform(WM_NEXTDLGCTL,0,0);
+end;
+
+procedure TCloudPessoaEnderecoView.FormShow(Sender: TObject);
+begin
+   edtCep.SetFocus;
 end;
 
 end.

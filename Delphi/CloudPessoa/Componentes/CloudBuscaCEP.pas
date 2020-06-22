@@ -8,17 +8,6 @@ uses
   Cloud.Dto.Pessoa.Endereco;
 
 type
-  TEnderecoCompleto = record
-    CEP,
-    logradouro,
-    complemento,
-    bairro,
-    localidade,
-    uf,
-    unidade,
-    IBGE : string
-  end;
-
    TCidade = class(Tobject)
    private
       FUF: String;
@@ -88,22 +77,26 @@ var
   viacep : TCloudViaCep;
 begin
   viacep := TCloudViaCep.Create;
-  viacep := TCloudRest.New('https://viacep.com.br/ws/' + FCEP + '/json/')
-                .build(GET)
-                .executar
-                .response.converter.get<TCloudViaCep>;
+  try
+    viacep := TCloudRest.New('https://viacep.com.br/ws/' + FCEP + '/json/')
+                  .build(GET)
+                  .executar
+                  .response.converter.get<TCloudViaCep>;
 
-  if viacep.logradouro <> '' then
-  begin
-    FCep := viacep.cep;
-    Logradouro := viacep.logradouro;
-    Bairro := viacep.bairro;
-    FCidade.Nome := viacep.localidade;
-    FCidade.UF := viacep.uf;
-    FCidade.FIBGE :=  viacep.ibge;
-    FCidade.FUFIBGE :=  Copy(Cidade.IBGE,1,2);
-    Self.FbLocalizado := Logradouro <> '';
-    Result := Self.FbLocalizado;
+    if viacep.logradouro <> '' then
+    begin
+      FCep := viacep.cep;
+      Logradouro := viacep.logradouro;
+      Bairro := viacep.bairro;
+      FCidade.Nome := viacep.localidade;
+      FCidade.UF := viacep.uf;
+      FCidade.FIBGE :=  viacep.ibge;
+      FCidade.FUFIBGE :=  Copy(Cidade.IBGE,1,2);
+      Self.FbLocalizado := Logradouro <> '';
+      Result := Self.FbLocalizado;
+    end;
+  finally
+    viacep.Free;
   end;
 end;
 
