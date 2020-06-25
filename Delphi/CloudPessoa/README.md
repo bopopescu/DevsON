@@ -1,6 +1,4 @@
-# CloudPessoa
-Sobre o Desenvolvimento:
-Para este projeto, como forma de demonstrar o conhecimento que possuo foi utilizado no desenvolvimento conceitos como: Padrões de Projeto, Rtti, POO, Interfaces, MVC, Generics<T>, Collections, Clean Code.	
+# CloudPessoa - Para este projeto, como forma de demonstrar o conhecimento que possuo foi utilizado no desenvolvimento conceitos como: Padrões de Projeto, Rtti, POO, Interfaces, MVC, Generics<T>, Collections, Clean Code.	
 
 Solicitação:
 A seguir detalhamos as informações para a execução do teste. Ressaltamos que a organização do código e as boas práticas também serão critérios de avaliação.
