@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-  <Transactions>
-    <Transaction>2019/05/07 22:06:58.482,=C:\Users\Andrei\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/05/07 22:18:04.761,C:\Devs\Delphi\Basico\POO-1 - R2\model\CompEventos.Classe\FormComponentes.dfm=C:\Users\Andrei\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2019/05/07 22:18:04.761,C:\Devs\Delphi\Basico\POO-1 - R2\model\CompEventos.Classe\FormComponentes.pas=C:\Users\Andrei\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/05/07 22:23:52.332,C:\Devs\Delphi\Basico\POO-1 - R2\model\CompEventos.Classe\Project1.dproj=C:\Users\Andrei\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
-  </Transactions>
-</BorlandProject>

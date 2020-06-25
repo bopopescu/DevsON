@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-	<Transactions>
-    <Transaction>2019/05/07 21:52:52.000.614,=rtl.dcp</Transaction>
-    <Transaction>2019/05/07 21:54:07.000.572,C:\Users\Andrei\Documents\Embarcadero\Studio\Projects\Package1.dproj=C:\Devs\Delphi\Basico\POO-1 - R2\model\CompEventos.dproj</Transaction>
-    <Transaction>2019/05/07 21:54:21.000.169,=C:\Devs\Delphi\Basico\POO-1 - R2\model\Unit1.pas</Transaction>
-    <Transaction>2019/05/07 21:54:59.000.917,C:\Devs\Delphi\Basico\POO-1 - R2\model\Unit1.pas=C:\Devs\Delphi\Basico\POO-1 - R2\model\CompEventos.Classe\Principal.pas</Transaction>
-  </Transactions>
-</BorlandProject>
