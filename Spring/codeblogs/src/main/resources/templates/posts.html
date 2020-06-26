@@ -22,16 +22,21 @@
            </nav>
 
            <div class="card shadow-sm bg-white rounded" style="margin-top: 20px;" th:each="post : ${posts}">
+               <--!th:each -> for each do Thymealeaf -->
                 <div class="card-body">
                     <p class="card-subtitle mb-2 text-muted" style="font-size: 0.8rem;">
                         <span th:text="${post.autor}"></span>
+                        <span th:text="${post.data}"></span>
                     </p>
-                    <a>
+                    <a href="#">
                         <h4 class="card-title" style="font-weight: bold; color: black;padding-top: 5px;">
-
+                            <span th:text="${post.titulo}"></span>
                         </h4>
                     </a>
-                    <p class="card-text"></p>
+                    <p class="card-text">
+                        <--!#strings.abbreviate(post.titulo,400) limitando texto em 400 caracters-->
+                        <span th:utext="${#strings.abbreviate(post.titulo,400)}"></span>
+                    </p>
                 </div>
            </div>
        </div>

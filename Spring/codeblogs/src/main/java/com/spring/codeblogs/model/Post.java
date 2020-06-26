@@ -19,6 +19,7 @@ public class Post {
 
     @NotBlank
     private String autor;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
     private LocalDate data;
 
