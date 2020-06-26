@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org"></html>
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <title>MyCodeBlog</title>
     <!--CSS-->
@@ -20,10 +20,11 @@
                    <li class="breadcrumb-item active" aria-current="page">Posts</li>
                </ol>
            </nav>
-           <div class="card shadow-sm bg-white rounded" style="margin-top: 20px;">
+
+           <div class="card shadow-sm bg-white rounded" style="margin-top: 20px;" th:each="post : ${posts}">
                 <div class="card-body">
                     <p class="card-subtitle mb-2 text-muted" style="font-size: 0.8rem;">
-
+                        <span th:text="${post.autor}"></span>
                     </p>
                     <a>
                         <h4 class="card-title" style="font-weight: bold; color: black;padding-top: 5px;">
