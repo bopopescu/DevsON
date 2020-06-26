@@ -1,26 +1,28 @@
 package com.spring.codeblogs.service;
 
 import com.spring.codeblogs.model.Post;
+import com.spring.codeblogs.repository.CodeblogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class CodeblogService implements CodeblogServiceInterface {
-    //Ponto de Injeção do Repository
+    //Ponto de Injeção do Repository (CodeBlogRepository) que já tem herança extendendo com os metodos prontos do JPA
     @Autowired
+    CodeblogRepository codeblogRepository;
 
     @Override
     public List<Post> findAll() {
-        return null;
+        return codeblogRepository.findAll();
     }
 
     @Override
     public Post findById(long id) {
-        return null;
+        return codeblogRepository.findById(id).get();
     }
 
     @Override
     public Post save(Post post) {
-        return null;
+        return codeblogRepository.save(post);
     }
 }
