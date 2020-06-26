@@ -1,0 +1,2 @@
+# Desenvolvedor Delphi - Wagner Costa - Linkedin: https://www.linkedin.com/in/wagnercostta/
+Meu principal objetivo é me tornar desenvolvedor Java back-end, possuo conhecimento em Java, Spring Framework, Spring Data, API Rest, JPA, Hibernate, Flutter, Angular com conhecimento e experiências acadêmicas / treinamentos, experiência profissional comprovada apenas em Delphi, atuando também com componentes no mesmo, Orientação a Objetos, e conhecimento em práticas ágeis. 
